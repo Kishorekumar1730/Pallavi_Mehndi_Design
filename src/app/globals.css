@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  
+  --bg-ivory: #FDFBF7;
+  --bg-cream: #FAF5EE;
+  --bg-card: #FFFFFF;
+  
+  --brand-terracotta: #B35D4D;
+  --brand-rose: #C87D6E;
+  --brand-plum: #241416;
+  --brand-gold: #C5A059;
+  --brand-gold-light: #E6C875;
+  --brand-border: #EADBCE;
+}
+
+body {
+  background-color: var(--bg-ivory);
+  color: var(--brand-plum);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF5EE;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B35D4D;
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid #C5A059;
+  outline-offset: 2px;
+}
+
+/* Subtle mandala pattern background */
+.mandala-bg-subtle {
+  background-image: radial-gradient(#C5A059 0.75px, transparent 0.75px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+}
+
+/* Smooth transitions */
+.transition-luxury {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}

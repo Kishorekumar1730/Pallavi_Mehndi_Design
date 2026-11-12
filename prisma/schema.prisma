@@ -1,0 +1,266 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         String        @default("STAFF") // OWNER, STAFF
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  bookings     Booking[]     @relation("AssignedArtist")
+  notes        InternalNote[]
+  auditLogs    AuditLog[]
+
+  @@index([email])
+}
+
+model BusinessSettings {
+  id                  String   @id @default("default-settings")
+  businessName        String   @default("Pallavi Mehndi Artistry")
+  tagline             String   @default("Bespoke Bridal & Contemporary Henna Artistry")
+  taglineTa           String   @default("பாரம்பரியம் மற்றும் சமகால மருதாணி கலை")
+  serviceArea         String   @default("Salem, Tamil Nadu & Destination Travel")
+  serviceAreaTa       String   @default("சேலம் மற்றும் அனைத்து இடங்களுக்கும் பயணம்")
+  phone               String   @default("+91 98765 43210")
+  whatsappNumber      String   @default("+91 98765 43210")
+  email               String   @default("enquiries@pallavimehndi.com")
+  currency            String   @default("INR")
+  currencySymbol      String   @default("₹")
+  timezone            String   @default("Asia/Kolkata")
+  instagramUrl        String   @default("https://instagram.com/pallavi_mehndi_artistry")
+  bookingNoticeDays   Int      @default(7)
+  depositPercent      Int      @default(30)
+  cancellationPolicy  String   @default("Cancellations made 14 days prior to the event are eligible for a partial credit. Deposits are non-refundable to secure the dedicated date.")
+  depositPolicy       String   @default("A 30% advance deposit is required to confirm your booking date once the artist confirms availability. The remaining balance is payable on the event date.")
+  privacyPolicy       String   @default("We respect your privacy. Contact information and event details submitted through our forms are strictly used for booking consultation, quotes, and communication. We never sell or share your data.")
+  bioEn               String   @default("Pallavi is a passionate henna artist blending intricate South Indian heritage motifs with contemporary Arabic and bespoke geometric aesthetics. Using only 100% natural, hand-blended organic henna, she ensures a rich, dark stain with maximum safety and care.")
+  bioTa               String   @default("பல்லவி பாரம்பரிய தென்னிந்திய மற்றும் நவீன அரபு மருதாணி கலைகளில் கைதேர்ந்தவர். 100% இயற்கை மருதாணியை மட்டுமே பயன்படுத்தி அழகு சேர்க்கிறார்.")
+  philosophyEn        String   @default("Every bride's journey is unique. We craft personalized motifs that celebrate love, personal heritage, and timeless celebration.")
+  hygienePractices    String   @default("Freshly mixed chemical-free henna, organic certified cajeput and eucalyptus essential oils, single-use application cones, and pre-application skin prep.")
+  enableWorkshops     Boolean  @default(false)
+  enableGiftCards     Boolean  @default(false)
+  enableOnlineDeposits Boolean @default(false)
+  enableMultiArtist   Boolean  @default(false)
+  updatedAt           DateTime @updatedAt
+}
+
+model ServiceCategory {
+  id           String    @id @default(cuid())
+  name         String
+  nameTa       String?
+  slug         String    @unique
+  description  String?
+  displayOrder Int       @default(0)
+  isActive     Boolean   @default(true)
+  services     Service[]
+}
+
+model Service {
+  id                 String           @id @default(cuid())
+  categoryId         String
+  category           ServiceCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name               String
+  nameTa             String?
+  slug               String           @unique
+  shortDescription   String
+  fullDescription    String
+  suitableFor        String
+  inclusions         String           // Comma-separated or JSON list of inclusions
+  durationMinutes    Int?
+  startingPrice      Int?             // null for quote only
+  priceType          String           @default("STARTING_FROM") // FIXED, STARTING_FROM, QUOTE_ONLY
+  travelDetails      String?
+  availabilityNotes  String?
+  imageUrl           String?
+  displayOrder       Int              @default(0)
+  isFeatured         Boolean          @default(false)
+  isPublished        Boolean          @default(true)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  enquiries          Enquiry[]
+  bookings           Booking[]
+
+  @@index([categoryId])
+  @@index([slug])
+}
+
+model PortfolioItem {
+  id               String   @id @default(cuid())
+  title            String
+  titleTa          String?
+  caption          String?
+  category         String   // BRIDAL, ARABIC, TRADITIONAL, MINIMAL, FESTIVE, BESPOKE
+  imageUrl         String
+  altText          String
+  featured         Boolean  @default(false)
+  published        Boolean  @default(true)
+  hasClientConsent Boolean  @default(true)
+  consentNotes     String?  // Internal permission details
+  collectionYear   String?  // e.g. "2026 Collection"
+  displayOrder     Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([category])
+  @@index([featured])
+  @@index([published])
+}
+
+model Enquiry {
+  id                   String        @id @default(cuid())
+  referenceNumber      String        @unique
+  customerName         String
+  phone                String
+  email                String?
+  contactMethod        String        @default("WHATSAPP") // WHATSAPP, PHONE, EMAIL
+  eventDate            String        // YYYY-MM-DD
+  eventType            String        // BRIDAL_MAIN, SANGEET_MEHNDI, ENGAGEMENT, BABY_SHOWER, FESTIVE, FAMILY_GUEST, OTHER
+  serviceId            String?
+  service              Service?      @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  serviceName          String?
+  guestCount           Int?
+  eventLocation        String
+  venueDetails         String?
+  styleNotes           String?
+  referenceImageUrl    String?
+  status               String        @default("NEW") // NEW, CONTACTED, QUOTE_SENT, AWAITING_REPLY, CONVERTED, CLOSED
+  referralSource       String?       // INSTAGRAM, FRIEND_FAMILY, GOOGLE, WEDDING_PLANNER, OTHER
+  referralCode         String?
+  marketingConsent     Boolean       @default(false)
+  privacyConsent       Boolean       @default(true)
+  ipAddress            String?
+  convertedToBookingId String?
+  booking              Booking?      @relation("EnquiryToBooking")
+  notes                InternalNote[]
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  @@index([eventDate])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Booking {
+  id                  String         @id @default(cuid())
+  bookingNumber       String         @unique
+  enquiryId           String?        @unique
+  enquiry             Enquiry?       @relation("EnquiryToBooking", fields: [enquiryId], references: [id], onDelete: SetNull)
+  customerName        String
+  customerPhone       String
+  customerEmail       String?
+  eventDate           String         // YYYY-MM-DD
+  startTime           String?        // e.g. "10:00"
+  endTime             String?        // e.g. "16:00"
+  eventType           String
+  serviceId           String?
+  service             Service?       @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  eventLocation       String
+  status              String         @default("REQUEST_RECEIVED") // REQUEST_RECEIVED, AWAITING_CONFIRMATION, CONFIRMED, DEPOSIT_PENDING, COMPLETED, CANCELLED, RESCHEDULED
+  quoteAmount         Int?
+  depositAmount       Int?
+  depositStatus       String         @default("UNPAID") // UNPAID, PAID, REFUNDED, WAIVED
+  assignedArtistId    String?
+  assignedArtist      User?          @relation("AssignedArtist", fields: [assignedArtistId], references: [id], onDelete: SetNull)
+  internalNotes       String?
+  cancellationReason  String?
+  notes               InternalNote[]
+  auditLogs           AuditLog[]
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  @@index([eventDate])
+  @@index([status])
+}
+
+model AvailabilityBlock {
+  id        String   @id @default(cuid())
+  startDate String   // YYYY-MM-DD
+  endDate   String   // YYYY-MM-DD
+  reason    String   // PERSONAL_LEAVE, FULLY_BOOKED, TRAVEL, PUBLIC_HOLIDAY, CUSTOM
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@index([startDate, endDate])
+}
+
+model InternalNote {
+  id        String   @id @default(cuid())
+  enquiryId String?
+  enquiry   Enquiry? @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  bookingId String?
+  booking   Booking? @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorName String
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([enquiryId])
+  @@index([bookingId])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userName   String
+  action     String   // ENQUIRY_CREATED, STATUS_UPDATED, BOOKING_CONFIRMED, etc.
+  entityType String   // ENQUIRY, BOOKING, SERVICE, PORTFOLIO, SETTINGS, USER
+  entityId   String?
+  details    String   // JSON text
+  ipAddress  String?
+  bookingId  String?
+  booking    Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}
+
+model FaqItem {
+  id           String   @id @default(cuid())
+  question     String
+  questionTa   String?
+  answer       String
+  answerTa     String?
+  category     String   @default("GENERAL") // GENERAL, BOOKING, HENNA_CARE, PRICING, TRAVEL
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+
+  @@index([displayOrder])
+}
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  clientName   String
+  event        String
+  quote        String
+  quoteTa      String?
+  rating       Int      @default(5)
+  isApproved   Boolean  @default(false) // Must be approved by owner before showing on public site
+  date         String?
+  displayOrder Int      @default(0)
+
+  @@index([isApproved])
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  eventType String   // PAGE_VIEW, GALLERY_ENGAGE, ENQUIRY_START, ENQUIRY_SUBMIT, WHATSAPP_CLICK, CALL_CLICK
+  path      String
+  metadata  String?  // JSON string
+  createdAt DateTime @default(now())
+
+  @@index([eventType])
+  @@index([createdAt])
+}
+
