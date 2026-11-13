@@ -1,28 +1,26 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { submitEnquiry } from '@/actions/enquiry';
-import ImageUploader from '@/components/ImageUploader';
+import React, { useState } from 'react';
 import {
   Calendar,
+  Clock,
   Sparkles,
-  User,
+  ShieldCheck,
   CheckCircle2,
   AlertCircle,
   ArrowRight,
   ArrowLeft,
-  Phone,
   MessageCircle,
-  ShieldCheck,
-  MapPin,
-  Clock,
-  Heart,
+  Phone,
+  FileCheck,
 } from 'lucide-react';
+import ImageUploader from '@/components/ImageUploader';
+import { submitEnquiry } from '@/actions/enquiry';
 
 interface ServiceOption {
   id: string;
   name: string;
-  startingPrice?: number | null;
+  startingPrice: number | null;
   priceType: string;
 }
 
@@ -30,58 +28,44 @@ interface EnquiryFormProps {
   services: ServiceOption[];
   preselectedServiceId?: string;
   preselectedStyle?: string;
-  whatsappNumber?: string;
-  phone?: string;
+  whatsappNumber: string;
+  phone: string;
 }
 
 export default function EnquiryForm({
   services,
-  preselectedServiceId = '',
-  preselectedStyle = '',
-  whatsappNumber = '+919876543210',
-  phone = '+91 98765 43210',
+  preselectedServiceId,
+  preselectedStyle,
+  whatsappNumber,
+  phone,
 }: EnquiryFormProps) {
-  const [step, setStep] = useState<number>(1);
-  const [formTimestamp] = useState<number>(() => Date.now());
+  const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedReference, setSubmittedReference] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [formData, setFormData] = useState({
-    // Step 1: Event Details
-    eventDate: '',
-    eventType: 'BRIDAL_MAIN',
-    eventLocation: 'Salem, Tamil Nadu',
-    venueDetails: '',
-
-    // Step 2: Service & Scope
-    serviceId: preselectedServiceId || (services.length > 0 ? services[0].id : ''),
-    guestCount: 1,
-    styleNotes: preselectedStyle ? `Interested in style: ${preselectedStyle}` : '',
-    referenceImageUrl: '',
-
-    // Step 3: Contact & Communication
     customerName: '',
     phone: '',
     email: '',
-    contactMethod: 'WHATSAPP' as 'WHATSAPP' | 'PHONE' | 'EMAIL',
+    eventDate: '',
+    eventType: 'BRIDAL_MAIN',
+    eventLocation: '',
+    venueDetails: '',
+    serviceId: preselectedServiceId || (services[0]?.id ?? ''),
+    guestCount: 1,
+    styleNotes: preselectedStyle ? `Interested in ${preselectedStyle} style` : '',
+    referenceImageUrl: '',
+    contactMethod: 'WHATSAPP',
     referralSource: 'INSTAGRAM',
     referralCode: '',
-
-    // Step 4: Consent & Bot Protection
-    privacyConsent: true,
+    privacyConsent: false,
     marketingConsent: false,
-    honeypot: '',
+    honeypot: '', // anti-bot spam trap
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [submittedReference, setSubmittedReference] = useState<string | null>(null);
-
-  // Sync preselectedServiceId if passed later
-  useEffect(() => {
-    if (preselectedServiceId) {
-      setFormData((prev) => ({ ...prev, serviceId: preselectedServiceId }));
-    }
-  }, [preselectedServiceId]);
+  const selectedService = services.find((s) => s.id === formData.serviceId);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -90,10 +74,13 @@ export default function EnquiryForm({
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
       setFormData((prev) => ({ ...prev, [name]: checked }));
+    } else if (type === 'number') {
+      setFormData((prev) => ({ ...prev, [name]: parseInt(value, 10) || 1 }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
+    // Clear field error on edit
     if (fieldErrors[name]) {
       setFieldErrors((prev) => {
         const next = { ...prev };
@@ -107,20 +94,46 @@ export default function EnquiryForm({
     const errors: Record<string, string> = {};
 
     if (currentStep === 1) {
-      if (!formData.eventDate) errors.eventDate = 'Please select your event date';
-      if (!formData.eventLocation.trim()) errors.eventLocation = 'Please specify city / location';
-    } else if (currentStep === 2) {
-      if (formData.guestCount < 1) errors.guestCount = 'Guest/hand count must be at least 1';
-    } else if (currentStep === 3) {
-      if (!formData.customerName.trim() || formData.customerName.length < 2) {
-        errors.customerName = 'Please enter your full name (minimum 2 characters)';
+      if (!formData.eventDate) {
+        errors.eventDate = 'Please select your celebration date.';
+      } else {
+        const selected = new Date(formData.eventDate);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (selected < today) {
+          errors.eventDate = 'Event date cannot be in the past.';
+        }
       }
-      if (!formData.phone.trim() || formData.phone.length < 10) {
-        errors.phone = 'Please enter a valid 10-digit mobile number';
+      if (!formData.eventLocation.trim()) {
+        errors.eventLocation = 'Please provide the city or venue area (e.g. Salem, Fairlands).';
       }
-    } else if (currentStep === 4) {
+    }
+
+    if (currentStep === 2) {
+      if (!formData.serviceId) {
+        errors.serviceId = 'Please select a service package.';
+      }
+      if (formData.guestCount < 1) {
+        errors.guestCount = 'Guest count must be at least 1.';
+      }
+    }
+
+    if (currentStep === 3) {
+      if (!formData.customerName.trim()) {
+        errors.customerName = 'Please enter your full name.';
+      }
+      const cleanPhone = formData.phone.replace(/[^0-9]/g, '');
+      if (cleanPhone.length < 10) {
+        errors.phone = 'Please enter a valid 10-digit phone/WhatsApp number.';
+      }
+      if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        errors.email = 'Please enter a valid email address or leave blank.';
+      }
+    }
+
+    if (currentStep === 4) {
       if (!formData.privacyConsent) {
-        errors.privacyConsent = 'You must consent to our privacy policy to submit your enquiry';
+        errors.privacyConsent = 'You must agree to the privacy policy to submit.';
       }
     }
 
@@ -131,12 +144,13 @@ export default function EnquiryForm({
   const nextStep = () => {
     if (validateStep(step)) {
       setStep((prev) => Math.min(prev + 1, 4));
-      window.scrollTo({ top: 300, behavior: 'smooth' });
+      window.scrollTo({ top: 120, behavior: 'smooth' });
     }
   };
 
   const prevStep = () => {
     setStep((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 120, behavior: 'smooth' });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -147,35 +161,29 @@ export default function EnquiryForm({
     setErrorMessage(null);
 
     try {
-      const payload = {
+      const result = await submitEnquiry({
         ...formData,
-        formTimestamp,
-      };
-
-      const result = await submitEnquiry(payload);
+        eventDate: formData.eventDate,
+      });
 
       if (result.success && result.referenceNumber) {
         setSubmittedReference(result.referenceNumber);
         setStep(5);
       } else {
-        setErrorMessage(result.error || 'Failed to submit enquiry. Please check your entries.');
-        if (result.fieldErrors) {
-          setFieldErrors(result.fieldErrors);
-        }
+        setErrorMessage(
+          result.error || 'Failed to submit your enquiry. Please verify details and try again.'
+        );
       }
-    } catch (err) {
-      setErrorMessage('An unexpected error occurred. Please try again or reach out on WhatsApp.');
+    } catch {
+      setErrorMessage('A network error occurred. Please try again or contact us directly on WhatsApp.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Find selected service name for summary & WhatsApp message
-  const selectedService = services.find((s) => s.id === formData.serviceId);
-
-  // Generate WhatsApp prefilled text
+  // WhatsApp Pre-fill URL
   const generateWhatsAppMessage = () => {
-    const text = `Hello Pallavi! I have submitted an enquiry on your website.\n*Reference:* ${submittedReference}\n*Name:* ${formData.customerName}\n*Event:* ${formData.eventType.replace('_', ' ')} on ${formData.eventDate}\n*Service:* ${selectedService?.name || 'Custom Mehndi'}\n*Location:* ${formData.eventLocation}\nLooking forward to checking availability!`;
+    const text = `Hello Pallavi! I submitted an enquiry on your website.\n\n*Reference:* ${submittedReference}\n*Name:* ${formData.customerName}\n*Date:* ${formData.eventDate}\n*Location:* ${formData.eventLocation}\n*Package:* ${selectedService?.name || 'Bridal Mehndi'}\n\nCould you please check availability and let me know?`;
     return encodeURIComponent(text);
   };
 
@@ -184,67 +192,67 @@ export default function EnquiryForm({
   // Step 5: Success Confirmation
   if (step === 5 && submittedReference) {
     return (
-      <div className="bg-white rounded-3xl border border-[#EADBCE] p-8 sm:p-12 shadow-xl max-w-2xl mx-auto text-center space-y-6 animate-in fade-in zoom-in-95 duration-300">
-        <div className="w-16 h-16 rounded-full bg-[#FAF5EE] border-2 border-[#C5A059] flex items-center justify-center mx-auto text-[#B35D4D]">
-          <CheckCircle2 className="w-10 h-10 text-[#C5A059]" />
+      <div className="card-floating-prominent bg-white rounded-3xl border border-[#C6A15B]/30 p-8 sm:p-12 shadow-xl max-w-2xl mx-auto text-center space-y-6 animate-in fade-in zoom-in-95 duration-300">
+        <div className="w-16 h-16 rounded-full bg-[#FAF4EB] border-2 border-[#C6A15B] flex items-center justify-center mx-auto text-[#8E3445]">
+          <CheckCircle2 className="w-10 h-10 text-[#C6A15B]" />
         </div>
 
         <div className="space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#8E3445]">
             Enquiry Submitted Successfully
           </span>
-          <h2 className="font-serif text-3xl font-bold text-[#241416]">
+          <h2 className="font-serif text-3xl font-bold text-[#2B1F2A]">
             Thank You, {formData.customerName}!
           </h2>
-          <p className="text-sm text-[#241416]/75 max-w-lg mx-auto">
+          <p className="text-sm text-[#2B2421]/80 max-w-lg mx-auto">
             We have received your celebration request. Our artist will review your event date and details, then get in touch with you shortly.
           </p>
         </div>
 
         {/* Reference Box */}
-        <div className="bg-[#FAF5EE] p-5 rounded-2xl border border-[#EADBCE] text-center space-y-1">
-          <span className="text-xs text-[#241416]/60 uppercase tracking-wider block font-medium">
+        <div className="bg-[#FAF4EB] p-5 rounded-2xl border border-[#C6A15B]/30 text-center space-y-1">
+          <span className="text-xs text-[#2B2421]/65 uppercase tracking-wider block font-medium">
             Your Dedicated Reference Number
           </span>
-          <span className="font-mono text-2xl font-bold text-[#8F3D30] tracking-wider block">
+          <span className="font-mono text-2xl font-bold text-[#8E3445] tracking-wider block">
             {submittedReference}
           </span>
-          <p className="text-[11px] text-[#241416]/60">
+          <p className="text-[11px] text-[#2B2421]/60">
             Please quote this reference number during all future communication.
           </p>
         </div>
 
         {/* Summary Card */}
-        <div className="bg-white p-5 rounded-xl border border-[#FAF5EE] text-left text-xs space-y-2 text-[#241416]/80">
-          <div className="flex justify-between py-1 border-b border-[#FAF5EE]">
-            <span className="text-[#241416]/60">Event Date:</span>
-            <span className="font-semibold text-[#241416]">{formData.eventDate}</span>
+        <div className="bg-[#FAF4EB]/60 p-5 rounded-2xl border border-[#C6A15B]/25 text-left text-xs space-y-2 text-[#2B2421]/85">
+          <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+            <span className="text-[#2B2421]/65">Event Date:</span>
+            <span className="font-semibold text-[#2B1F2A]">{formData.eventDate}</span>
           </div>
-          <div className="flex justify-between py-1 border-b border-[#FAF5EE]">
-            <span className="text-[#241416]/60">Event Type:</span>
-            <span className="font-semibold text-[#241416]">{formData.eventType.replace('_', ' ')}</span>
+          <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+            <span className="text-[#2B2421]/65">Event Type:</span>
+            <span className="font-semibold text-[#2B1F2A]">{formData.eventType.replace('_', ' ')}</span>
           </div>
-          <div className="flex justify-between py-1 border-b border-[#FAF5EE]">
-            <span className="text-[#241416]/60">Service:</span>
-            <span className="font-semibold text-[#241416]">{selectedService?.name || 'Selected Package'}</span>
+          <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+            <span className="text-[#2B2421]/65">Service:</span>
+            <span className="font-semibold text-[#2B1F2A]">{selectedService?.name || 'Selected Package'}</span>
           </div>
           <div className="flex justify-between py-1">
-            <span className="text-[#241416]/60">Location:</span>
-            <span className="font-semibold text-[#241416]">{formData.eventLocation}</span>
+            <span className="text-[#2B2421]/65">Location:</span>
+            <span className="font-semibold text-[#2B1F2A]">{formData.eventLocation}</span>
           </div>
         </div>
 
         {/* Important notice */}
-        <div className="bg-[#FAF5EE]/70 p-4 rounded-xl border border-[#C5A059]/30 text-xs text-[#8F3D30] flex items-start gap-2.5 text-left">
-          <ShieldCheck className="w-5 h-5 text-[#C5A059] shrink-0 mt-0.5" />
+        <div className="bg-[#FAF4EB] p-4 rounded-2xl border border-[#C6A15B]/30 text-xs text-[#8E3445] flex items-start gap-2.5 text-left">
+          <ShieldCheck className="w-5 h-5 text-[#C6A15B] shrink-0 mt-0.5" />
           <p className="leading-relaxed">
-            <strong className="text-[#241416]">Please Note:</strong> This submission is a preliminary enquiry and does not confirm your date. Date locks require artist verification and an advance booking deposit.
+            <strong className="text-[#2B1F2A]">Please Note:</strong> This submission is a preliminary enquiry and does not confirm your date. Date locks require artist verification and an advance booking deposit.
           </p>
         </div>
 
         {/* Direct Actions */}
         <div className="pt-4 space-y-3">
-          <p className="text-xs text-[#241416]/70 font-medium">
+          <p className="text-xs text-[#2B2421]/75 font-medium">
             Want to fast-track your booking? Send your pre-filled details to Pallavi on WhatsApp:
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -261,7 +269,7 @@ export default function EnquiryForm({
               href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
               className="btn-elevated-secondary py-3 px-6 text-sm gap-2"
             >
-              <Phone className="w-4 h-4 text-[#8F3D30]" />
+              <Phone className="w-4 h-4 text-[#8E3445]" />
               <span>Call Studio Directly</span>
             </a>
           </div>
@@ -271,25 +279,25 @@ export default function EnquiryForm({
   }
 
   return (
-    <div className="card-floating-prominent p-6 sm:p-10 max-w-2xl mx-auto">
+    <div className="card-floating-prominent bg-white rounded-3xl border border-[#C6A15B]/30 p-6 sm:p-10 max-w-2xl mx-auto shadow-xl">
       {/* Progress Stepper */}
       <div className="mb-8">
-        <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#241416]/60 mb-3">
-          <span className={step >= 1 ? 'text-[#8F3D30]' : ''}>1. Date & Venue</span>
-          <span className={step >= 2 ? 'text-[#8F3D30]' : ''}>2. Scope & Style</span>
-          <span className={step >= 3 ? 'text-[#8F3D30]' : ''}>3. Contact</span>
-          <span className={step >= 4 ? 'text-[#8F3D30]' : ''}>4. Review</span>
+        <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#2B2421]/60 mb-3">
+          <span className={step >= 1 ? 'text-[#8E3445]' : ''}>1. Date & Venue</span>
+          <span className={step >= 2 ? 'text-[#8E3445]' : ''}>2. Scope & Style</span>
+          <span className={step >= 3 ? 'text-[#8E3445]' : ''}>3. Contact</span>
+          <span className={step >= 4 ? 'text-[#8E3445]' : ''}>4. Review</span>
         </div>
-        <div className="w-full bg-[#FAF5EE] h-2 rounded-full overflow-hidden">
+        <div className="w-full bg-[#FAF4EB] h-2 rounded-full overflow-hidden border border-[#C6A15B]/20">
           <div
-            className="bg-gradient-to-r from-[#C5A059] to-[#B35D4D] h-full transition-all duration-300"
+            className="bg-gradient-to-r from-[#C6A15B] to-[#8E3445] h-full transition-all duration-300"
             style={{ width: `${(step / 4) * 100}%` }}
           />
         </div>
       </div>
 
       {errorMessage && (
-        <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2.5">
+        <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2.5">
           <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
           <span>{errorMessage}</span>
         </div>
@@ -311,16 +319,16 @@ export default function EnquiryForm({
         {step === 1 && (
           <div className="space-y-5 animate-in fade-in duration-200">
             <div>
-              <h3 className="font-serif text-2xl font-bold text-[#241416]">
+              <h3 className="font-serif text-2xl font-bold text-[#2B1F2A]">
                 When & Where is Your Celebration?
               </h3>
-              <p className="text-xs text-[#241416]/70 mt-1">
+              <p className="text-xs text-[#2B2421]/75 mt-1">
                 Tell us about your date and location so we can check availability.
               </p>
             </div>
 
             <div>
-              <label htmlFor="eventDate" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="eventDate" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 Event Date <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -331,9 +339,9 @@ export default function EnquiryForm({
                   value={formData.eventDate}
                   min={new Date().toISOString().split('T')[0]}
                   onChange={handleChange}
-                  className={`w-full bg-[#FAF5EE] border ${
-                    fieldErrors.eventDate ? 'border-red-500' : 'border-[#EADBCE]'
-                  } rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]`}
+                  className={`w-full bg-[#FAF4EB] border ${
+                    fieldErrors.eventDate ? 'border-red-500' : 'border-[#C6A15B]/30'
+                  } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
                   required
                 />
               </div>
@@ -343,7 +351,7 @@ export default function EnquiryForm({
             </div>
 
             <div>
-              <label htmlFor="eventType" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="eventType" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 Event Type <span className="text-red-500">*</span>
               </label>
               <select
@@ -351,7 +359,7 @@ export default function EnquiryForm({
                 name="eventType"
                 value={formData.eventType}
                 onChange={handleChange}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               >
                 <option value="BRIDAL_MAIN">Bridal Mehndi (Main Wedding Ceremony)</option>
                 <option value="SANGEET_MEHNDI">Sangeet / Mehendi Party</option>
@@ -364,7 +372,7 @@ export default function EnquiryForm({
             </div>
 
             <div>
-              <label htmlFor="eventLocation" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="eventLocation" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 City / Location <span className="text-red-500">*</span>
               </label>
               <input
@@ -374,9 +382,9 @@ export default function EnquiryForm({
                 value={formData.eventLocation}
                 onChange={handleChange}
                 placeholder="e.g. Salem (Fairlands / Shevapet) or Destination"
-                className={`w-full bg-[#FAF5EE] border ${
-                  fieldErrors.eventLocation ? 'border-red-500' : 'border-[#EADBCE]'
-                } rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]`}
+                className={`w-full bg-[#FAF4EB] border ${
+                  fieldErrors.eventLocation ? 'border-red-500' : 'border-[#C6A15B]/30'
+                } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
                 required
               />
               {fieldErrors.eventLocation && (
@@ -385,7 +393,7 @@ export default function EnquiryForm({
             </div>
 
             <div>
-              <label htmlFor="venueDetails" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="venueDetails" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 Venue Name or Area (Optional)
               </label>
               <input
@@ -395,7 +403,7 @@ export default function EnquiryForm({
                 value={formData.venueDetails}
                 onChange={handleChange}
                 placeholder="e.g. Grand Estancia / Home residence / Mandapam"
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               />
             </div>
           </div>
@@ -405,16 +413,16 @@ export default function EnquiryForm({
         {step === 2 && (
           <div className="space-y-5 animate-in fade-in duration-200">
             <div>
-              <h3 className="font-serif text-2xl font-bold text-[#241416]">
+              <h3 className="font-serif text-2xl font-bold text-[#2B1F2A]">
                 Service & Artistic Preferences
               </h3>
-              <p className="text-xs text-[#241416]/70 mt-1">
+              <p className="text-xs text-[#2B2421]/75 mt-1">
                 Select your preferred package or tell us about your coverage requirements.
               </p>
             </div>
 
             <div>
-              <label htmlFor="serviceId" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="serviceId" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 Requested Service Package
               </label>
               <select
@@ -422,7 +430,7 @@ export default function EnquiryForm({
                 name="serviceId"
                 value={formData.serviceId}
                 onChange={handleChange}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               >
                 {services.map((svc) => (
                   <option key={svc.id} value={svc.id}>
@@ -436,7 +444,7 @@ export default function EnquiryForm({
             </div>
 
             <div>
-              <label htmlFor="guestCount" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="guestCount" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 Estimated Number of Persons / Hands
               </label>
               <input
@@ -447,11 +455,11 @@ export default function EnquiryForm({
                 max="250"
                 value={formData.guestCount}
                 onChange={handleChange}
-                className={`w-full bg-[#FAF5EE] border ${
-                  fieldErrors.guestCount ? 'border-red-500' : 'border-[#EADBCE]'
-                } rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]`}
+                className={`w-full bg-[#FAF4EB] border ${
+                  fieldErrors.guestCount ? 'border-red-500' : 'border-[#C6A15B]/30'
+                } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
               />
-              <p className="text-[11px] text-[#241416]/60 mt-1">
+              <p className="text-[11px] text-[#2B2421]/65 mt-1">
                 For bridal, enter 1. For Sangeet or guest parties, enter the estimated guest count.
               </p>
               {fieldErrors.guestCount && (
@@ -460,7 +468,7 @@ export default function EnquiryForm({
             </div>
 
             <div>
-              <label htmlFor="styleNotes" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="styleNotes" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 Style Notes & Vision (Optional)
               </label>
               <textarea
@@ -470,7 +478,7 @@ export default function EnquiryForm({
                 value={formData.styleNotes}
                 onChange={handleChange}
                 placeholder="e.g. Symmetrical lotus mandalas, couple initials, elbow-length arms, negative space floral wristbands..."
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               />
             </div>
 
@@ -490,16 +498,16 @@ export default function EnquiryForm({
         {step === 3 && (
           <div className="space-y-5 animate-in fade-in duration-200">
             <div>
-              <h3 className="font-serif text-2xl font-bold text-[#241416]">
+              <h3 className="font-serif text-2xl font-bold text-[#2B1F2A]">
                 How Should We Reach You?
               </h3>
-              <p className="text-xs text-[#241416]/70 mt-1">
+              <p className="text-xs text-[#2B2421]/75 mt-1">
                 We respect your privacy and will never spam or share your contact details.
               </p>
             </div>
 
             <div>
-              <label htmlFor="customerName" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="customerName" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 Your Full Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -509,9 +517,9 @@ export default function EnquiryForm({
                 value={formData.customerName}
                 onChange={handleChange}
                 placeholder="e.g. Deepika Ramasamy"
-                className={`w-full bg-[#FAF5EE] border ${
-                  fieldErrors.customerName ? 'border-red-500' : 'border-[#EADBCE]'
-                } rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]`}
+                className={`w-full bg-[#FAF4EB] border ${
+                  fieldErrors.customerName ? 'border-red-500' : 'border-[#C6A15B]/30'
+                } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
                 required
               />
               {fieldErrors.customerName && (
@@ -521,7 +529,7 @@ export default function EnquiryForm({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="phone" className="block text-xs font-semibold text-[#241416] mb-1.5">
+                <label htmlFor="phone" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                   Phone Number (WhatsApp) <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -531,9 +539,9 @@ export default function EnquiryForm({
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91 98765 43210"
-                  className={`w-full bg-[#FAF5EE] border ${
-                    fieldErrors.phone ? 'border-red-500' : 'border-[#EADBCE]'
-                  } rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]`}
+                  className={`w-full bg-[#FAF4EB] border ${
+                    fieldErrors.phone ? 'border-red-500' : 'border-[#C6A15B]/30'
+                  } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
                   required
                 />
                 {fieldErrors.phone && (
@@ -542,7 +550,7 @@ export default function EnquiryForm({
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-xs font-semibold text-[#241416] mb-1.5">
+                <label htmlFor="email" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                   Email Address (Optional)
                 </label>
                 <input
@@ -552,13 +560,13 @@ export default function EnquiryForm({
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@example.com"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="contactMethod" className="block text-xs font-semibold text-[#241416] mb-1.5">
+              <label htmlFor="contactMethod" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                 Preferred Contact Method
               </label>
               <select
@@ -566,7 +574,7 @@ export default function EnquiryForm({
                 name="contactMethod"
                 value={formData.contactMethod}
                 onChange={handleChange}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               >
                 <option value="WHATSAPP">WhatsApp Message</option>
                 <option value="PHONE">Direct Phone Call</option>
@@ -576,7 +584,7 @@ export default function EnquiryForm({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div>
-                <label htmlFor="referralSource" className="block text-xs font-semibold text-[#241416] mb-1.5">
+                <label htmlFor="referralSource" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                   How Did You Hear About Us?
                 </label>
                 <select
@@ -584,7 +592,7 @@ export default function EnquiryForm({
                   name="referralSource"
                   value={formData.referralSource}
                   onChange={handleChange}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 >
                   <option value="INSTAGRAM">Instagram</option>
                   <option value="FRIEND_FAMILY">Friend or Family Recommendation</option>
@@ -596,7 +604,7 @@ export default function EnquiryForm({
               </div>
 
               <div>
-                <label htmlFor="referralCode" className="block text-xs font-semibold text-[#241416] mb-1.5">
+                <label htmlFor="referralCode" className="block text-xs font-semibold text-[#2B1F2A] mb-1.5">
                   Referral / Promo Code (Optional)
                 </label>
                 <input
@@ -606,7 +614,7 @@ export default function EnquiryForm({
                   value={formData.referralCode}
                   onChange={handleChange}
                   placeholder="e.g. BRIDE2026"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 />
               </div>
             </div>
@@ -617,51 +625,51 @@ export default function EnquiryForm({
         {step === 4 && (
           <div className="space-y-5 animate-in fade-in duration-200">
             <div>
-              <h3 className="font-serif text-2xl font-bold text-[#241416]">
+              <h3 className="font-serif text-2xl font-bold text-[#2B1F2A]">
                 Review Your Enquiry
               </h3>
-              <p className="text-xs text-[#241416]/70 mt-1">
+              <p className="text-xs text-[#2B2421]/75 mt-1">
                 Please verify your details before submitting your request.
               </p>
             </div>
 
             {/* Summary Review Card */}
-            <div className="bg-[#FAF5EE] p-5 rounded-2xl border border-[#EADBCE] text-xs space-y-2.5">
-              <div className="flex justify-between py-1 border-b border-[#EADBCE]/60">
-                <span className="text-[#241416]/60">Customer Name:</span>
-                <span className="font-semibold text-[#241416]">{formData.customerName}</span>
+            <div className="bg-[#FAF4EB] p-5 rounded-2xl border border-[#C6A15B]/30 text-xs space-y-2.5">
+              <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+                <span className="text-[#2B2421]/65">Customer Name:</span>
+                <span className="font-semibold text-[#2B1F2A]">{formData.customerName}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-[#EADBCE]/60">
-                <span className="text-[#241416]/60">Phone (WhatsApp):</span>
-                <span className="font-semibold text-[#241416]">{formData.phone}</span>
+              <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+                <span className="text-[#2B2421]/65">Phone (WhatsApp):</span>
+                <span className="font-semibold text-[#2B1F2A]">{formData.phone}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-[#EADBCE]/60">
-                <span className="text-[#241416]/60">Event Date:</span>
-                <span className="font-semibold text-[#8F3D30]">{formData.eventDate}</span>
+              <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+                <span className="text-[#2B2421]/65">Event Date:</span>
+                <span className="font-semibold text-[#8E3445]">{formData.eventDate}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-[#EADBCE]/60">
-                <span className="text-[#241416]/60">Event Type:</span>
-                <span className="font-semibold text-[#241416]">{formData.eventType.replace('_', ' ')}</span>
+              <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+                <span className="text-[#2B2421]/65">Event Type:</span>
+                <span className="font-semibold text-[#2B1F2A]">{formData.eventType.replace('_', ' ')}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-[#EADBCE]/60">
-                <span className="text-[#241416]/60">Service Package:</span>
-                <span className="font-semibold text-[#241416]">{selectedService?.name || 'Selected Package'}</span>
+              <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+                <span className="text-[#2B2421]/65">Service Package:</span>
+                <span className="font-semibold text-[#2B1F2A]">{selectedService?.name || 'Selected Package'}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-[#EADBCE]/60">
-                <span className="text-[#241416]/60">Location:</span>
-                <span className="font-semibold text-[#241416]">{formData.eventLocation}</span>
+              <div className="flex justify-between py-1 border-b border-[#C6A15B]/20">
+                <span className="text-[#2B2421]/65">Location:</span>
+                <span className="font-semibold text-[#2B1F2A]">{formData.eventLocation}</span>
               </div>
               {formData.styleNotes && (
                 <div className="py-1">
-                  <span className="text-[#241416]/60 block mb-0.5">Style Notes:</span>
-                  <p className="text-[#241416] italic">{formData.styleNotes}</p>
+                  <span className="text-[#2B2421]/65 block mb-0.5">Style Notes:</span>
+                  <p className="text-[#2B1F2A] italic">{formData.styleNotes}</p>
                 </div>
               )}
             </div>
 
             {/* Mandatory Non-Binding Notice */}
-            <div className="bg-amber-50/80 p-4 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5">
-              <ShieldCheck className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="bg-amber-50/90 p-4 rounded-2xl border border-amber-300 text-xs text-amber-950 flex items-start gap-2.5">
+              <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
               <p className="leading-relaxed">
                 <strong>Important Notice:</strong> Submitting this request sends an enquiry to the artist. It does <em>not</em> confirm or lock your date. You will receive an official availability confirmation and quote, after which a 30% advance deposit secures your date.
               </p>
@@ -675,10 +683,10 @@ export default function EnquiryForm({
                   name="privacyConsent"
                   checked={formData.privacyConsent}
                   onChange={handleChange}
-                  className="mt-1 rounded text-[#B35D4D] focus:ring-[#C5A059]"
+                  className="mt-1 rounded text-[#8E3445] focus:ring-[#C6A15B]"
                   required
                 />
-                <span className="text-xs text-[#241416]/80 leading-relaxed">
+                <span className="text-xs text-[#2B2421]/80 leading-relaxed">
                   I consent to Pallavi Mehndi Artistry storing and processing my submitted details for the purpose of booking consultation and communication. <span className="text-red-500">*</span>
                 </span>
               </label>
@@ -692,9 +700,9 @@ export default function EnquiryForm({
                   name="marketingConsent"
                   checked={formData.marketingConsent}
                   onChange={handleChange}
-                  className="mt-1 rounded text-[#B35D4D] focus:ring-[#C5A059]"
+                  className="mt-1 rounded text-[#8E3445] focus:ring-[#C6A15B]"
                 />
-                <span className="text-xs text-[#241416]/70 leading-relaxed">
+                <span className="text-xs text-[#2B2421]/75 leading-relaxed">
                   (Optional) Keep me informed about seasonal bridal discounts and festival pop-ups.
                 </span>
               </label>
@@ -703,7 +711,7 @@ export default function EnquiryForm({
         )}
 
         {/* Navigation Buttons (Polished Raised & Floating) */}
-        <div className="flex items-center justify-between pt-8 mt-6 border-t border-[#EADBCE]">
+        <div className="flex items-center justify-between pt-8 mt-6 border-t border-[#C6A15B]/25">
           {step > 1 ? (
             <button
               type="button"
@@ -739,7 +747,7 @@ export default function EnquiryForm({
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4 text-[#E6C875]" />
+                  <Sparkles className="w-4 h-4 text-[#C6A15B]" />
                   <span>Send Booking Request</span>
                 </>
               )}
@@ -750,4 +758,3 @@ export default function EnquiryForm({
     </div>
   );
 }
-

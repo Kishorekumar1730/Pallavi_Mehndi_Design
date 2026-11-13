@@ -150,12 +150,12 @@ export default function BookingManager({
   return (
     <div className="space-y-8">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-[#EADBCE] shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-floating bg-white p-6 rounded-3xl border border-[#C6A15B]/30 shadow-xs">
         <div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#241416]">
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#2B1F2A]">
             Booking Calendar &amp; Schedule
           </h1>
-          <p className="text-xs text-[#241416]/70 mt-1">
+          <p className="text-xs text-[#2B2421]/70 mt-1">
             Confirmed artist dates with transaction-level double-booking protection and blackout blocks.
           </p>
         </div>
@@ -163,9 +163,9 @@ export default function BookingManager({
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowBlackoutModal(true)}
-            className="inline-flex items-center gap-1.5 bg-[#FAF5EE] hover:bg-[#EADBCE] text-[#8F3D30] border border-[#EADBCE] px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 bg-[#FAF4EB] hover:bg-[#FAF4EB]/80 text-[#8E3445] border border-[#C6A15B]/30 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-xs active:scale-[0.98]"
           >
-            <ShieldAlert className="w-4 h-4 text-[#B35D4D]" />
+            <ShieldAlert className="w-4 h-4 text-[#8E3445]" />
             <span>Add Unavailable / Blackout Date</span>
           </button>
         </div>
@@ -173,10 +173,10 @@ export default function BookingManager({
 
       {/* Active Blackout Dates Bar */}
       {blackouts.length > 0 && (
-        <div className="bg-[#FAF5EE] p-5 rounded-2xl border border-[#EADBCE] space-y-3">
+        <div className="card-floating bg-[#FAF4EB] p-5 rounded-2xl border border-[#C6A15B]/30 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30] flex items-center gap-1.5">
-              <ShieldAlert className="w-4 h-4 text-[#C5A059]" />
+            <span className="text-xs font-bold uppercase tracking-wider text-[#8E3445] flex items-center gap-1.5">
+              <ShieldAlert className="w-4 h-4 text-[#C6A15B]" />
               <span>Active Blackout &amp; Unavailable Blocks ({blackouts.length})</span>
             </span>
           </div>
@@ -184,13 +184,13 @@ export default function BookingManager({
             {blackouts.map((b) => (
               <div
                 key={b.id}
-                className="bg-white p-3 rounded-xl border border-[#EADBCE] text-xs flex items-center justify-between"
+                className="bg-white p-3 rounded-xl border border-[#C6A15B]/30 text-xs flex items-center justify-between"
               >
                 <div>
-                  <span className="font-semibold text-[#241416] block">
+                  <span className="font-semibold text-[#2B2421] block">
                     {b.startDate} to {b.endDate}
                   </span>
-                  <span className="text-[11px] text-[#8F3D30]">
+                  <span className="text-[11px] text-[#8E3445]">
                     {b.reason.replace('_', ' ')} {b.notes ? `• ${b.notes}` : ''}
                   </span>
                 </div>
@@ -222,10 +222,10 @@ export default function BookingManager({
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                 statusFilter === st
-                  ? 'bg-[#B35D4D] text-white shadow-xs font-semibold'
-                  : 'bg-white text-[#241416]/70 hover:bg-[#FAF5EE] border border-[#EADBCE]'
+                  ? 'bg-[#8E3445] text-white shadow-xs font-semibold'
+                  : 'bg-white text-[#2B2421]/70 hover:bg-[#FAF4EB] border border-[#C6A15B]/30'
               }`}
             >
               {st.replace('_', ' ')}
@@ -234,11 +234,11 @@ export default function BookingManager({
         </div>
 
         {/* View Toggle */}
-        <div className="bg-white p-1 rounded-xl border border-[#EADBCE] flex items-center text-xs">
+        <div className="bg-white p-1 rounded-xl border border-[#C6A15B]/30 flex items-center text-xs">
           <button
             onClick={() => setActiveTab('LIST')}
             className={`px-3 py-1 rounded-lg font-semibold transition-colors cursor-pointer ${
-              activeTab === 'LIST' ? 'bg-[#FAF5EE] text-[#8F3D30]' : 'text-[#241416]/60'
+              activeTab === 'LIST' ? 'bg-[#FAF4EB] text-[#8E3445]' : 'text-[#2B2421]/60'
             }`}
           >
             List View
@@ -246,7 +246,7 @@ export default function BookingManager({
           <button
             onClick={() => setActiveTab('CALENDAR')}
             className={`px-3 py-1 rounded-lg font-semibold transition-colors cursor-pointer ${
-              activeTab === 'CALENDAR' ? 'bg-[#FAF5EE] text-[#8F3D30]' : 'text-[#241416]/60'
+              activeTab === 'CALENDAR' ? 'bg-[#FAF4EB] text-[#8E3445]' : 'text-[#2B2421]/60'
             }`}
           >
             Calendar Agenda
@@ -256,21 +256,21 @@ export default function BookingManager({
 
       {/* Bookings Display */}
       {filteredBookings.length === 0 ? (
-        <div className="bg-white rounded-3xl p-12 text-center border border-[#EADBCE] text-xs text-[#241416]/60">
-          <CalendarDays className="w-8 h-8 mx-auto mb-2 text-[#C5A059] opacity-60" />
+        <div className="card-floating bg-white rounded-3xl p-12 text-center border border-[#C6A15B]/30 text-xs text-[#2B2421]/60">
+          <CalendarDays className="w-8 h-8 mx-auto mb-2 text-[#C6A15B] opacity-60" />
           <p>No bookings found matching your status filter.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-3xl border border-[#EADBCE] shadow-xs overflow-hidden">
-          <div className="divide-y divide-[#FAF5EE]">
+        <div className="card-floating bg-white rounded-3xl border border-[#C6A15B]/30 shadow-xs overflow-hidden">
+          <div className="divide-y divide-[#C6A15B]/15">
             {filteredBookings.map((b) => (
               <div
                 key={b.id}
-                className="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#FAF5EE]/40 transition-colors"
+                className="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#FAF4EB]/50 transition-colors"
               >
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-[#8F3D30]">
+                    <span className="font-mono text-xs font-bold text-[#8E3445]">
                       {b.bookingNumber}
                     </span>
                     <span
@@ -286,31 +286,31 @@ export default function BookingManager({
                     >
                       {b.status.replace('_', ' ')}
                     </span>
-                    <span className="text-xs text-[#241416]/50">•</span>
-                    <span className="text-xs text-[#241416]/70">{b.eventType.replace('_', ' ')}</span>
+                    <span className="text-xs text-[#2B2421]/50">•</span>
+                    <span className="text-xs text-[#2B2421]/70">{b.eventType.replace('_', ' ')}</span>
                   </div>
 
-                  <h3 className="font-serif text-lg font-bold text-[#241416]">
+                  <h3 className="font-serif text-lg font-bold text-[#2B1F2A]">
                     {b.customerName}
                   </h3>
 
-                  <div className="flex flex-wrap items-center gap-4 text-xs text-[#241416]/70">
-                    <span className="flex items-center gap-1 font-semibold text-[#8F3D30]">
-                      <Calendar className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-[#2B2421]/70">
+                    <span className="flex items-center gap-1 font-semibold text-[#8E3445]">
+                      <Calendar className="w-3.5 h-3.5 text-[#C6A15B]" />
                       <span>{b.eventDate} ({b.startTime || '10:00'} - {b.endTime || '16:00'})</span>
                     </span>
                     <span className="flex items-center gap-1">
-                      <Phone className="w-3.5 h-3.5 text-[#241416]/40" />
+                      <Phone className="w-3.5 h-3.5 text-[#2B2421]/40" />
                       <span>{b.customerPhone}</span>
                     </span>
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#241416]/40" />
+                      <MapPin className="w-3.5 h-3.5 text-[#2B2421]/40" />
                       <span>{b.eventLocation}</span>
                     </span>
                   </div>
 
                   {b.service && (
-                    <p className="text-xs text-[#8F3D30] font-medium">
+                    <p className="text-xs text-[#8E3445] font-medium">
                       Package: {b.service.name}
                     </p>
                   )}
@@ -319,8 +319,8 @@ export default function BookingManager({
                 {/* Financial Summary & Edit Button */}
                 <div className="flex items-center gap-6 self-start md:self-center">
                   <div className="text-right text-xs">
-                    <span className="text-[#241416]/60 block text-[11px]">Quote / Deposit</span>
-                    <span className="font-semibold text-[#241416]">
+                    <span className="text-[#2B2421]/60 block text-[11px]">Quote / Deposit</span>
+                    <span className="font-semibold text-[#2B2421]">
                       ₹{b.quoteAmount?.toLocaleString('en-IN') || 'TBD'}
                     </span>
                     <span
@@ -334,7 +334,7 @@ export default function BookingManager({
 
                   <button
                     onClick={() => openEdit(b)}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] text-[#8F3D30] hover:bg-[#B35D4D] hover:text-white border border-[#EADBCE] transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF4EB] text-[#8E3445] hover:bg-[#8E3445] hover:text-white border border-[#C6A15B]/30 transition-all cursor-pointer shadow-xs"
                   >
                     Edit / Reschedule
                   </button>
@@ -352,21 +352,21 @@ export default function BookingManager({
           onClick={() => setSelectedBooking(null)}
         >
           <div
-            className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-[#EADBCE] shadow-2xl space-y-5"
+            className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-[#C6A15B]/30 shadow-2xl space-y-5"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#FAF5EE] pb-3">
+            <div className="flex items-center justify-between border-b border-[#C6A15B]/20 pb-3">
               <div>
-                <span className="font-mono text-xs font-bold text-[#8F3D30]">
+                <span className="font-mono text-xs font-bold text-[#8E3445]">
                   {selectedBooking.bookingNumber}
                 </span>
-                <h3 className="font-serif text-xl font-bold text-[#241416]">
+                <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
                   Manage Booking: {selectedBooking.customerName}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedBooking(null)}
-                className="text-[#241416]/60 hover:text-[#241416]"
+                className="text-[#2B2421]/60 hover:text-[#2B2421]"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -381,11 +381,11 @@ export default function BookingManager({
 
             <form onSubmit={handleUpdateBooking} className="space-y-4 text-xs">
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Status</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Status</label>
                 <select
                   value={editForm.status}
                   onChange={(e) => setEditForm({ ...editForm, status: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs font-semibold"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs font-semibold text-[#2B2421]"
                 >
                   <option value="REQUEST_RECEIVED">REQUEST_RECEIVED</option>
                   <option value="AWAITING_CONFIRMATION">AWAITING_CONFIRMATION</option>
@@ -398,64 +398,64 @@ export default function BookingManager({
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">
+                <label className="block font-semibold text-[#2B2421] mb-1">
                   Event Date (YYYY-MM-DD)
                 </label>
                 <input
                   type="date"
                   value={editForm.eventDate}
                   onChange={(e) => setEditForm({ ...editForm, eventDate: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Start Time</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Start Time</label>
                   <input
                     type="time"
                     value={editForm.startTime || ''}
                     onChange={(e) => setEditForm({ ...editForm, startTime: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">End Time</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">End Time</label>
                   <input
                     type="time"
                     value={editForm.endTime || ''}
                     onChange={(e) => setEditForm({ ...editForm, endTime: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Quote (₹)</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Quote (₹)</label>
                   <input
                     type="number"
                     value={editForm.quoteAmount ?? ''}
                     onChange={(e) => setEditForm({ ...editForm, quoteAmount: Number(e.target.value) })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Deposit (₹)</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Deposit (₹)</label>
                   <input
                     type="number"
                     value={editForm.depositAmount ?? ''}
                     onChange={(e) => setEditForm({ ...editForm, depositAmount: Number(e.target.value) })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Deposit Status</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Deposit Status</label>
                   <select
                     value={editForm.depositStatus}
                     onChange={(e) => setEditForm({ ...editForm, depositStatus: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-2 py-2 text-xs font-semibold"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-2 py-2 text-xs font-semibold text-[#2B2421]"
                   >
                     <option value="UNPAID">UNPAID</option>
                     <option value="PAID">PAID</option>
@@ -475,13 +475,13 @@ export default function BookingManager({
                     value={editForm.cancellationReason || ''}
                     onChange={(e) => setEditForm({ ...editForm, cancellationReason: e.target.value })}
                     placeholder="Enter reason for cancellation..."
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">
+                <label className="block font-semibold text-[#2B2421] mb-1">
                   Internal Notes
                 </label>
                 <textarea
@@ -489,22 +489,22 @@ export default function BookingManager({
                   value={editForm.internalNotes || ''}
                   onChange={(e) => setEditForm({ ...editForm, internalNotes: e.target.value })}
                   placeholder="Notes about bridal preferences, motifs, or special requests..."
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-[#FAF5EE]">
+              <div className="flex justify-end gap-2 pt-3 border-t border-[#C6A15B]/20">
                 <button
                   type="button"
                   onClick={() => setSelectedBooking(null)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] text-[#241416]/70"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF4EB] text-[#2B2421]/70 hover:bg-[#FAF4EB]/80"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="px-5 py-2 rounded-xl text-xs font-semibold bg-[#B35D4D] text-white hover:bg-[#8F3D30] transition-colors disabled:opacity-50"
+                  className="btn-elevated-primary px-5 py-2 text-xs font-semibold disabled:opacity-50"
                 >
                   {isUpdating ? 'Validating Conflicts & Saving...' : 'Save Booking Changes'}
                 </button>
@@ -521,22 +521,22 @@ export default function BookingManager({
           onClick={() => setShowBlackoutModal(false)}
         >
           <div
-            className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-[#EADBCE] shadow-2xl space-y-5"
+            className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-[#C6A15B]/30 shadow-2xl space-y-5"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#FAF5EE] pb-3">
-              <h3 className="font-serif text-xl font-bold text-[#241416]">
+            <div className="flex items-center justify-between border-b border-[#C6A15B]/20 pb-3">
+              <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
                 Block Out Date (Unavailable)
               </h3>
               <button
                 onClick={() => setShowBlackoutModal(false)}
-                className="text-[#241416]/60 hover:text-[#241416]"
+                className="text-[#2B2421]/60 hover:text-[#2B2421]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-xs text-[#241416]/70">
+            <p className="text-xs text-[#2B2421]/75">
               Dates blocked here will trigger automated conflict prevention and block out bookings.
             </p>
 
@@ -550,33 +550,33 @@ export default function BookingManager({
             <form onSubmit={handleCreateBlackout} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Start Date</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Start Date</label>
                   <input
                     type="date"
                     value={blackoutForm.startDate}
                     onChange={(e) => setBlackoutForm({ ...blackoutForm, startDate: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">End Date</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">End Date</label>
                   <input
                     type="date"
                     value={blackoutForm.endDate}
                     onChange={(e) => setBlackoutForm({ ...blackoutForm, endDate: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Reason</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Reason</label>
                 <select
                   value={blackoutForm.reason}
                   onChange={(e) => setBlackoutForm({ ...blackoutForm, reason: e.target.value as any })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs font-semibold"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs font-semibold text-[#2B2421]"
                 >
                   <option value="FULLY_BOOKED">Fully Booked (Max capacity reached)</option>
                   <option value="PERSONAL_LEAVE">Personal Leave / Artist Unavailable</option>
@@ -587,28 +587,28 @@ export default function BookingManager({
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Notes (Optional)</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Notes (Optional)</label>
                 <input
                   type="text"
                   placeholder="e.g. Yercaud wedding travel / Family event"
                   value={blackoutForm.notes}
                   onChange={(e) => setBlackoutForm({ ...blackoutForm, notes: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-[#FAF5EE]">
+              <div className="flex justify-end gap-2 pt-3 border-t border-[#C6A15B]/20">
                 <button
                   type="button"
                   onClick={() => setShowBlackoutModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] text-[#241416]/70"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF4EB] text-[#2B2421]/70 hover:bg-[#FAF4EB]/80"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSavingBlackout}
-                  className="px-5 py-2 rounded-xl text-xs font-semibold bg-[#B35D4D] text-white hover:bg-[#8F3D30] transition-colors disabled:opacity-50"
+                  className="btn-elevated-primary px-5 py-2 text-xs font-semibold disabled:opacity-50"
                 >
                   {isSavingBlackout ? 'Saving...' : 'Add Blockout Range'}
                 </button>
@@ -620,4 +620,3 @@ export default function BookingManager({
     </div>
   );
 }
-

@@ -20,7 +20,6 @@ import {
 export interface AdminServiceItem {
   id: string;
   name: string;
-  nameTa?: string | null;
   slug: string;
   categoryId: string;
   categoryName: string;
@@ -57,7 +56,6 @@ export default function ServiceManager({
 
   const [form, setForm] = useState({
     name: '',
-    nameTa: '',
     categoryId: categories.length > 0 ? categories[0].id : '',
     shortDescription: '',
     fullDescription: '',
@@ -81,7 +79,6 @@ export default function ServiceManager({
     setEditingItem(null);
     setForm({
       name: '',
-      nameTa: '',
       categoryId: categories.length > 0 ? categories[0].id : '',
       shortDescription: '',
       fullDescription: '',
@@ -106,7 +103,6 @@ export default function ServiceManager({
     setEditingItem(item);
     setForm({
       name: item.name,
-      nameTa: item.nameTa || '',
       categoryId: item.categoryId,
       shortDescription: item.shortDescription,
       fullDescription: item.fullDescription,
@@ -133,7 +129,8 @@ export default function ServiceManager({
     try {
       const res = await saveService(form, editingItem ? editingItem.id : undefined);
       if (res.success) {
-        alert(`Service ${editingItem ? 'updated' : 'created'} successfully!`);
+        setIsCreating(false);
+        setEditingItem(null);
         window.location.reload();
       } else {
         setFormError(res.error || 'Failed to save service.');
@@ -146,7 +143,9 @@ export default function ServiceManager({
   };
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete service "${name}"?`)) return;
+    const confirmed = window.confirm(`Delete service "${name}"? This action cannot be undone.`);
+    if (!confirmed) return;
+
     try {
       await deleteService(id);
       window.location.reload();
@@ -157,96 +156,92 @@ export default function ServiceManager({
 
   return (
     <div className="space-y-8">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-[#EADBCE] shadow-xs">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-floating bg-white p-6 rounded-3xl border border-[#C6A15B]/30 shadow-xs">
         <div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#241416]">
-            Services &amp; Pricing Catalog
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#2B1F2A]">
+            Services &amp; Bridal Packages
           </h1>
-          <p className="text-xs text-[#241416]/70 mt-1">
-            Manage public package cards, rates, inclusions, and draft/published states.
+          <p className="text-xs text-[#2B2421]/70 mt-1">
+            Configure transparent starting pricing, package descriptions, inclusions, and coverage timelines.
           </p>
         </div>
 
         <button
           onClick={startCreate}
-          className="btn-elevated-primary px-4 py-2.5 text-xs gap-1.5 self-start sm:self-center"
+          className="btn-elevated-primary px-4 py-2.5 text-xs gap-1.5"
         >
-          <Plus className="w-4 h-4 text-[#E6C875]" />
-          <span>Add New Service</span>
+          <Plus className="w-4 h-4 text-[#C6A15B]" />
+          <span>Add New Service Package</span>
         </button>
       </div>
 
-      {/* Services Grid */}
+      {/* Grid of Services */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map((svc) => (
           <div
             key={svc.id}
-            className="bg-white rounded-2xl border border-[#EADBCE] overflow-hidden shadow-xs p-5 flex flex-col justify-between"
+            className="card-floating bg-white rounded-2xl border border-[#C6A15B]/30 overflow-hidden shadow-xs p-5 flex flex-col justify-between"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-semibold text-[#8F3D30] bg-[#FAF5EE] px-2.5 py-0.5 rounded-full border border-[#EADBCE]">
+                <span className="text-[11px] font-semibold text-[#8E3445] bg-[#FAF4EB] px-2.5 py-0.5 rounded-full border border-[#C6A15B]/30">
                   {svc.categoryName}
                 </span>
+
                 <div className="flex items-center gap-1.5">
                   {svc.isFeatured && (
-                    <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C6A15B] text-[#2B1F2A] flex items-center gap-1">
                       <Star className="w-3 h-3 fill-current" />
                       <span>Featured</span>
                     </span>
                   )}
                   <span
                     className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                      svc.isPublished
-                        ? 'bg-emerald-100 text-emerald-800'
-                        : 'bg-gray-100 text-gray-700'
+                      svc.isPublished ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-800'
                     }`}
                   >
-                    {svc.isPublished ? 'Published' : 'Draft'}
+                    {svc.isPublished ? 'Active' : 'Hidden'}
                   </span>
                 </div>
               </div>
 
-              <h3 className="font-serif text-lg font-bold text-[#241416]">
+              <h3 className="font-serif text-lg font-bold text-[#2B1F2A]">
                 {svc.name}
               </h3>
-              {svc.nameTa && (
-                <p className="text-xs text-[#8F3D30] font-medium">{svc.nameTa}</p>
-              )}
 
-              <p className="text-xs text-[#241416]/75 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-[#2B2421]/75 line-clamp-2 leading-relaxed">
                 {svc.shortDescription}
               </p>
 
-              <div className="pt-2 text-xs text-[#241416]/70 flex items-center justify-between border-t border-[#FAF5EE]">
-                <span className="font-bold text-[#8F3D30]">
+              <div className="pt-2 text-xs text-[#2B2421]/70 flex items-center justify-between border-t border-[#C6A15B]/15">
+                <span className="font-bold text-[#8E3445]">
                   {svc.startingPrice
-                    ? `₹${svc.startingPrice.toLocaleString('en-IN')}`
-                    : 'Quote Only'}
+                    ? `From ₹${svc.startingPrice.toLocaleString('en-IN')}`
+                    : 'Quote on Request'}
                 </span>
                 {svc.durationMinutes && (
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-[#C5A059]" />
-                    <span>{Math.round(svc.durationMinutes / 60)} hrs</span>
+                  <span className="flex items-center gap-1 text-[11px] text-[#2B2421]/60">
+                    <Clock className="w-3 h-3 text-[#C6A15B]" />
+                    <span>~{svc.durationMinutes} mins</span>
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#FAF5EE]">
+            <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#C6A15B]/15">
               <button
                 onClick={() => startEdit(svc)}
-                className="inline-flex items-center gap-1 text-xs font-semibold text-[#8F3D30] hover:text-[#241416]"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[#8E3445] hover:text-[#2B1F2A]"
               >
                 <Edit2 className="w-3.5 h-3.5" />
-                <span>Edit Service</span>
+                <span>Edit Package</span>
               </button>
 
               <button
                 onClick={() => handleDelete(svc.id, svc.name)}
-                className="p-1 text-red-500 hover:text-red-700 cursor-pointer"
-                aria-label="Delete service"
+                className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                title="Delete service"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -255,7 +250,7 @@ export default function ServiceManager({
         ))}
       </div>
 
-      {/* CREATE / EDIT MODAL */}
+      {/* CREATE / EDIT MODAL DRAWER */}
       {(isCreating || editingItem) && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-xs animate-in zoom-in-95"
@@ -265,19 +260,19 @@ export default function ServiceManager({
           }}
         >
           <div
-            className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 border border-[#EADBCE] shadow-2xl space-y-5"
+            className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 border border-[#C6A15B]/30 shadow-2xl space-y-5"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#FAF5EE] pb-3">
-              <h3 className="font-serif text-xl font-bold text-[#241416]">
-                {editingItem ? `Edit Service: ${editingItem.name}` : 'Create New Service'}
+            <div className="flex items-center justify-between border-b border-[#C6A15B]/20 pb-3">
+              <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
+                {editingItem ? 'Edit Service Package' : 'Create New Service Package'}
               </h3>
               <button
                 onClick={() => {
                   setIsCreating(false);
                   setEditingItem(null);
                 }}
-                className="text-[#241416]/60 hover:text-[#241416]"
+                className="text-[#2B2421]/60 hover:text-[#2B2421]"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -292,93 +287,97 @@ export default function ServiceManager({
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Service Name *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Service Name *</label>
                 <input
                   type="text"
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder="e.g. Royal Heritage Bridal Package"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  placeholder="e.g. Royal Bespoke Bridal Package"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Category *</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Category *</label>
                   <select
                     value={form.categoryId}
                     onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs font-semibold"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs font-semibold text-[#2B2421]"
                   >
                     {categories.map((c) => (
-                      <option key={c.id} value={c.id}>{c.name}</option>
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
                     ))}
                   </select>
                 </div>
+
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Price (₹)</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Price (₹)</label>
                   <input
                     type="number"
                     value={form.startingPrice}
                     onChange={(e) => setForm({ ...form, startingPrice: Number(e.target.value) })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                   />
                 </div>
+
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Duration (mins)</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Duration (mins)</label>
                   <input
                     type="number"
                     value={form.durationMinutes}
                     onChange={(e) => setForm({ ...form, durationMinutes: Number(e.target.value) })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Short Description *</label>
-                <input
-                  type="text"
+                <label className="block font-semibold text-[#2B2421] mb-1">Short Description *</label>
+                <textarea
+                  rows={2}
                   required
                   value={form.shortDescription}
                   onChange={(e) => setForm({ ...form, shortDescription: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Full Description *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Full Description *</label>
                 <textarea
                   rows={3}
                   required
                   value={form.fullDescription}
                   onChange={(e) => setForm({ ...form, fullDescription: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Suitable For (Event types) *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Suitable For (Event types) *</label>
                 <input
                   type="text"
                   required
                   value={form.suitableFor}
                   onChange={(e) => setForm({ ...form, suitableFor: e.target.value })}
-                  placeholder="e.g. Grand Muhurtham, Sangeet Parties, Baby Showers"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  placeholder="e.g. Wedding Main, Muhurtham, Sangeet"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Inclusions (Separated by comma or newline) *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Inclusions (Separated by comma or newline) *</label>
                 <textarea
                   rows={2}
                   required
                   value={form.inclusions}
                   onChange={(e) => setForm({ ...form, inclusions: e.target.value })}
-                  placeholder="Both hands up to elbow, Feet adornment, Aftercare balm..."
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  placeholder="Bridal both palms, Forearms elbow-length, Feet, Aftercare balm kit"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
@@ -387,8 +386,8 @@ export default function ServiceManager({
                   value={form.imageUrl || ''}
                   onChange={(url) => setForm({ ...form, imageUrl: url })}
                   folder="portfolio"
-                  label="Package Feature Image"
-                  helperText="Upload JPEG, PNG, or WebP photo of genuine henna artwork (Max 5 MB)"
+                  label="Featured Service Image"
+                  helperText="Photo illustrating this service (Max 5 MB, authentic photography)"
                 />
               </div>
 
@@ -398,9 +397,9 @@ export default function ServiceManager({
                     type="checkbox"
                     checked={form.isPublished}
                     onChange={(e) => setForm({ ...form, isPublished: e.target.checked })}
-                    className="rounded text-[#B35D4D]"
+                    className="rounded text-[#8E3445]"
                   />
-                  <span className="font-semibold text-[#241416]">Publish on Live Site</span>
+                  <span className="font-semibold text-[#2B2421]">Publish on Live Site</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -408,13 +407,13 @@ export default function ServiceManager({
                     type="checkbox"
                     checked={form.isFeatured}
                     onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })}
-                    className="rounded text-[#B35D4D]"
+                    className="rounded text-[#8E3445]"
                   />
-                  <span className="font-semibold text-[#241416]">Feature on Homepage</span>
+                  <span className="font-semibold text-[#2B2421]">Feature on Homepage</span>
                 </label>
               </div>
 
-              <div className="flex justify-end gap-2 pt-4 border-t border-[#FAF5EE]">
+              <div className="flex justify-end gap-2 pt-4 border-t border-[#C6A15B]/20">
                 <button
                   type="button"
                   onClick={() => {
@@ -428,9 +427,9 @@ export default function ServiceManager({
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="btn-elevated-primary px-6 py-2 text-xs"
+                  className="btn-elevated-primary px-5 py-2 text-xs"
                 >
-                  {isSaving ? 'Saving...' : 'Save Service'}
+                  {isSaving ? 'Saving...' : editingItem ? 'Save Service Changes' : 'Create Package'}
                 </button>
               </div>
             </form>
@@ -440,4 +439,3 @@ export default function ServiceManager({
     </div>
   );
 }
-

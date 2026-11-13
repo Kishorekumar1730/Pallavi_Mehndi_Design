@@ -185,6 +185,22 @@ export async function addInternalNote(
   return { success: true };
 }
 
+export async function addEnquiryNote(enquiryId: string, content: string) {
+  const session = await requireAuth();
+  if (!content.trim()) return { success: false, error: 'Note cannot be empty' };
+
+  const note = await prisma.internalNote.create({
+    data: {
+      enquiryId,
+      authorId: session.userId,
+      authorName: session.name,
+      content: content.trim(),
+    },
+  });
+
+  return { success: true, note };
+}
+
 // ==========================================
 // 2. BOOKINGS & CONFLICT PREVENTION
 // ==========================================

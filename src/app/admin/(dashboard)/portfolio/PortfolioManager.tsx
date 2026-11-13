@@ -22,7 +22,6 @@ import {
 export interface AdminPortfolioItem {
   id: string;
   title: string;
-  titleTa?: string | null;
   caption?: string | null;
   category: string;
   imageUrl: string;
@@ -53,7 +52,6 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
 
   const [form, setForm] = useState({
     title: '',
-    titleTa: '',
     caption: '',
     category: 'BRIDAL' as 'BRIDAL' | 'ARABIC' | 'TRADITIONAL' | 'MINIMAL' | 'FESTIVE' | 'BESPOKE',
     imageUrl: '/placeholders/portfolio-bridal.svg',
@@ -78,7 +76,6 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
     setEditingItem(null);
     setForm({
       title: '',
-      titleTa: '',
       caption: '',
       category: 'BRIDAL',
       imageUrl: '/placeholders/portfolio-bridal.svg',
@@ -100,7 +97,6 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
     setEditingItem(item);
     setForm({
       title: item.title,
-      titleTa: item.titleTa || '',
       caption: item.caption || '',
       category: item.category as any,
       imageUrl: item.imageUrl,
@@ -154,133 +150,137 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-[#EADBCE] shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-floating bg-white p-6 rounded-3xl border border-[#C6A15B]/30 shadow-xs">
         <div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#241416]">
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#2B1F2A]">
             Portfolio &amp; Media Gallery
           </h1>
-          <p className="text-xs text-[#241416]/70 mt-1">
-            Upload and manage design showcase pieces with safe image storage, alt text, and client consent tracking.
+          <p className="text-xs text-[#2B2421]/70 mt-1">
+            Manage high-resolution bridal and festival henna photography. Real work only with verified client consent.
           </p>
         </div>
 
         <button
           onClick={startCreate}
-          className="btn-elevated-primary px-4 py-2.5 text-xs gap-1.5 self-start sm:self-center"
+          className="btn-elevated-primary px-4 py-2.5 text-xs gap-1.5"
         >
-          <Plus className="w-4 h-4 text-[#E6C875]" />
-          <span>Add Portfolio Item</span>
+          <Plus className="w-4 h-4 text-[#C6A15B]" />
+          <span>Add New Design Work</span>
         </button>
       </div>
 
-      {/* Filter Tabs */}
+      {/* Category Filter Pills */}
       <div className="flex flex-wrap items-center gap-2">
         <button
           onClick={() => setActiveCategoryFilter('ALL')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
             activeCategoryFilter === 'ALL'
-              ? 'bg-[#B35D4D] text-white shadow-xs'
-              : 'bg-white text-[#241416]/70 hover:bg-[#FAF5EE] border border-[#EADBCE]'
+              ? 'bg-[#8E3445] text-white shadow-xs font-semibold'
+              : 'bg-white text-[#2B2421]/70 hover:bg-[#FAF4EB] border border-[#C6A15B]/30'
           }`}
         >
-          All Items ({portfolio.length})
+          All Categories ({portfolio.length})
         </button>
-        {CATEGORY_OPTIONS.map((cat) => (
-          <button
-            key={cat.value}
-            onClick={() => setActiveCategoryFilter(cat.value)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
-              activeCategoryFilter === cat.value
-                ? 'bg-[#B35D4D] text-white shadow-xs'
-                : 'bg-white text-[#241416]/70 hover:bg-[#FAF5EE] border border-[#EADBCE]'
-            }`}
-          >
-            {cat.label} ({portfolio.filter((i) => i.category === cat.value).length})
-          </button>
-        ))}
+        {CATEGORY_OPTIONS.map((cat) => {
+          const count = portfolio.filter((i) => i.category === cat.value).length;
+          return (
+            <button
+              key={cat.value}
+              onClick={() => setActiveCategoryFilter(cat.value)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                activeCategoryFilter === cat.value
+                  ? 'bg-[#8E3445] text-white shadow-xs font-semibold'
+                  : 'bg-white text-[#2B2421]/70 hover:bg-[#FAF4EB] border border-[#C6A15B]/30'
+              }`}
+            >
+              {cat.label} ({count})
+            </button>
+          );
+        })}
       </div>
 
-      {/* Grid */}
+      {/* Grid of Portfolio Items */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredItems.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-2xl border border-[#EADBCE] overflow-hidden shadow-xs flex flex-col justify-between"
+            className="card-floating bg-white rounded-2xl border border-[#C6A15B]/30 overflow-hidden shadow-xs flex flex-col justify-between"
           >
             <div>
-              <div className="relative aspect-4/3 overflow-hidden bg-[#FAF5EE]">
+              {/* Image Preview with Badges */}
+              <div className="relative aspect-4/3 overflow-hidden bg-[#FAF4EB]">
                 <img
                   src={item.imageUrl}
                   alt={item.altText}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute top-2 left-2 right-2 flex items-center justify-between">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/90 text-[#8F3D30]">
+
+                <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/95 text-[#8E3445] shadow-xs">
                     {item.category}
                   </span>
-                  <div className="flex items-center gap-1">
-                    {item.featured && (
-                      <span className="text-[10px] font-bold bg-amber-400 text-black px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shadow-xs">
-                        <Star className="w-3 h-3 fill-current" />
-                        <span>Featured</span>
-                      </span>
-                    )}
-                    <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                        item.published ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-200 text-gray-700'
-                      }`}
-                    >
-                      {item.published ? 'Live' : 'Draft'}
+                  {item.featured && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C6A15B] text-[#2B1F2A] flex items-center gap-1 shadow-xs">
+                      <Star className="w-3 h-3 fill-current" />
+                      <span>Featured</span>
                     </span>
-                  </div>
+                  )}
+                </div>
+
+                <div className="absolute top-2.5 right-2.5">
+                  <span
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase shadow-xs ${
+                      item.published
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-gray-700 text-white'
+                    }`}
+                  >
+                    {item.published ? 'Live' : 'Draft'}
+                  </span>
                 </div>
               </div>
 
+              {/* Card Meta Content */}
               <div className="p-4 space-y-2">
                 <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h3 className="font-serif text-base font-bold text-[#241416]">
-                      {item.title}
-                    </h3>
-                    {item.titleTa && (
-                      <p className="text-xs text-[#8F3D30]">{item.titleTa}</p>
-                    )}
-                  </div>
-                  <span className="text-[11px] font-mono text-[#241416]/50 bg-[#FAF5EE] px-1.5 py-0.5 rounded">
-                    Order #{item.displayOrder}
+                  <h3 className="font-serif text-base font-bold text-[#2B1F2A]">
+                    {item.title}
+                  </h3>
+                  <span className="text-[11px] font-mono text-[#2B2421]/50 bg-[#FAF4EB] px-1.5 py-0.5 rounded border border-[#C6A15B]/20">
+                    #{item.displayOrder}
                   </span>
                 </div>
 
                 {item.caption && (
-                  <p className="text-xs text-[#241416]/70 line-clamp-2">{item.caption}</p>
+                  <p className="text-xs text-[#2B2421]/70 line-clamp-2">{item.caption}</p>
                 )}
 
-                <div className="pt-2 text-[11px] text-[#241416]/60 space-y-1 border-t border-[#FAF5EE]">
-                  <p className="flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
-                    <span>Client Consent: {item.hasClientConsent ? 'Confirmed' : 'Pending'}</span>
-                  </p>
+                <div className="pt-2 text-[11px] text-[#2B2421]/60 space-y-1 border-t border-[#C6A15B]/15">
+                  <div className="flex items-center gap-1 text-emerald-800">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#C6A15B]" />
+                    <span>Client Permission Documented</span>
+                  </div>
                   {item.consentNotes && (
-                    <p className="italic text-[10px] text-[#241416]/50">Note: {item.consentNotes}</p>
+                    <p className="italic text-[10px] text-[#2B2421]/50">Note: {item.consentNotes}</p>
                   )}
                 </div>
               </div>
             </div>
 
-            <div className="p-4 pt-0 flex items-center justify-between border-t border-[#FAF5EE] mt-2">
+            {/* Action Bar */}
+            <div className="p-4 pt-0 flex items-center justify-between border-t border-[#C6A15B]/15 mt-2">
               <button
                 onClick={() => startEdit(item)}
-                className="inline-flex items-center gap-1 text-xs font-semibold text-[#8F3D30] hover:text-[#241416] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[#8E3445] hover:text-[#2B1F2A] transition-colors cursor-pointer"
               >
                 <Edit2 className="w-3.5 h-3.5" />
-                <span>Edit Details &amp; Image</span>
+                <span>Edit Artwork</span>
               </button>
 
               <button
                 onClick={() => handleDelete(item.id, item.title)}
-                className="p-1 text-red-500 hover:text-red-700 transition-colors cursor-pointer"
-                aria-label="Delete item"
-                title="Delete item"
+                className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                title="Delete portfolio item"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -289,7 +289,7 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
         ))}
       </div>
 
-      {/* CREATE / EDIT MODAL */}
+      {/* CREATE / EDIT MODAL DRAWER */}
       {(isCreating || editingItem) && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-xs animate-in zoom-in-95"
@@ -299,19 +299,19 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
           }}
         >
           <div
-            className="bg-white rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 border border-[#EADBCE] shadow-2xl space-y-5"
+            className="bg-white rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 border border-[#C6A15B]/30 shadow-2xl space-y-5"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#FAF5EE] pb-3">
-              <h3 className="font-serif text-xl font-bold text-[#241416]">
-                {editingItem ? `Edit: ${editingItem.title}` : 'Add New Portfolio Work'}
+            <div className="flex items-center justify-between border-b border-[#C6A15B]/20 pb-3">
+              <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
+                {editingItem ? 'Edit Portfolio Design' : 'Publish New Henna Portfolio Piece'}
               </h3>
               <button
                 onClick={() => {
                   setIsCreating(false);
                   setEditingItem(null);
                 }}
-                className="text-[#241416]/60 hover:text-[#241416] cursor-pointer"
+                className="text-[#2B2421]/60 hover:text-[#2B2421] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -326,24 +326,24 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Title *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Title *</label>
                 <input
                   type="text"
                   required
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  placeholder="e.g. Symmetrical Heirloom Bridal Palms"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
+                  placeholder="e.g. Royal South Indian Bridal Jaal Work"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Category *</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Category *</label>
                   <select
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value as any })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-[#C5A059]"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs font-semibold text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                   >
                     {CATEGORY_OPTIONS.map((c) => (
                       <option key={c.value} value={c.value}>
@@ -352,127 +352,112 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
                     ))}
                   </select>
                 </div>
+
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Collection / Year</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Collection / Year</label>
                   <input
                     type="text"
                     value={form.collectionYear}
                     onChange={(e) => setForm({ ...form, collectionYear: e.target.value })}
                     placeholder="e.g. 2026 Collection"
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                   />
                 </div>
               </div>
 
-              {/* Dedicated Image Uploader with Drag & Drop and Preview */}
-              <div className="space-y-2">
+              {/* Secure Image Uploader */}
+              <div>
                 <ImageUploader
                   value={form.imageUrl}
                   onChange={(url) => setForm({ ...form, imageUrl: url })}
                   folder="portfolio"
-                  label="Featured Work Image"
-                  helperText="Upload JPEG, PNG, or WebP photo of genuine henna artwork (Max 5 MB)"
+                  label="Photograph Asset *"
+                  helperText="Upload original client photo (JPEG/PNG/WebP, Max 5 MB). Authentic photography only."
                   required
                 />
 
-                {/* Quick placeholder shortcut */}
-                <div className="flex items-center gap-1.5 flex-wrap pt-1 text-[11px] text-[#241416]/70">
-                  <span className="text-[#8F3D30] font-semibold">Or select verified placeholder:</span>
-                  {CATEGORY_OPTIONS.map((cat) => (
+                <div className="flex items-center gap-1.5 flex-wrap pt-1 text-[11px] text-[#2B2421]/70">
+                  <span className="text-[#8E3445] font-semibold">Or select verified placeholder:</span>
+                  {CATEGORY_OPTIONS.map((c) => (
                     <button
-                      key={cat.value}
+                      key={c.value}
                       type="button"
-                      onClick={() => setForm({ ...form, imageUrl: cat.placeholder, category: cat.value as any })}
-                      className="px-2 py-0.5 rounded-md bg-[#FAF5EE] hover:bg-[#EADBCE] border border-[#EADBCE] text-[10px] transition-colors"
+                      onClick={() => setForm({ ...form, imageUrl: c.placeholder, category: c.value as any })}
+                      className="px-2 py-0.5 rounded-md bg-[#FAF4EB] hover:bg-[#FAF4EB]/80 border border-[#C6A15B]/30 text-[10px] transition-colors"
                     >
-                      {cat.label.split(' ')[0]}
+                      {c.value}
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Accessibility Alt Text *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Accessibility Alt Text *</label>
                 <input
                   type="text"
                   required
                   value={form.altText}
                   onChange={(e) => setForm({ ...form, altText: e.target.value })}
-                  placeholder="Detailed description of henna motif, elements, and placement for screen readers"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
+                  placeholder="Descriptive explanation for screen readers"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Caption / Storyline</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Caption / Storyline</label>
                 <textarea
                   rows={2}
                   value={form.caption}
                   onChange={(e) => setForm({ ...form, caption: e.target.value })}
-                  placeholder="Story behind the motifs, client requirements, or special elements"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
+                  placeholder="Context about motifs, couple elements, or celebration style..."
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 />
               </div>
 
-              {/* Multi-image detail shots */}
-              <div>
-                <label className="block font-semibold text-[#241416] mb-1">
-                  Additional Detail Shots (Optional Image URLs or Paths)
-                </label>
-                <input
-                  type="text"
-                  value={form.additionalImages}
-                  onChange={(e) => setForm({ ...form, additionalImages: e.target.value })}
-                  placeholder="Comma-separated image URLs for close-up shots or feet matching work"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Display Order</label>
+                  <label className="block font-semibold text-[#2B2421] mb-1">Display Order</label>
                   <input
                     type="number"
-                    min="0"
                     value={form.displayOrder}
-                    onChange={(e) => setForm({ ...form, displayOrder: parseInt(e.target.value) || 0 })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
+                    onChange={(e) => setForm({ ...form, displayOrder: parseInt(e.target.value, 10) || 0 })}
+                    className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                   />
                 </div>
 
-                <div className="flex items-center gap-4 pt-4">
-                  <label className="flex items-center gap-1.5 cursor-pointer">
+                <div className="flex flex-col justify-center space-y-2 pt-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={form.featured}
                       onChange={(e) => setForm({ ...form, featured: e.target.checked })}
-                      className="rounded text-[#B35D4D] focus:ring-[#C5A059]"
+                      className="rounded text-[#8E3445] focus:ring-[#C6A15B]"
                     />
-                    <span className="font-semibold text-[#241416]">Featured Piece</span>
+                    <span className="font-semibold text-[#2B2421]">Featured Piece</span>
                   </label>
 
-                  <label className="flex items-center gap-1.5 cursor-pointer">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={form.published}
                       onChange={(e) => setForm({ ...form, published: e.target.checked })}
-                      className="rounded text-[#B35D4D] focus:ring-[#C5A059]"
+                      className="rounded text-[#8E3445] focus:ring-[#C6A15B]"
                     />
-                    <span className="font-semibold text-[#241416]">Published (Live)</span>
+                    <span className="font-semibold text-[#2B2421]">Published (Live)</span>
                   </label>
                 </div>
               </div>
 
               {/* Client Consent Tracking */}
-              <div className="bg-[#FAF5EE] p-3.5 rounded-xl border border-[#EADBCE] space-y-2">
+              <div className="bg-[#FAF4EB] p-3.5 rounded-xl border border-[#C6A15B]/30 space-y-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={form.hasClientConsent}
                     onChange={(e) => setForm({ ...form, hasClientConsent: e.target.checked })}
-                    className="rounded text-[#B35D4D] focus:ring-[#C5A059]"
+                    className="rounded text-[#8E3445] focus:ring-[#C6A15B]"
                   />
-                  <span className="font-semibold text-[#241416]">
+                  <span className="font-semibold text-[#2B2421]">
                     Client has provided explicit consent to publish this photograph
                   </span>
                 </label>
@@ -483,12 +468,12 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
                     value={form.consentNotes}
                     onChange={(e) => setForm({ ...form, consentNotes: e.target.value })}
                     placeholder="Internal permission notes (e.g. Wedding photoshoot release, client Instagram handle)"
-                    className="w-full bg-white border border-[#EADBCE] rounded-lg px-2.5 py-1.5 text-[11px] focus:outline-none focus:border-[#C5A059]"
+                    className="w-full bg-white border border-[#C6A15B]/30 rounded-lg px-2.5 py-1.5 text-[11px] text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                   />
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-3 border-t border-[#FAF5EE]">
+              <div className="pt-2 flex items-center justify-end gap-3 border-t border-[#C6A15B]/20">
                 <button
                   type="button"
                   onClick={() => {

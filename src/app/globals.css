@@ -4,38 +4,34 @@
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   
-  /* Heritage Henna & Indian Artistry Palette */
-  --bg-ivory: #FDFBF7;
-  --bg-cream: #FAF5EE;
-  --bg-card: #FFFFFF;
-  --bg-card-warm: #FAF6F0;
-  
-  --henna-deep-brown: #241416;
-  --henna-espresso: #1F110B;
-  --henna-terracotta: #8F3D30;
-  --henna-terracotta-light: #B35D4D;
-  --henna-oxblood: #6E261A;
-  --henna-green: #2D4A3E;
-  --henna-green-light: #EBF1ED;
-  --henna-green-border: #4D6E5D;
-  --henna-gold: #C5A059;
-  --henna-gold-light: #E6C875;
-  --henna-gold-muted: #D4AF37;
-  --henna-border: #EADBCE;
-  --henna-border-gold: #E2CFB4;
+  /* -------------------------------------------------------------
+     NEW CEREMONIAL INDIAN MEHNDI STUDIO PALETTE
+     ------------------------------------------------------------- */
+  --sandalwood-ivory: #F4EADD;
+  --sandalwood-ivory-light: #FAF4EB;
+  --sandalwood-card: #FFFFFF;
+  --midnight-plum: #2B1F2A;
+  --midnight-plum-dark: #1E151E;
+  --midnight-plum-card: #352734;
+  --pomegranate: #8E3445;
+  --pomegranate-hover: #A13D51;
+  --pomegranate-dark: #742937;
+  --henna-brown: #713E2E;
+  --henna-brown-light: #8A4F3C;
+  --antique-gold: #C6A15B;
+  --antique-gold-light: #DFBF7D;
+  --antique-gold-muted: #B48E47;
+  --warm-ink: #2B2421;
+  --warm-ink-muted: #574B46;
 
-  /* Legacy aliases for backward compatibility */
-  --brand-terracotta: #B35D4D;
-  --brand-rose: #C87D6E;
-  --brand-plum: #241416;
-  --brand-gold: #C5A059;
-  --brand-gold-light: #E6C875;
-  --brand-border: #EADBCE;
+  /* Global tokens */
+  --bg-main: var(--sandalwood-ivory);
+  --text-main: var(--warm-ink);
 }
 
 body {
-  background-color: var(--bg-ivory);
-  color: var(--henna-deep-brown);
+  background-color: var(--sandalwood-ivory);
+  color: var(--warm-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -45,25 +41,25 @@ h1, h2, h3, .font-serif {
   font-family: var(--font-serif);
 }
 
-/* Custom scrollbars */
+/* Custom scrollbars with antique gold thumb */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF5EE;
+  background: #F4EADD;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C5A059;
+  background: #C6A15B;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8F3D30;
+  background: #8E3445;
 }
 
 /* Accessible focus ring */
 :focus-visible {
-  outline: 2px solid #C5A059;
+  outline: 2px solid #C6A15B;
   outline-offset: 3px;
 }
 
@@ -72,23 +68,23 @@ h1, h2, h3, .font-serif {
    ------------------------------------------------------------- */
 .card-floating {
   background-color: #FFFFFF;
-  border: 1px solid #EADBCE;
+  border: 1px solid rgba(198, 161, 91, 0.35);
   border-radius: 1.25rem;
-  box-shadow: 0 4px 20px -2px rgba(36, 20, 22, 0.05), 0 2px 6px -1px rgba(36, 20, 22, 0.03);
+  box-shadow: 0 6px 22px -3px rgba(43, 31, 42, 0.07), 0 2px 8px -2px rgba(43, 31, 42, 0.04);
   transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.28s ease;
   position: relative;
 }
 
 .card-floating:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 36px -6px rgba(36, 20, 22, 0.10), 0 6px 14px -2px rgba(36, 20, 22, 0.05);
-  border-color: rgba(197, 160, 89, 0.65);
+  box-shadow: 0 18px 40px -8px rgba(43, 31, 42, 0.14), 0 8px 16px -3px rgba(43, 31, 42, 0.06);
+  border-color: #C6A15B;
 }
 
 .card-floating:focus-within {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -4px rgba(36, 20, 22, 0.08);
-  border-color: rgba(197, 160, 89, 0.85);
+  box-shadow: 0 14px 32px -6px rgba(43, 31, 42, 0.11);
+  border-color: #C6A15B;
 }
 
 .card-floating:active {
@@ -97,50 +93,66 @@ h1, h2, h3, .font-serif {
 
 /* Featured / Prominent floating surface */
 .card-floating-prominent {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAF6F0 100%);
-  border: 1px solid #E2CFB4;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAF4EB 100%);
+  border: 1px solid rgba(198, 161, 91, 0.5);
   border-radius: 1.5rem;
-  box-shadow: 0 8px 30px -4px rgba(36, 20, 22, 0.08), 0 4px 10px -2px rgba(36, 20, 22, 0.04);
+  box-shadow: 0 10px 32px -4px rgba(43, 31, 42, 0.10), 0 4px 12px -2px rgba(43, 31, 42, 0.05);
   transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.28s ease;
 }
 
 .card-floating-prominent:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 45px -8px rgba(36, 20, 22, 0.12), 0 8px 18px -3px rgba(36, 20, 22, 0.06);
-  border-color: #C5A059;
+  box-shadow: 0 24px 50px -10px rgba(43, 31, 42, 0.16), 0 10px 22px -4px rgba(43, 31, 42, 0.08);
+  border-color: #C6A15B;
+}
+
+/* Midnight Plum Deep Floating Card */
+.card-floating-plum {
+  background: linear-gradient(180deg, #352734 0%, #2B1F2A 100%);
+  color: #F4EADD;
+  border: 1px solid rgba(198, 161, 91, 0.35);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 28px -4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.28s ease;
+}
+
+.card-floating-plum:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 42px -6px rgba(0, 0, 0, 0.35);
+  border-color: #C6A15B;
 }
 
 /* -------------------------------------------------------------
    POLISHED RAISED & ELEVATED BUTTONS
    ------------------------------------------------------------- */
-/* Primary Terracotta / Oxblood Button */
+/* Primary Pomegranate Button */
 .btn-elevated-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
   border-radius: 9999px;
-  background: linear-gradient(180deg, #9C4332 0%, #802E20 100%);
+  background: linear-gradient(180deg, #A13D51 0%, #8E3445 100%);
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 14px rgba(128, 46, 32, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 14px rgba(142, 52, 69, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
   transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease, opacity 0.2s ease;
   cursor: pointer;
 }
 
 .btn-elevated-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  background: linear-gradient(180deg, #A84B38 0%, #8F3D30 100%);
-  box-shadow: 0 8px 24px rgba(128, 46, 32, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  background: linear-gradient(180deg, #B1465C 0%, #9C384B 100%);
+  box-shadow: 0 8px 24px rgba(142, 52, 69, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.45);
 }
 
 .btn-elevated-primary:active:not(:disabled) {
   transform: translateY(1px) scale(0.98);
-  box-shadow: 0 2px 6px rgba(128, 46, 32, 0.25);
+  box-shadow: 0 2px 6px rgba(142, 52, 69, 0.25);
 }
 
 .btn-elevated-primary:focus-visible {
-  outline: 2px solid #C5A059;
+  outline: 2px solid #C6A15B;
   outline-offset: 3px;
 }
 
@@ -151,33 +163,7 @@ h1, h2, h3, .font-serif {
   box-shadow: none;
 }
 
-/* Rich Henna Green Accent Button */
-.btn-elevated-green {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  border-radius: 9999px;
-  background: linear-gradient(180deg, #375B4C 0%, #233C31 100%);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 14px rgba(35, 60, 49, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease;
-  cursor: pointer;
-}
-
-.btn-elevated-green:hover:not(:disabled) {
-  transform: translateY(-2px);
-  background: linear-gradient(180deg, #426A59 0%, #2D4A3E 100%);
-  box-shadow: 0 8px 24px rgba(35, 60, 49, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-}
-
-.btn-elevated-green:active:not(:disabled) {
-  transform: translateY(1px) scale(0.98);
-  box-shadow: 0 2px 6px rgba(35, 60, 49, 0.25);
-}
-
-/* Secondary Elevated Ivory Button */
+/* Secondary Elevated Sandalwood Ivory Button */
 .btn-elevated-secondary {
   display: inline-flex;
   align-items: center;
@@ -185,30 +171,132 @@ h1, h2, h3, .font-serif {
   font-weight: 600;
   border-radius: 9999px;
   background: #FFFFFF;
-  color: #241416;
-  border: 1px solid #EADBCE;
-  box-shadow: 0 2px 8px rgba(36, 20, 22, 0.05);
+  color: #2B1F2A;
+  border: 1px solid #C6A15B;
+  box-shadow: 0 2px 8px rgba(43, 31, 42, 0.06);
   transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease, background-color 0.2s ease;
   cursor: pointer;
 }
 
 .btn-elevated-secondary:hover:not(:disabled) {
   transform: translateY(-2px);
-  border-color: #C5A059;
-  background-color: #FAF5EE;
-  box-shadow: 0 6px 18px rgba(36, 20, 22, 0.09);
+  border-color: #8E3445;
+  background-color: #FAF4EB;
+  color: #8E3445;
+  box-shadow: 0 6px 18px rgba(43, 31, 42, 0.12);
 }
 
 .btn-elevated-secondary:active:not(:disabled) {
   transform: translateY(1px) scale(0.98);
-  box-shadow: 0 1px 4px rgba(36, 20, 22, 0.05);
+  box-shadow: 0 1px 4px rgba(43, 31, 42, 0.05);
+}
+
+/* Deep Midnight Plum Button */
+.btn-elevated-plum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #3A2A38 0%, #2B1F2A 100%);
+  color: #F4EADD;
+  border: 1px solid rgba(198, 161, 91, 0.45);
+  box-shadow: 0 4px 14px rgba(43, 31, 42, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+}
+
+.btn-elevated-plum:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #C6A15B;
+  box-shadow: 0 8px 22px rgba(43, 31, 42, 0.55);
+}
+
+.btn-elevated-plum:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(43, 31, 42, 0.3);
+}
+
+/* Authentic Instagram Elevated Button */
+.btn-elevated-instagram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #F58529 0%, #DD2A7B 50%, #8134AF 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(221, 42, 123, 0.35);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+}
+
+.btn-elevated-instagram:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(221, 42, 123, 0.48);
+}
+
+.btn-elevated-instagram:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(221, 42, 123, 0.25);
 }
 
 /* -------------------------------------------------------------
-   TRADITIONAL INDIAN AESTHETIC VISUAL ACCENTS (SPARINGLY USED)
+   TRADITIONAL INDIAN AESTHETIC VISUAL ACCENTS
    ------------------------------------------------------------- */
-/* Delicate Traditional Indian Ornamental Divider */
-.ornamental-divider {
+/* Heritage Ceremonial Badge */
+.heritage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  background-color: rgba(244, 234, 221, 0.92);
+  border: 1px solid rgba(198, 161, 91, 0.6);
+  color: #8E3445;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(43, 31, 42, 0.04);
+}
+
+/* Midnight Plum Heritage Badge */
+.heritage-badge-plum {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  background-color: #2B1F2A;
+  border: 1px solid rgba(198, 161, 91, 0.5);
+  color: #C6A15B;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Henna Brown Heritage Badge */
+.heritage-badge-henna {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  background-color: rgba(113, 62, 46, 0.1);
+  border: 1px solid rgba(113, 62, 46, 0.3);
+  color: #713E2E;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Delicate Antique Gold Divider */
+.ceremonial-divider {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,81 +304,24 @@ h1, h2, h3, .font-serif {
   margin: 1.5rem 0;
 }
 
-.ornamental-divider::before,
-.ornamental-divider::after {
+.ceremonial-divider::before,
+.ceremonial-divider::after {
   content: '';
   flex: 1;
   max-width: 120px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #C5A059, transparent);
+  background: linear-gradient(90deg, transparent, #C6A15B, transparent);
 }
 
-/* Heritage Henna Pill Badge */
-.heritage-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.95rem;
-  border-radius: 9999px;
-  background-color: rgba(250, 245, 238, 0.92);
-  border: 1px solid rgba(197, 160, 89, 0.45);
-  color: #8F3D30;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: 0 2px 6px rgba(36, 20, 22, 0.04);
-}
-
-/* Henna Green Heritage Badge */
-.heritage-pill-green {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.95rem;
-  border-radius: 9999px;
-  background-color: #EBF1ED;
-  border: 1px solid rgba(45, 74, 62, 0.35);
-  color: #2D4A3E;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: 0 2px 6px rgba(36, 20, 22, 0.04);
-}
-
-/* Delicate Traditional Inner Border Frame */
-.traditional-frame-inner {
-  position: relative;
-}
-
-.traditional-frame-inner::after {
-  content: '';
-  position: absolute;
-  inset: 7px;
-  border: 1px solid rgba(197, 160, 89, 0.28);
-  border-radius: calc(inherit - 4px);
-  pointer-events: none;
-}
-
-/* Subtle Authentic Background Overlay Container */
-.authentic-henna-backdrop {
-  position: relative;
-  overflow: hidden;
-}
-
-.authentic-henna-backdrop-overlay {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.05;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Smooth transitions */
-.transition-luxury {
-  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
 }

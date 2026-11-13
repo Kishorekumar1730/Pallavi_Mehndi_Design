@@ -17,7 +17,7 @@ export default async function AdminDashboardLayout({
   }
 
   return (
-    <div className="min-h-screen flex bg-[#FAF5EE]">
+    <div className="min-h-screen flex bg-[#F4EADD] text-[#2B2421]">
       {/* Sidebar */}
       <AdminSidebar user={session} />
 

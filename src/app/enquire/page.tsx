@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EnquiryForm from '@/components/EnquiryForm';
-import { CalendarCheck, Sparkles, ShieldCheck, Phone, Clock } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,7 +39,7 @@ export default async function EnquirePage({
   const backgroundThemeUrl = settings?.backgroundThemeUrl;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FDFBF7]">
+    <div className="min-h-screen flex flex-col bg-[#F4EADD]">
       <Navbar
         businessName={businessName}
         tagline={tagline}
@@ -50,7 +50,7 @@ export default async function EnquirePage({
       <main className="flex-1 py-12 sm:py-16 relative overflow-hidden">
         {backgroundThemeUrl ? (
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-[0.04] mix-blend-multiply pointer-events-none"
+            className="absolute inset-0 bg-cover bg-center opacity-[0.05] mix-blend-multiply pointer-events-none"
             style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
           />
         ) : null}
@@ -58,19 +58,19 @@ export default async function EnquirePage({
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
           <div className="text-center space-y-3 mb-10">
-            <span className="heritage-pill text-xs">
+            <span className="heritage-badge text-xs">
               Availability Check &amp; Bespoke Consultation
             </span>
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#241416]">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B1F2A]">
               Request a Booking Enquiry
             </h1>
-            <p className="text-sm sm:text-base text-[#241416]/75 max-w-xl mx-auto leading-relaxed font-light">
+            <p className="text-sm sm:text-base text-[#2B2421]/80 max-w-xl mx-auto leading-relaxed font-light">
               Submit your event details below. We verify calendar availability and respond within 24 hours with a comprehensive quote.
             </p>
 
             <div className="pt-2">
-              <span className="inline-flex items-center gap-2 text-xs text-[#8F3D30] bg-white border border-[#EADBCE] px-4 py-1.5 rounded-full shadow-xs">
-                <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
+              <span className="inline-flex items-center gap-2 text-xs text-[#8E3445] bg-[#FAF4EB] border border-[#C6A15B]/30 px-4 py-1.5 rounded-full shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-[#C6A15B]" />
                 <span>Non-binding enquiry • No immediate charge</span>
               </span>
             </div>

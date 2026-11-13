@@ -94,13 +94,13 @@ export default function ImageUploader({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="block text-xs font-semibold text-[#241416]">
+        <label className="block text-xs font-semibold text-[#2B2421]">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
         <button
           type="button"
           onClick={() => setUseUrlMode(!useUrlMode)}
-          className="text-[11px] font-medium text-[#8F3D30] hover:text-[#241416] flex items-center gap-1 transition-colors"
+          className="text-[11px] font-medium text-[#8E3445] hover:text-[#2B2421] flex items-center gap-1 transition-colors"
         >
           {useUrlMode ? (
             <>
@@ -133,17 +133,17 @@ export default function ImageUploader({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="https://... (direct image link or /placeholders/...)"
-            className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3.5 py-2.5 text-xs text-[#241416] focus:outline-none focus:border-[#C5A059]"
+            className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3.5 py-2.5 text-xs text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
           />
-          <p className="text-[11px] text-[#241416]/60">
-            Paste an image URL or relative path (e.g., <code className="bg-white px-1 py-0.5 rounded text-[#8F3D30]">/placeholders/portfolio-bridal.svg</code>).
+          <p className="text-[11px] text-[#2B2421]/60">
+            Paste an image URL or relative path (e.g., <code className="bg-white px-1 py-0.5 rounded text-[#8E3445]">/placeholders/portfolio-bridal.svg</code>).
           </p>
         </div>
       ) : (
         <div>
           {value ? (
-            <div className="relative rounded-2xl border border-[#EADBCE] bg-[#FAF5EE] overflow-hidden p-3 flex items-center gap-4">
-              <div className="w-20 h-24 rounded-xl overflow-hidden bg-white shrink-0 border border-[#EADBCE]">
+            <div className="relative rounded-2xl border border-[#C6A15B]/30 bg-[#FAF4EB] overflow-hidden p-3 flex items-center gap-4">
+              <div className="w-20 h-24 rounded-xl overflow-hidden bg-white shrink-0 border border-[#C6A15B]/30">
                 <img
                   src={value}
                   alt="Preview"
@@ -156,7 +156,7 @@ export default function ImageUploader({
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   <span>Image Selected &amp; Ready</span>
                 </div>
-                <p className="text-[11px] text-[#241416]/70 truncate mt-0.5">
+                <p className="text-[11px] text-[#2B2421]/70 truncate mt-0.5">
                   {value}
                 </p>
                 <div className="mt-2 flex items-center gap-2">
@@ -164,7 +164,7 @@ export default function ImageUploader({
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading}
-                    className="text-xs px-2.5 py-1 rounded-lg bg-white border border-[#EADBCE] hover:bg-[#FAF5EE] text-[#241416] font-medium transition-colors"
+                    className="text-xs px-2.5 py-1 rounded-lg bg-white border border-[#C6A15B]/30 hover:bg-[#FAF4EB] text-[#2B2421] font-medium transition-colors"
                   >
                     Change File
                   </button>
@@ -186,8 +186,8 @@ export default function ImageUploader({
               onClick={() => fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all cursor-pointer ${
                 isDragging
-                  ? 'border-[#B35D4D] bg-[#FAF5EE]'
-                  : 'border-[#EADBCE] hover:border-[#C5A059] bg-[#FAF5EE]/50 hover:bg-[#FAF5EE]'
+                  ? 'border-[#8E3445] bg-[#FAF4EB]'
+                  : 'border-[#C6A15B]/30 hover:border-[#C6A15B] bg-[#FAF4EB]/60 hover:bg-[#FAF4EB]'
               }`}
             >
               <input
@@ -204,20 +204,20 @@ export default function ImageUploader({
 
               {isUploading ? (
                 <div className="py-4 space-y-2">
-                  <Loader2 className="w-8 h-8 text-[#B35D4D] animate-spin mx-auto" />
-                  <p className="text-xs font-semibold text-[#241416]">Uploading &amp; validating image...</p>
-                  <p className="text-[11px] text-[#241416]/60">Processing upload with safe naming</p>
+                  <Loader2 className="w-8 h-8 text-[#8E3445] animate-spin mx-auto" />
+                  <p className="text-xs font-semibold text-[#2B2421]">Uploading &amp; validating image...</p>
+                  <p className="text-[11px] text-[#2B2421]/60">Processing upload with safe naming</p>
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <div className="w-10 h-10 rounded-full bg-white border border-[#EADBCE] flex items-center justify-center mx-auto text-[#B35D4D] shadow-xs">
-                    <Upload className="w-5 h-5 text-[#C5A059]" />
+                  <div className="w-10 h-10 rounded-full bg-white border border-[#C6A15B]/30 flex items-center justify-center mx-auto text-[#8E3445] shadow-xs">
+                    <Upload className="w-5 h-5 text-[#C6A15B]" />
                   </div>
                   <div>
-                    <span className="text-xs font-semibold text-[#8F3D30]">Click to choose file</span>
-                    <span className="text-xs text-[#241416]/70"> or drag and drop</span>
+                    <span className="text-xs font-semibold text-[#8E3445]">Click to choose file</span>
+                    <span className="text-xs text-[#2B2421]/70"> or drag and drop</span>
                   </div>
-                  <p className="text-[11px] text-[#241416]/60">{helperText}</p>
+                  <p className="text-[11px] text-[#2B2421]/60">{helperText}</p>
                 </div>
               )}
             </div>
@@ -227,4 +227,3 @@ export default function ImageUploader({
     </div>
   );
 }
-

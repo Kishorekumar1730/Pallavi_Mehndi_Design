@@ -2,6 +2,7 @@ import React from 'react';
 import prisma from '@/lib/prisma';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import InstagramLogo from '@/components/InstagramLogo';
 import {
   Sparkles,
   Droplets,
@@ -39,7 +40,7 @@ export default async function AboutPage() {
     'Freshly mixed chemical-free henna, organic certified cajeput and eucalyptus essential oils, single-use application cones, and pre-application skin prep.';
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FDFBF7]">
+    <div className="min-h-screen flex flex-col bg-[#F4EADD]">
       <Navbar
         businessName={businessName}
         tagline={tagline}
@@ -48,23 +49,23 @@ export default async function AboutPage() {
       />
 
       <main className="flex-1">
-        {/* Header with optional subtle henna watermark */}
-        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/80 text-center relative overflow-hidden">
+        {/* Header with optional subtle henna photo watermark */}
+        <section className="py-16 sm:py-20 bg-[#FAF4EB] border-b border-[#C6A15B]/25 text-center relative overflow-hidden">
           {backgroundThemeUrl ? (
             <div
-              className="absolute inset-0 bg-cover bg-center opacity-[0.05] mix-blend-multiply pointer-events-none"
+              className="absolute inset-0 bg-cover bg-center opacity-[0.06] mix-blend-multiply pointer-events-none"
               style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
             />
           ) : null}
 
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative z-10">
-            <span className="heritage-pill text-xs">
+            <span className="heritage-badge text-xs">
               The Artist &amp; Studio Story
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#241416]">
+            <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#2B1F2A]">
               Passion, Heritage &amp; Organic Artistry
             </h1>
-            <p className="text-base text-[#241416]/75 max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="text-base text-[#2B2421]/80 max-w-2xl mx-auto leading-relaxed font-light">
               Rooted in Salem, Tamil Nadu, celebrating brides and festive moments with handcrafted natural botanical henna.
             </p>
           </div>
@@ -75,75 +76,76 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Visual Portrait / Artwork Showcase */}
             <div className="lg:col-span-5 relative">
-              <div className="card-floating-prominent relative overflow-hidden aspect-4/5">
+              <div className="card-floating-prominent relative overflow-hidden aspect-4/5 rounded-3xl border border-[#C6A15B]/30">
                 <img
                   src={artistImageUrl}
                   alt="Pallavi Mehndi Artist Salem"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#E6C875] block">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2B1F2A]/85 via-[#2B1F2A]/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-5 left-5 right-5 text-white">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#C6A15B] block mb-1">
                     Salem Mehandi Artist
                   </span>
                   <a
                     href={instagramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-serif text-lg font-bold hover:text-[#E6C875] transition-colors inline-flex items-center gap-1.5"
+                    className="font-serif text-lg font-bold hover:text-[#C6A15B] transition-colors inline-flex items-center gap-2"
                   >
+                    <InstagramLogo size={20} variant="gradient-badge" />
                     <span>@salem_mehandi_artist_pallavi</span>
                   </a>
                 </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-2xl border border-[#EADBCE] shadow-lg flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30]">
-                  <Sparkles className="w-5 h-5 text-[#C5A059]" />
+              <div className="absolute -bottom-4 -right-4 bg-[#FAF4EB] p-4 rounded-2xl border border-[#C6A15B]/30 shadow-lg flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#F4EADD] flex items-center justify-center text-[#8E3445]">
+                  <Sparkles className="w-5 h-5 text-[#C6A15B]" />
                 </div>
                 <div>
-                  <span className="text-xs font-bold text-[#241416] block">100% Natural Henna</span>
-                  <span className="text-[11px] text-[#241416]/60">Chemical &amp; Dye Free</span>
+                  <span className="text-xs font-bold text-[#2B1F2A] block">100% Natural Henna</span>
+                  <span className="text-[11px] text-[#2B2421]/60">Chemical &amp; Dye Free</span>
                 </div>
               </div>
             </div>
 
             {/* Biography & Approach */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="heritage-pill text-xs">
+              <span className="heritage-badge text-xs">
                 About Pallavi
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#241416] leading-tight">
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#2B1F2A] leading-tight">
                 Crafting Intimate Heirloom Memories Through Ephemeral Henna
               </h2>
 
-              <p className="text-sm sm:text-base text-[#241416]/80 leading-relaxed font-light">
+              <p className="text-sm sm:text-base text-[#2B2421]/80 leading-relaxed font-light">
                 {bioEn}
               </p>
 
               <div className="pt-2 space-y-3">
-                <h4 className="font-serif text-lg font-bold text-[#241416]">
+                <h4 className="font-serif text-lg font-bold text-[#2B1F2A]">
                   Artistic Philosophy
                 </h4>
-                <p className="text-xs sm:text-sm text-[#241416]/75 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#2B2421]/75 leading-relaxed">
                   {philosophyEn} We do not believe in cookie-cutter stencils. Every line is drawn freehand with intentional rhythm, allowing the bride to relax and savor a peaceful, celebratory pause amidst the wedding festivities.
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#EADBCE] grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-[#241416]/80">
+              <div className="pt-4 border-t border-[#C6A15B]/25 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-[#2B2421]/80">
                 <div className="flex items-start gap-2.5">
-                  <CheckCircle className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#C6A15B] shrink-0 mt-0.5" />
                   <span>Custom motifs: Couple portraits, monograms, dates, and sacred symbols</span>
                 </div>
                 <div className="flex items-start gap-2.5">
-                  <CheckCircle className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#C6A15B] shrink-0 mt-0.5" />
                   <span>Complimentary aftercare kit &amp; stain sealant provided</span>
                 </div>
                 <div className="flex items-start gap-2.5">
-                  <CheckCircle className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#C6A15B] shrink-0 mt-0.5" />
                   <span>Single-use cones prepared fresh for each client appointment</span>
                 </div>
                 <div className="flex items-start gap-2.5">
-                  <CheckCircle className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#C6A15B] shrink-0 mt-0.5" />
                   <span>Destination travel across Tamil Nadu &amp; pan-India</span>
                 </div>
               </div>
@@ -152,53 +154,53 @@ export default async function AboutPage() {
         </section>
 
         {/* Hygiene, Ingredients & Safety Standards */}
-        <section className="py-16 bg-[#FAF5EE] border-t border-[#EADBCE]/80">
+        <section className="py-16 bg-[#FAF4EB] border-t border-[#C6A15B]/25">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-              <span className="heritage-pill text-xs">
+              <span className="heritage-badge text-xs">
                 Uncompromising Standards
               </span>
-              <h2 className="font-serif text-3xl font-bold text-[#241416]">
+              <h2 className="font-serif text-3xl font-bold text-[#2B1F2A]">
                 Hygiene, Ingredients &amp; Safety Protocol
               </h2>
-              <p className="text-xs sm:text-sm text-[#241416]/75">
+              <p className="text-xs sm:text-sm text-[#2B2421]/75">
                 We believe what goes onto your skin matters as much as the beauty of the design.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="card-floating p-7 sm:p-8 space-y-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30] border border-[#EADBCE]">
-                  <Droplets className="w-5 h-5 text-[#8F3D30]" />
+              <div className="card-floating p-7 sm:p-8 space-y-3.5 bg-white border border-[#C6A15B]/30 rounded-3xl">
+                <div className="w-11 h-11 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#8E3445] border border-[#C6A15B]/30">
+                  <Droplets className="w-5 h-5 text-[#8E3445]" />
                 </div>
-                <h3 className="font-serif text-lg font-bold text-[#241416]">
+                <h3 className="font-serif text-lg font-bold text-[#2B1F2A]">
                   100% Pure Botanical Blend
                 </h3>
-                <p className="text-xs sm:text-sm text-[#241416]/75 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#2B2421]/75 leading-relaxed">
                   Fresh Rajasthani Sojat Lawsonia inermis powder sifted five times, distilled water, pure therapeutic-grade eucalyptus and cajeput oils, and cane sugar.
                 </p>
               </div>
 
-              <div className="card-floating p-7 sm:p-8 space-y-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] border border-[#EADBCE]">
-                  <ShieldCheck className="w-5 h-5 text-[#C5A059]" />
+              <div className="card-floating p-7 sm:p-8 space-y-3.5 bg-white border border-[#C6A15B]/30 rounded-3xl">
+                <div className="w-11 h-11 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#C6A15B] border border-[#C6A15B]/30">
+                  <ShieldCheck className="w-5 h-5 text-[#C6A15B]" />
                 </div>
-                <h3 className="font-serif text-lg font-bold text-[#241416]">
+                <h3 className="font-serif text-lg font-bold text-[#2B1F2A]">
                   Zero Chemicals &amp; No PPD
                 </h3>
-                <p className="text-xs sm:text-sm text-[#241416]/75 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#2B2421]/75 leading-relaxed">
                   We strictly refuse black henna, kerosene, or synthetic dye boosters that cause chemical burns and allergies. Our color comes solely from natural lawsone oxidation.
                 </p>
               </div>
 
-              <div className="card-floating p-7 sm:p-8 space-y-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#2D4A3E] border border-[#EADBCE]">
-                  <Award className="w-5 h-5 text-[#2D4A3E]" />
+              <div className="card-floating p-7 sm:p-8 space-y-3.5 bg-white border border-[#C6A15B]/30 rounded-3xl">
+                <div className="w-11 h-11 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#713E2E] border border-[#C6A15B]/30">
+                  <Award className="w-5 h-5 text-[#713E2E]" />
                 </div>
-                <h3 className="font-serif text-lg font-bold text-[#241416]">
+                <h3 className="font-serif text-lg font-bold text-[#2B1F2A]">
                   Pre-Event Patch Testing
                 </h3>
-                <p className="text-xs sm:text-sm text-[#241416]/75 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#2B2421]/75 leading-relaxed">
                   For brides with sensitive skin or expectant mothers (baby showers), we offer a complimentary mini patch test cone 3 weeks prior to verify skin comfort.
                 </p>
               </div>
@@ -208,13 +210,13 @@ export default async function AboutPage() {
 
         {/* Travel Area Coverage */}
         <section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <span className="heritage-pill text-xs">
+          <span className="heritage-badge text-xs">
             Service Locations
           </span>
-          <h2 className="font-serif text-3xl font-bold text-[#241416]">
+          <h2 className="font-serif text-3xl font-bold text-[#2B1F2A]">
             Where We Travel
           </h2>
-          <p className="text-sm text-[#241416]/80 max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-sm text-[#2B2421]/80 max-w-2xl mx-auto leading-relaxed font-light">
             Based in Salem, Tamil Nadu. We regularly travel throughout Salem district (Fairlands, Shevapet, Yercaud, Omalur, Attur), neighboring districts (Erode, Namakkal, Dharmapuri, Coimbatore, Tiruchirappalli, Madurai, Chennai), and destination venues across India.
           </p>
 
@@ -223,7 +225,7 @@ export default async function AboutPage() {
               href="/enquire"
               className="btn-elevated-primary text-sm px-8 py-3.5 gap-2"
             >
-              <CalendarCheck className="w-4 h-4 text-[#E6C875]" />
+              <CalendarCheck className="w-4 h-4 text-[#C6A15B]" />
               <span>Enquire for Your Wedding Date</span>
             </a>
           </div>

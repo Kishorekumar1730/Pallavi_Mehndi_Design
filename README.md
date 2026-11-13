@@ -4,22 +4,33 @@ A bespoke, production-ready website and business administration management syste
 
 **Instagram Reference:** [https://www.instagram.com/salem_mehandi_artist_pallavi/](https://www.instagram.com/salem_mehandi_artist_pallavi/)
 
-Built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Prisma ORM (SQLite / PostgreSQL ready)**, **Jose (JWT Secure Sessions)**, **Bcryptjs**, and **Three.js (WebGL 3D Hero Motif)**.
+Built with **Next.js 16 (App Router)**, **React 19**, **TypeScript 5**, **Tailwind CSS 4**, **Prisma ORM (SQLite / PostgreSQL ready)**, **Jose (JWT Secure Sessions)**, and **Bcryptjs**.
 
 ---
 
 ## 🌟 Executive Overview & Key Features
 
 ### 1. Public Creative Studio Website
-- **Original Visual Identity**: Inspired by the artist's genuine henna work and high-end beauty atelier aesthetics. Warm, luminous pearl/ivory base (`#FDFBF7`), deep espresso text (`#241416`), restrained accents of terracotta/oxblood (`#B35D4D`, `#8F3D30`), and antique champagne gold (`#C5A059`).
-- **Official Instagram Atelier Showcase (`<InstagramHeroCard />`)**: Verified studio card featuring direct links to [@salem_mehandi_artist_pallavi](https://www.instagram.com/salem_mehandi_artist_pallavi/), 100% natural organic henna certifications, verified Salem location, and live portfolio links.
-- **Truthful Content & Replacement Placeholder System**:
-  - In strict compliance with creative ethics, **no stock photography or AI-generated images are presented as Pallavi's actual work**.
-  - All default portfolio and service items feature clean, minimalist neutral photography frames with camera icons and clear notices awaiting genuine photo upload from [@salem_mehandi_artist_pallavi](https://www.instagram.com/salem_mehandi_artist_pallavi/).
-  - The artist can replace these placeholders with her genuine high-resolution client photos directly from her phone or computer using the Admin Dashboard.
-- **Real Mehndi Background Theme**: Authentic photos of Pallavi's real henna work can be uploaded in Business Settings and displayed as a subtle, low-contrast, softly faded watermark behind key sections, backed by a solid backing layer to ensure 100% text readability.
-- **Modern, Elevated & Lightly Floating UI**: Refined multi-stop warm shadows, layered surfaces, subtle separation from the background, gentle lift on hover/focus, and polished raised buttons with clear pressed/tap feedback.
-- **English-Only**: 100% English across all public pages, navigation, booking forms, admin labels, messages, FAQs, and setup instructions.
+- **Ceremonial Visual Identity**: Inspired by authentic Indian henna traditions and a high-end atelier studio feel:
+  - **Sandalwood Ivory** (`#F4EADD` / `#FAF4EB`) for warm, luminous base surfaces.
+  - **Midnight Plum** (`#2B1F2A`) for high-contrast banners, navigation details, contrast cards, and footer.
+  - **Pomegranate** (`#8E3445`, hover `#A13D51`) for prominent actions and selective accents.
+  - **Henna Brown** (`#713E2E`) for organic details connecting naturally to the artwork.
+  - **Antique Gold** (`#C6A15B`) for delicate framing, star ratings, and subtle highlights.
+  - **Warm Ink** (`#2B2421`) for readable body typography ensuring high contrast.
+- **Authentic Instagram Integration**:
+  - Official Instagram camera glyph with authentic brand gradient badge (`#F58529`, `#DD2A7B`, `#8134AF`) via `<InstagramLogo />`.
+  - Accessible links to [@salem_mehandi_artist_pallavi](https://www.instagram.com/salem_mehandi_artist_pallavi/) across header, mobile menu, hero card, footer, and lightbox.
+- **Strict Visual Authenticity (Real Mehndi Work Only)**:
+  - In strict compliance with creative ethics, **zero AI-generated imagery, zero stock photos, zero 3D hand models, and zero 3D visual mockups** are used.
+  - The hero features a full-bleed photograph of real Mehndi work with a deep plum overlay, maintaining sharp readability.
+  - Real Mehndi photos from the Instagram profile or owner uploads can be applied as subtle, low-contrast watermarks behind key sections with solid backing layers.
+  - Default portfolio and service items feature clean, minimalist neutral photography frames awaiting genuine photo upload from [@salem_mehandi_artist_pallavi](https://www.instagram.com/salem_mehandi_artist_pallavi/).
+- **Modern, Elevated & Lightly Floating UI**:
+  - Layered surfaces with fine antique gold borders and multi-stop warm shadows (`.card-floating`, `.card-floating-prominent`).
+  - Smooth hover lift (`-translate-y-1`) and active tap feedback (`active:scale-[0.99]`).
+  - Polished raised buttons (`btn-elevated-primary`, `btn-elevated-secondary`, `btn-elevated-plum`, `btn-elevated-green`) with distinct hover, pressed, and disabled states.
+- **Strictly English-Only**: 100% English across all public pages, navigation, booking forms, admin labels, messages, FAQs, and setup instructions. No Tamil script or language options.
 - **Curated Offerings & Services (`/services`)**: Admin-managed packages (Royal Heritage Bridal, Contemporary Elegant Bridal, Sangeet & Bridesmaid Henna Lounge, Festive & Baby Shower, Bespoke Concepts) with transparent price type options (`STARTING_FROM`, `FIXED`, or `QUOTE_ONLY`), duration, inclusions, and travel guidelines.
 - **Portfolio Showcase with Accessible Lightbox (`/portfolio`)**: Category filters (Bridal, Arabic, Traditional Rajasthani/South, Minimal, Festive, Bespoke). Keyboard-accessible lightbox modal (`ArrowLeft`, `ArrowRight`, `Escape`, touch swipe) with screen-reader descriptive alt text and explicit client consent tracking.
 - **The Artist & Organic Henna Philosophy (`/about`)**: Biography, artistic philosophy, 100% natural Rajasthani Lawsonia inermis powder, pure eucalyptus and cajeput essential oils, skin patch-testing policy, and zero chemicals / no PPD guarantee. Linked directly to verified Instagram profile `@salem_mehandi_artist_pallavi`.
@@ -61,7 +72,7 @@ Access the management system at `/admin` (or `/admin/login`).
    - Edit booking modal: Update quote amount, deposit amount, deposit status (`UNPAID`, `PAID`, `REFUNDED`, `WAIVED`), event start/end times, and cancellation reasons.
 4. **Services & Pricing CMS (`/admin/services`)**:
    - Full CRUD: Create, edit, reorder, delete, and toggle published/draft state.
-   - Inclusions list, duration, starting rates, price types (`STARTING_FROM`, `FIXED`, `QUOTE_ONLY`), and Tamil translations.
+   - Inclusions list, duration, starting rates, price types (`STARTING_FROM`, `FIXED`, `QUOTE_ONLY`).
    - Image uploader for package feature artwork.
 5. **Portfolio & Media Gallery (`/admin/portfolio`)**:
    - Full CRUD: Add, edit, reorder (display order), delete (with confirmation dialog), and toggle Live/Draft state.
@@ -74,6 +85,7 @@ Access the management system at `/admin` (or `/admin/login`).
 7. **Business Settings & Team Administration (`/admin/settings`)**:
    - **Brand Customization**: Business name, tagline, hero headline, service area label, phone, WhatsApp number, email, currency symbol, timezone, and official Instagram handle URL.
    - **Artist Media & Portrait**: Upload genuine photo of Pallavi or her studio banner using the secure uploader.
+   - **Background Theme Photo**: Upload real Mehndi photography from Instagram to subtly brand the website backgrounds.
    - **Policy & Aftercare Editor**: Editable cancellation, deposit, privacy policy, and aftercare guidance copy.
    - **Team Management**: Invite staff, assign roles (`OWNER` or `STAFF`), and toggle active status.
    - **Last Owner Guardrail**: System strictly prohibits deactivating or deleting the sole active Owner account.
@@ -87,11 +99,10 @@ Access the management system at `/admin` (or `/admin/login`).
 
 - **Framework**: [Next.js](https://nextjs.org/) App Router with Server Actions & API Route Handlers.
 - **Language**: TypeScript with strict mode enabled.
-- **Design & UI**: Tailwind CSS, Lucide React icons, Playfair Display serif typography, and Plus Jakarta Sans body.
+- **Design & UI**: Tailwind CSS 4, Lucide React icons, Playfair Display serif typography, and Plus Jakarta Sans body.
 - **Database & ORM**: [Prisma ORM](https://www.prisma.io/). Configured with **SQLite** (`dev.db`) for immediate zero-dependency local execution, and fully compatible with **PostgreSQL** in production by switching `DATABASE_URL` in `.env`.
 - **Authentication**: Stateless, cryptographically signed HTTP-only JWT cookies using [Jose](https://github.com/panva/jose) with `HS256`, paired with [Bcryptjs](https://github.com/dcodeIO/bcrypt.js) for password hashing.
 - **Validation**: [Zod](https://zod.dev/) schemas enforcing end-to-end type safety on client forms, file uploads, and server actions.
-- **3D Hero Graphics**: [Three.js](https://threejs.org/) WebGL canvas with procedural geometry, soft metallic materials, and static SVG fallback.
 - **Secure File Storage**: Server route `/api/upload` validating MIME types, enforcing size caps (5 MB), sanitizing paths, and saving non-guessable UUID filenames.
 
 ---
@@ -107,7 +118,7 @@ Access the management system at `/admin` (or `/admin/login`).
 # Clone or navigate to the project directory
 cd "c:\Users\kisho\Desktop\Pallavi_mehndi_design"
 
-# Install dependencies (already installed)
+# Install dependencies
 npm install
 ```
 

@@ -27,13 +27,11 @@ import {
 export interface BusinessSettingsData {
   businessName: string;
   tagline: string;
-  taglineTa?: string | null;
   heroHeadline?: string | null;
   heroImageUrl?: string | null;
   backgroundThemeUrl?: string | null;
   artistImageUrl?: string | null;
   serviceArea: string;
-  serviceAreaTa?: string | null;
   phone: string;
   whatsappNumber: string;
   email: string;
@@ -47,7 +45,6 @@ export interface BusinessSettingsData {
   depositPolicy: string;
   privacyPolicy: string;
   bioEn: string;
-  bioTa?: string | null;
   philosophyEn: string;
   hygienePractices: string;
   aftercareGuide?: string | null;
@@ -159,19 +156,19 @@ export default function SettingsManager({
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-[#EADBCE] shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-floating bg-white p-6 rounded-3xl border border-[#C6A15B]/30 shadow-xs">
         <div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#241416]">
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#2B1F2A]">
             Business Settings &amp; Team Administration
           </h1>
-          <p className="text-xs text-[#241416]/70 mt-1">
+          <p className="text-xs text-[#2B2421]/70 mt-1">
             Configure studio brand rules, contact parameters, growth modules, and staff access roles.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           {currentRole === 'OWNER' && (
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#C5A059] text-[#241416]">
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#C6A15B] text-[#2B1F2A]">
               Owner Privileges Active
             </span>
           )}
@@ -182,10 +179,10 @@ export default function SettingsManager({
       <div className="flex items-center gap-3">
         <button
           onClick={() => setActiveTab('SETTINGS')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
             activeTab === 'SETTINGS'
-              ? 'bg-[#B35D4D] text-white shadow-xs'
-              : 'bg-white text-[#241416]/70 hover:bg-[#FAF5EE] border border-[#EADBCE]'
+              ? 'bg-[#8E3445] text-white shadow-xs'
+              : 'bg-white text-[#2B2421]/70 hover:bg-[#FAF4EB] border border-[#C6A15B]/30'
           }`}
         >
           Studio Brand &amp; Policies
@@ -193,10 +190,10 @@ export default function SettingsManager({
 
         <button
           onClick={() => setActiveTab('TEAM')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
             activeTab === 'TEAM'
-              ? 'bg-[#B35D4D] text-white shadow-xs'
-              : 'bg-white text-[#241416]/70 hover:bg-[#FAF5EE] border border-[#EADBCE]'
+              ? 'bg-[#8E3445] text-white shadow-xs'
+              : 'bg-white text-[#2B2421]/70 hover:bg-[#FAF4EB] border border-[#C6A15B]/30'
           }`}
         >
           Team &amp; Roles ({users.length})
@@ -204,10 +201,10 @@ export default function SettingsManager({
 
         <button
           onClick={() => setActiveTab('MODULES')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
             activeTab === 'MODULES'
-              ? 'bg-[#B35D4D] text-white shadow-xs'
-              : 'bg-white text-[#241416]/70 hover:bg-[#FAF5EE] border border-[#EADBCE]'
+              ? 'bg-[#8E3445] text-white shadow-xs'
+              : 'bg-white text-[#2B2421]/70 hover:bg-[#FAF4EB] border border-[#C6A15B]/30'
           }`}
         >
           Growth Modules (Configurable)
@@ -230,67 +227,67 @@ export default function SettingsManager({
 
       {/* TAB 1: STUDIO BRAND & POLICIES */}
       {activeTab === 'SETTINGS' && (
-        <form onSubmit={handleSaveSettings} className="bg-white rounded-3xl border border-[#EADBCE] shadow-xs p-6 sm:p-8 space-y-6 text-xs">
-          <div className="border-b border-[#FAF5EE] pb-4">
-            <h3 className="font-serif text-lg font-bold text-[#241416]">
+        <form onSubmit={handleSaveSettings} className="card-floating bg-white rounded-3xl border border-[#C6A15B]/30 shadow-xs p-6 sm:p-8 space-y-6 text-xs">
+          <div className="border-b border-[#C6A15B]/20 pb-4">
+            <h3 className="font-serif text-lg font-bold text-[#2B1F2A]">
               Core Business &amp; Location Parameters
             </h3>
-            <p className="text-[#241416]/60">All values update live across the public site, footer, and inquiry form.</p>
+            <p className="text-[#2B2421]/60">All values update live across the public site, footer, and inquiry form.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Business Name *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Business Name *</label>
               <input
                 type="text"
                 required
                 value={form.businessName}
                 onChange={(e) => setForm({ ...form, businessName: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Service Area Label *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Service Area Label *</label>
               <input
                 type="text"
                 required
                 value={form.serviceArea}
                 onChange={(e) => setForm({ ...form, serviceArea: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block font-semibold text-[#241416] mb-1">Tagline *</label>
+            <label className="block font-semibold text-[#2B2421] mb-1">Tagline *</label>
             <input
               type="text"
               required
               value={form.tagline}
               onChange={(e) => setForm({ ...form, tagline: e.target.value })}
-              className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+              className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Hero Headline</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Hero Headline</label>
               <input
                 type="text"
                 value={form.heroHeadline || ''}
                 onChange={(e) => setForm({ ...form, heroHeadline: e.target.value })}
                 placeholder="e.g. Bespoke Bridal & Contemporary Henna Artistry"
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Official Instagram URL</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Official Instagram URL</label>
               <input
                 type="url"
                 value={form.instagramUrl || ''}
                 onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })}
                 placeholder="https://www.instagram.com/salem_mehandi_artist_pallavi/"
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
           </div>
@@ -298,11 +295,11 @@ export default function SettingsManager({
           {/* Authentic Imagery & Background Media */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Artist Portrait Upload */}
-            <div className="p-4 bg-[#FAF5EE]/70 rounded-2xl border border-[#EADBCE] space-y-3">
-              <h4 className="font-serif text-sm font-bold text-[#241416]">
+            <div className="p-4 bg-[#FAF4EB]/80 rounded-2xl border border-[#C6A15B]/30 space-y-3">
+              <h4 className="font-serif text-sm font-bold text-[#2B1F2A]">
                 Artist Profile &amp; Studio Portrait Media
               </h4>
-              <p className="text-[11px] text-[#241416]/60">
+              <p className="text-[11px] text-[#2B2421]/65">
                 Upload genuine photo of Pallavi or her studio work. If not set, the verified artistic placeholder is shown.
               </p>
               <ImageUploader
@@ -315,11 +312,11 @@ export default function SettingsManager({
             </div>
 
             {/* Authentic Background Theme Watermark */}
-            <div className="p-4 bg-[#FAF5EE]/70 rounded-2xl border border-[#EADBCE] space-y-3">
-              <h4 className="font-serif text-sm font-bold text-[#241416]">
+            <div className="p-4 bg-[#FAF4EB]/80 rounded-2xl border border-[#C6A15B]/30 space-y-3">
+              <h4 className="font-serif text-sm font-bold text-[#2B1F2A]">
                 Authentic Mehndi Background Theme Photo
               </h4>
-              <p className="text-[11px] text-[#241416]/60">
+              <p className="text-[11px] text-[#2B2421]/65">
                 Upload an authentic photo of Pallavi&apos;s real henna work from Instagram. It will appear as a subtle, low-contrast, softly faded watermark behind key website sections.
               </p>
               <ImageUploader
@@ -334,140 +331,140 @@ export default function SettingsManager({
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Phone Number *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Phone Number *</label>
               <input
                 type="text"
                 required
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">WhatsApp Number *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">WhatsApp Number *</label>
               <input
                 type="text"
                 required
                 value={form.whatsappNumber}
                 onChange={(e) => setForm({ ...form, whatsappNumber: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Studio Email *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Studio Email *</label>
               <input
                 type="email"
                 required
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Currency Code</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Currency Code</label>
               <input
                 type="text"
                 value={form.currency}
                 onChange={(e) => setForm({ ...form, currency: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Currency Symbol</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Currency Symbol</label>
               <input
                 type="text"
                 value={form.currencySymbol}
                 onChange={(e) => setForm({ ...form, currencySymbol: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Timezone</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Timezone</label>
               <input
                 type="text"
                 value={form.timezone}
                 onChange={(e) => setForm({ ...form, timezone: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Default Deposit %</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Default Deposit %</label>
               <input
                 type="number"
                 min="0"
                 max="100"
                 value={form.depositPercent}
                 onChange={(e) => setForm({ ...form, depositPercent: Number(e.target.value) })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
           </div>
 
-          <div className="border-t border-[#FAF5EE] pt-4 space-y-4">
-            <h4 className="font-serif text-base font-bold text-[#241416]">
+          <div className="border-t border-[#C6A15B]/20 pt-4 space-y-4">
+            <h4 className="font-serif text-base font-bold text-[#2B1F2A]">
               Artist Bio, Philosophy &amp; Hygiene Policies
             </h4>
 
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Biography *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Biography *</label>
               <textarea
                 rows={4}
                 required
                 value={form.bioEn}
                 onChange={(e) => setForm({ ...form, bioEn: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Cancellation Policy *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Cancellation Policy *</label>
               <textarea
                 rows={2}
                 required
                 value={form.cancellationPolicy}
                 onChange={(e) => setForm({ ...form, cancellationPolicy: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Deposit Policy *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Deposit Policy *</label>
               <textarea
                 rows={2}
                 required
                 value={form.depositPolicy}
                 onChange={(e) => setForm({ ...form, depositPolicy: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Client Privacy Policy *</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Client Privacy Policy *</label>
               <textarea
                 rows={2}
                 required
                 value={form.privacyPolicy}
                 onChange={(e) => setForm({ ...form, privacyPolicy: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Henna Aftercare &amp; Stain Maturation Guidance</label>
+              <label className="block font-semibold text-[#2B2421] mb-1">Henna Aftercare &amp; Stain Maturation Guidance</label>
               <textarea
                 rows={3}
                 value={form.aftercareGuide || ''}
                 onChange={(e) => setForm({ ...form, aftercareGuide: e.target.value })}
                 placeholder="Guidance for brides on keeping paste, avoiding water, and natural oils for peak stain color"
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#FAF5EE] flex justify-end">
+          <div className="pt-4 border-t border-[#C6A15B]/20 flex justify-end">
             <button
               type="submit"
               disabled={savingSettings || currentRole !== 'OWNER'}
@@ -482,12 +479,12 @@ export default function SettingsManager({
       {/* TAB 2: TEAM & ROLES */}
       {activeTab === 'TEAM' && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-[#EADBCE]">
+          <div className="flex items-center justify-between card-floating bg-white p-4 rounded-2xl border border-[#C6A15B]/30">
             <div>
-              <h3 className="font-serif text-base font-bold text-[#241416]">
+              <h3 className="font-serif text-base font-bold text-[#2B1F2A]">
                 Studio Staff &amp; Administrative Roles
               </h3>
-              <p className="text-xs text-[#241416]/60">
+              <p className="text-xs text-[#2B2421]/60">
                 Staff accounts can manage enquiries and bookings. Only Owners can alter business configurations or team accounts.
               </p>
             </div>
@@ -495,23 +492,23 @@ export default function SettingsManager({
             {currentRole === 'OWNER' && (
               <button
                 onClick={() => setShowAddStaffModal(true)}
-                className="inline-flex items-center gap-1.5 bg-[#B35D4D] text-white text-xs font-semibold px-4 py-2 rounded-xl"
+                className="btn-elevated-primary px-4 py-2 text-xs gap-1.5"
               >
-                <Plus className="w-4 h-4 text-[#E6C875]" />
+                <Plus className="w-4 h-4 text-[#C6A15B]" />
                 <span>Invite Staff Member</span>
               </button>
             )}
           </div>
 
-          <div className="bg-white rounded-3xl border border-[#EADBCE] shadow-xs overflow-hidden divide-y divide-[#FAF5EE]">
+          <div className="card-floating bg-white rounded-3xl border border-[#C6A15B]/30 shadow-xs overflow-hidden divide-y divide-[#C6A15B]/15">
             {users.map((u) => (
               <div key={u.id} className="p-5 flex items-center justify-between text-xs">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-sm text-[#241416]">{u.name}</span>
+                    <span className="font-bold text-sm text-[#2B1F2A]">{u.name}</span>
                     <span
                       className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                        u.role === 'OWNER' ? 'bg-[#C5A059] text-[#241416]' : 'bg-[#B35D4D] text-white'
+                        u.role === 'OWNER' ? 'bg-[#C6A15B] text-[#2B1F2A]' : 'bg-[#8E3445] text-white'
                       }`}
                     >
                       {u.role}
@@ -524,7 +521,7 @@ export default function SettingsManager({
                       {u.isActive ? 'Active' : 'Disabled'}
                     </span>
                   </div>
-                  <p className="text-[#241416]/60">{u.email}</p>
+                  <p className="text-[#2B2421]/60">{u.email}</p>
                 </div>
 
                 {currentRole === 'OWNER' && (
@@ -545,8 +542,8 @@ export default function SettingsManager({
             ))}
           </div>
 
-          <div className="bg-[#FAF5EE] p-4 rounded-2xl border border-[#EADBCE] text-xs text-[#8F3D30] flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#C5A059] shrink-0" />
+          <div className="card-floating bg-[#FAF4EB] p-4 rounded-2xl border border-[#C6A15B]/30 text-xs text-[#8E3445] flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-[#C6A15B] shrink-0" />
             <span>
               <strong>Owner Protection Guarantee:</strong> The system automatically prohibits deactivating or deleting the last active Owner account. Deactivating a staff account preserves their historical booking records intact.
             </span>
@@ -556,24 +553,24 @@ export default function SettingsManager({
 
       {/* TAB 3: GROWTH MODULES */}
       {activeTab === 'MODULES' && (
-        <div className="bg-white rounded-3xl border border-[#EADBCE] p-6 sm:p-8 shadow-xs space-y-6 text-xs">
+        <div className="card-floating bg-white rounded-3xl border border-[#C6A15B]/30 p-6 sm:p-8 shadow-xs space-y-6 text-xs">
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#241416]">
+            <h3 className="font-serif text-lg font-bold text-[#2B1F2A]">
               Future Growth Modules (Toggle On Demand)
             </h3>
-            <p className="text-[#241416]/60 mt-0.5">
+            <p className="text-[#2B2421]/60 mt-0.5">
               These modular business extensions are disabled by default as per requirements, ready to be turned on when the artist expands services.
             </p>
           </div>
 
           <div className="space-y-4">
             {/* Module 1: Workshops */}
-            <div className="p-4 rounded-2xl border border-[#EADBCE] bg-[#FAF5EE] flex items-center justify-between">
+            <div className="p-4 rounded-2xl border border-[#C6A15B]/30 bg-[#FAF4EB] flex items-center justify-between">
               <div>
-                <span className="font-bold text-sm text-[#241416] block">
+                <span className="font-bold text-sm text-[#2B1F2A] block">
                   Henna Artistry Workshops &amp; Masterclasses
                 </span>
-                <p className="text-[#241416]/70 text-[11px] mt-0.5">
+                <p className="text-[#2B2421]/70 text-[11px] mt-0.5">
                   Allows students to enroll in basic or advanced bridal henna certification courses.
                 </p>
               </div>
@@ -584,17 +581,17 @@ export default function SettingsManager({
                   onChange={(e) => setForm({ ...form, enableWorkshops: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#B35D4D]" />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8E3445]" />
               </label>
             </div>
 
             {/* Module 2: Gift Cards */}
-            <div className="p-4 rounded-2xl border border-[#EADBCE] bg-[#FAF5EE] flex items-center justify-between">
+            <div className="p-4 rounded-2xl border border-[#C6A15B]/30 bg-[#FAF4EB] flex items-center justify-between">
               <div>
-                <span className="font-bold text-sm text-[#241416] block">
+                <span className="font-bold text-sm text-[#2B1F2A] block">
                   Bridal Gift Cards &amp; Vouchers
                 </span>
-                <p className="text-[#241416]/70 text-[11px] mt-0.5">
+                <p className="text-[#2B2421]/70 text-[11px] mt-0.5">
                   Allows family and friends to gift bridal mehndi packages for upcoming weddings.
                 </p>
               </div>
@@ -605,17 +602,17 @@ export default function SettingsManager({
                   onChange={(e) => setForm({ ...form, enableGiftCards: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#B35D4D]" />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8E3445]" />
               </label>
             </div>
 
             {/* Module 3: Online Deposits */}
-            <div className="p-4 rounded-2xl border border-[#EADBCE] bg-[#FAF5EE] flex items-center justify-between">
+            <div className="p-4 rounded-2xl border border-[#C6A15B]/30 bg-[#FAF4EB] flex items-center justify-between">
               <div>
-                <span className="font-bold text-sm text-[#241416] block">
+                <span className="font-bold text-sm text-[#2B1F2A] block">
                   Hosted Online Gateway Deposits (Razorpay / Stripe)
                 </span>
-                <p className="text-[#241416]/70 text-[11px] mt-0.5">
+                <p className="text-[#2B2421]/70 text-[11px] mt-0.5">
                   Keep disabled until payment gateway keys are configured. Never stores card details.
                 </p>
               </div>
@@ -626,17 +623,17 @@ export default function SettingsManager({
                   onChange={(e) => setForm({ ...form, enableOnlineDeposits: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#B35D4D]" />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8E3445]" />
               </label>
             </div>
 
             {/* Module 4: Multi-Artist Team */}
-            <div className="p-4 rounded-2xl border border-[#EADBCE] bg-[#FAF5EE] flex items-center justify-between">
+            <div className="p-4 rounded-2xl border border-[#C6A15B]/30 bg-[#FAF4EB] flex items-center justify-between">
               <div>
-                <span className="font-bold text-sm text-[#241416] block">
+                <span className="font-bold text-sm text-[#2B1F2A] block">
                   Multi-Artist Collective Dispatch
                 </span>
-                <p className="text-[#241416]/70 text-[11px] mt-0.5">
+                <p className="text-[#2B2421]/70 text-[11px] mt-0.5">
                   Allows dispatching multiple junior artists for large simultaneous sangeet gatherings.
                 </p>
               </div>
@@ -647,16 +644,16 @@ export default function SettingsManager({
                   onChange={(e) => setForm({ ...form, enableMultiArtist: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#B35D4D]" />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8E3445]" />
               </label>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#FAF5EE] flex justify-end">
+          <div className="pt-4 border-t border-[#C6A15B]/20 flex justify-end">
             <button
               onClick={handleSaveSettings}
               disabled={savingSettings || currentRole !== 'OWNER'}
-              className="px-6 py-2.5 rounded-xl text-xs font-semibold bg-[#B35D4D] text-white hover:bg-[#8F3D30] transition-colors shadow-xs"
+              className="btn-elevated-primary px-6 py-2.5 text-xs"
             >
               Save Module Preferences
             </button>
@@ -671,16 +668,16 @@ export default function SettingsManager({
           onClick={() => setShowAddStaffModal(false)}
         >
           <div
-            className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-[#EADBCE] shadow-2xl space-y-4"
+            className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-[#C6A15B]/30 shadow-2xl space-y-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#FAF5EE] pb-3">
-              <h3 className="font-serif text-xl font-bold text-[#241416]">
+            <div className="flex items-center justify-between border-b border-[#C6A15B]/20 pb-3">
+              <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
                 Create Staff Account
               </h3>
               <button
                 onClick={() => setShowAddStaffModal(false)}
-                className="text-[#241416]/60 hover:text-[#241416]"
+                className="text-[#2B2421]/60 hover:text-[#2B2421]"
               >
                 ✕
               </button>
@@ -695,65 +692,65 @@ export default function SettingsManager({
 
             <form onSubmit={handleCreateStaff} className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Full Name *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Full Name *</label>
                 <input
                   type="text"
                   required
                   value={staffForm.name}
                   onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })}
                   placeholder="e.g. Priya Sundar"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Staff Email *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Staff Email *</label>
                 <input
                   type="email"
                   required
                   value={staffForm.email}
                   onChange={(e) => setStaffForm({ ...staffForm, email: e.target.value })}
                   placeholder="priya@pallavimehndi.com"
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Temporary Password (8+ chars) *</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Temporary Password (8+ chars) *</label>
                 <input
                   type="password"
                   required
                   minLength={8}
                   value={staffForm.password}
                   onChange={(e) => setStaffForm({ ...staffForm, password: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Role</label>
+                <label className="block font-semibold text-[#2B2421] mb-1">Role</label>
                 <select
                   value={staffForm.role}
                   onChange={(e) => setStaffForm({ ...staffForm, role: e.target.value as any })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs font-semibold"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs font-semibold text-[#2B2421]"
                 >
                   <option value="STAFF">STAFF (Manage Enquiries &amp; Bookings)</option>
                   <option value="OWNER">OWNER (Full Administrative Control)</option>
                 </select>
               </div>
 
-              <div className="flex justify-end gap-2 pt-4 border-t border-[#FAF5EE]">
+              <div className="flex justify-end gap-2 pt-4 border-t border-[#C6A15B]/20">
                 <button
                   type="button"
                   onClick={() => setShowAddStaffModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] text-[#241416]/70"
+                  className="btn-elevated-secondary px-4 py-2 text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={creatingStaff}
-                  className="px-5 py-2 rounded-xl text-xs font-semibold bg-[#B35D4D] text-white hover:bg-[#8F3D30]"
+                  className="btn-elevated-primary px-5 py-2 text-xs"
                 >
                   {creatingStaff ? 'Creating...' : 'Create Account'}
                 </button>
