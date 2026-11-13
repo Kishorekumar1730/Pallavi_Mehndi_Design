@@ -13,6 +13,7 @@ import {
   Award,
 } from 'lucide-react';
 
+export const revalidate = 60;
 
 export default async function AboutPage() {
   const settings = await prisma.businessSettings.findUnique({
@@ -26,19 +27,16 @@ export default async function AboutPage() {
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
   const artistImageUrl = settings?.artistImageUrl || '/placeholders/artist-portrait.svg';
   const instagramUrl = settings?.instagramUrl || 'https://www.instagram.com/salem_mehandi_artist_pallavi/';
+  const backgroundThemeUrl = settings?.backgroundThemeUrl;
   const bioEn =
     settings?.bioEn ||
     'Pallavi is a passionate henna artist blending intricate South Indian heritage motifs with contemporary Arabic and bespoke geometric aesthetics. Using only 100% natural, hand-blended organic henna, she ensures a rich, dark stain with maximum safety and care.';
-  const bioTa = settings?.bioTa;
   const philosophyEn =
     settings?.philosophyEn ||
     'Every bride’s journey is unique. We craft personalized motifs that celebrate love, personal heritage, and timeless celebration.';
   const hygienePractices =
     settings?.hygienePractices ||
     'Freshly mixed chemical-free henna, organic certified cajeput and eucalyptus essential oils, single-use application cones, and pre-application skin prep.';
-  const aftercareGuide =
-    settings?.aftercareGuide ||
-    'Keep henna paste on skin for 6-8 hours. Gently scrape paste off; avoid water contact for the first 24 hours. Natural warmth and pure coconut/eucalyptus balm enhance stain depth.';
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7]">
@@ -50,10 +48,17 @@ export default async function AboutPage() {
       />
 
       <main className="flex-1">
-        {/* Header */}
-        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/60 text-center">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+        {/* Header with optional subtle henna watermark */}
+        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/80 text-center relative overflow-hidden">
+          {backgroundThemeUrl ? (
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-[0.05] mix-blend-multiply pointer-events-none"
+              style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
+            />
+          ) : null}
+
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative z-10">
+            <span className="heritage-pill text-xs">
               The Artist &amp; Studio Story
             </span>
             <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#241416]">
@@ -70,13 +75,13 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Visual Portrait / Artwork Showcase */}
             <div className="lg:col-span-5 relative">
-              <div className="relative rounded-3xl overflow-hidden border-2 border-[#EADBCE] shadow-xl bg-[#FAF5EE] aspect-4/5">
+              <div className="card-floating-prominent relative overflow-hidden aspect-4/5">
                 <img
                   src={artistImageUrl}
                   alt="Pallavi Mehndi Artist Salem"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#E6C875] block">
                     Salem Mehandi Artist
@@ -92,7 +97,7 @@ export default async function AboutPage() {
                 </div>
               </div>
               <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-2xl border border-[#EADBCE] shadow-lg flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#FAF5EE] flex items-center justify-center text-[#B35D4D]">
+                <div className="w-10 h-10 rounded-full bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30]">
                   <Sparkles className="w-5 h-5 text-[#C5A059]" />
                 </div>
                 <div>
@@ -104,7 +109,7 @@ export default async function AboutPage() {
 
             {/* Biography & Approach */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+              <span className="heritage-pill text-xs">
                 About Pallavi
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#241416] leading-tight">
@@ -114,12 +119,6 @@ export default async function AboutPage() {
               <p className="text-sm sm:text-base text-[#241416]/80 leading-relaxed font-light">
                 {bioEn}
               </p>
-
-              {bioTa && (
-                <div className="bg-[#FAF5EE] p-4 rounded-xl border border-[#EADBCE] text-xs sm:text-sm text-[#8F3D30] font-medium leading-relaxed">
-                  {bioTa}
-                </div>
-              )}
 
               <div className="pt-2 space-y-3">
                 <h4 className="font-serif text-lg font-bold text-[#241416]">
@@ -153,10 +152,10 @@ export default async function AboutPage() {
         </section>
 
         {/* Hygiene, Ingredients & Safety Standards */}
-        <section className="py-16 bg-[#FAF5EE] border-t border-[#EADBCE]/60">
+        <section className="py-16 bg-[#FAF5EE] border-t border-[#EADBCE]/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+              <span className="heritage-pill text-xs">
                 Uncompromising Standards
               </span>
               <h2 className="font-serif text-3xl font-bold text-[#241416]">
@@ -168,8 +167,8 @@ export default async function AboutPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-7 rounded-2xl border border-[#EADBCE] shadow-xs space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30]">
+              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30] border border-[#EADBCE]">
                   <Droplets className="w-5 h-5 text-[#8F3D30]" />
                 </div>
                 <h3 className="font-serif text-lg font-bold text-[#241416]">
@@ -180,27 +179,27 @@ export default async function AboutPage() {
                 </p>
               </div>
 
-              <div className="bg-white p-7 rounded-2xl border border-[#EADBCE] shadow-xs space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30]">
+              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] border border-[#EADBCE]">
                   <ShieldCheck className="w-5 h-5 text-[#C5A059]" />
                 </div>
                 <h3 className="font-serif text-lg font-bold text-[#241416]">
                   Zero Chemicals &amp; No PPD
                 </h3>
                 <p className="text-xs sm:text-sm text-[#241416]/75 leading-relaxed">
-                  We strictly refuse black henna, kerosene, or synthetic dye boosters that cause chemical burns and allergies. Our color comes solely from natural lawosone oxidation.
+                  We strictly refuse black henna, kerosene, or synthetic dye boosters that cause chemical burns and allergies. Our color comes solely from natural lawsone oxidation.
                 </p>
               </div>
 
-              <div className="bg-white p-7 rounded-2xl border border-[#EADBCE] shadow-xs space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30]">
-                  <Award className="w-5 h-5 text-[#8F3D30]" />
+              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#2D4A3E] border border-[#EADBCE]">
+                  <Award className="w-5 h-5 text-[#2D4A3E]" />
                 </div>
                 <h3 className="font-serif text-lg font-bold text-[#241416]">
                   Pre-Event Patch Testing
                 </h3>
                 <p className="text-xs sm:text-sm text-[#241416]/75 leading-relaxed">
-                  For brides with sensitive skin or expectant mothers (baby showers), we gladly offer a complimentary mini patch test cone 3 weeks prior to verify skin comfort.
+                  For brides with sensitive skin or expectant mothers (baby showers), we offer a complimentary mini patch test cone 3 weeks prior to verify skin comfort.
                 </p>
               </div>
             </div>
@@ -209,7 +208,7 @@ export default async function AboutPage() {
 
         {/* Travel Area Coverage */}
         <section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+          <span className="heritage-pill text-xs">
             Service Locations
           </span>
           <h2 className="font-serif text-3xl font-bold text-[#241416]">
@@ -222,7 +221,7 @@ export default async function AboutPage() {
           <div className="pt-4">
             <a
               href="/enquire"
-              className="inline-flex items-center gap-2 bg-[#B35D4D] hover:bg-[#8F3D30] text-white font-medium text-sm px-8 py-3.5 rounded-full shadow-md transition-all"
+              className="btn-elevated-primary text-sm px-8 py-3.5 gap-2"
             >
               <CalendarCheck className="w-4 h-4 text-[#E6C875]" />
               <span>Enquire for Your Wedding Date</span>

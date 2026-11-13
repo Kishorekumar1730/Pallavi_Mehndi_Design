@@ -166,7 +166,7 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
 
         <button
           onClick={startCreate}
-          className="inline-flex items-center gap-1.5 bg-[#B35D4D] hover:bg-[#8F3D30] text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-xs transition-colors cursor-pointer self-start sm:self-center"
+          className="btn-elevated-primary px-4 py-2.5 text-xs gap-1.5 self-start sm:self-center"
         >
           <Plus className="w-4 h-4 text-[#E6C875]" />
           <span>Add Portfolio Item</span>
@@ -325,26 +325,16 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Title (English) *</label>
-                  <input
-                    type="text"
-                    required
-                    value={form.title}
-                    onChange={(e) => setForm({ ...form, title: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Title (Tamil)</label>
-                  <input
-                    type="text"
-                    value={form.titleTa}
-                    onChange={(e) => setForm({ ...form, titleTa: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
-                  />
-                </div>
+              <div>
+                <label className="block font-semibold text-[#241416] mb-1">Title *</label>
+                <input
+                  type="text"
+                  required
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  placeholder="e.g. Symmetrical Heirloom Bridal Palms"
+                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#C5A059]"
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -505,7 +495,7 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
                     setIsCreating(false);
                     setEditingItem(null);
                   }}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-[#241416]/70 hover:bg-[#FAF5EE] transition-colors cursor-pointer"
+                  className="btn-elevated-secondary px-4 py-2 text-xs"
                 >
                   Cancel
                 </button>
@@ -513,7 +503,7 @@ export default function PortfolioManager({ items }: { items: AdminPortfolioItem[
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="bg-[#B35D4D] hover:bg-[#8F3D30] disabled:opacity-60 text-white px-5 py-2 rounded-xl text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+                  className="btn-elevated-primary px-5 py-2 text-xs"
                 >
                   {isSaving ? 'Saving...' : editingItem ? 'Save Changes' : 'Publish Item'}
                 </button>

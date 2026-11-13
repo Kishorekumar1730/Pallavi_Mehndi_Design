@@ -51,65 +51,67 @@ export default function ServiceCard({ service }: { service: ServiceData }) {
   };
 
   return (
-    <div className="group bg-[#FFFFFF] rounded-2xl border border-[#EADBCE] overflow-hidden shadow-sm hover:shadow-xl hover:border-[#C5A059] transition-all duration-300 flex flex-col justify-between">
+    <div className="card-floating group overflow-hidden flex flex-col justify-between">
       <div>
-        {/* Service Image */}
+        {/* Service Image / Placeholder Frame */}
         {service.imageUrl && (
-          <div className="relative h-56 w-full overflow-hidden bg-[#FAF5EE]">
+          <div className="relative h-60 w-full overflow-hidden bg-[#FAF5EE] border-b border-[#EADBCE]">
             <img
               src={service.imageUrl}
               alt={service.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#241416]/75 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between text-white">
               {service.category && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#B35D4D]/90 backdrop-blur-sm border border-white/20">
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#2D4A3E]/90 backdrop-blur-xs border border-white/20 text-[#FAF5EE] shadow-xs">
                   {service.category.name}
                 </span>
               )}
               {service.durationMinutes && (
-                <span className="flex items-center gap-1 text-xs bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-full">
-                  <Clock className="w-3 h-3 text-[#E6C875]" />
-                  {formatDuration(service.durationMinutes)}
+                <span className="flex items-center gap-1.5 text-xs bg-[#241416]/75 backdrop-blur-xs px-2.5 py-1 rounded-full text-[#FAF5EE] border border-white/10 shadow-xs">
+                  <Clock className="w-3.5 h-3.5 text-[#E6C875]" />
+                  <span>{formatDuration(service.durationMinutes)}</span>
                 </span>
               )}
             </div>
           </div>
         )}
 
-        <div className="p-6">
-          <h3 className="font-serif text-xl font-bold text-[#241416] group-hover:text-[#B35D4D] transition-colors">
+        <div className="p-6 sm:p-7">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8F3D30]">
+              Heritage Artistry
+            </span>
+          </div>
+
+          <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#241416] group-hover:text-[#8F3D30] transition-colors">
             {service.name}
           </h3>
-          {service.nameTa && (
-            <p className="text-xs text-[#8F3D30] font-medium mt-0.5">
-              {service.nameTa}
-            </p>
-          )}
 
-          <p className="text-sm text-[#241416]/75 mt-3 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#241416]/75 mt-3 leading-relaxed">
             {service.shortDescription}
           </p>
 
           {/* Suitable for badge */}
-          <div className="mt-4 pt-3 border-t border-[#FAF5EE]">
-            <span className="text-[11px] font-semibold text-[#8F3D30] uppercase tracking-wider block mb-1">
-              Suitable For
+          <div className="mt-4 pt-3.5 border-t border-[#FAF5EE]">
+            <span className="text-[10px] font-bold text-[#8F3D30] uppercase tracking-wider block mb-1">
+              Ideal Occasion
             </span>
-            <p className="text-xs text-[#241416]/80 bg-[#FAF5EE] px-2.5 py-1.5 rounded-md inline-block">
+            <p className="text-xs text-[#241416]/85 bg-[#FAF5EE] px-3 py-1.5 rounded-xl border border-[#EADBCE]/80 inline-block font-medium">
               {service.suitableFor}
             </p>
           </div>
 
           {/* Inclusions highlights */}
           {inclusionsList.length > 0 && (
-            <div className="mt-4">
-              <span className="text-[11px] font-semibold text-[#8F3D30] uppercase tracking-wider block mb-2">
-                What's Included
+            <div className="mt-4 pt-3.5 border-t border-[#FAF5EE]">
+              <span className="text-[10px] font-bold text-[#8F3D30] uppercase tracking-wider block mb-2">
+                What&apos;s Included
               </span>
-              <ul className="space-y-1.5 text-xs text-[#241416]/80">
+              <ul className="space-y-2 text-xs text-[#241416]/80">
                 {inclusionsList.slice(0, 4).map((inc, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <Check className="w-3.5 h-3.5 text-[#C5A059] shrink-0 mt-0.5" />
@@ -122,16 +124,16 @@ export default function ServiceCard({ service }: { service: ServiceData }) {
 
           {/* Travel & Availability Notes */}
           {(service.travelDetails || service.availabilityNotes) && (
-            <div className="mt-4 pt-3 border-t border-[#FAF5EE] text-xs text-[#241416]/70 space-y-1">
+            <div className="mt-4 pt-3.5 border-t border-[#FAF5EE] text-xs text-[#241416]/70 space-y-1.5">
               {service.travelDetails && (
                 <p className="flex items-center gap-1.5">
-                  <MapPin className="w-3 h-3 text-[#C5A059] shrink-0" />
+                  <MapPin className="w-3.5 h-3.5 text-[#2D4A3E] shrink-0" />
                   <span>{service.travelDetails}</span>
                 </p>
               )}
               {service.availabilityNotes && (
                 <p className="flex items-center gap-1.5 text-[#8F3D30]">
-                  <Sparkles className="w-3 h-3 shrink-0" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
                   <span>{service.availabilityNotes}</span>
                 </p>
               )}
@@ -140,11 +142,11 @@ export default function ServiceCard({ service }: { service: ServiceData }) {
         </div>
       </div>
 
-      {/* Footer Pricing & CTA */}
-      <div className="p-6 pt-0 mt-2">
-        <div className="pt-4 border-t border-[#EADBCE] flex items-center justify-between">
+      {/* Footer Pricing & Elevated CTA */}
+      <div className="p-6 sm:p-7 pt-0 mt-2">
+        <div className="pt-4 border-t border-[#EADBCE] flex items-center justify-between gap-4">
           <div>
-            <span className="text-[11px] text-[#241416]/60 block">Price Guide</span>
+            <span className="text-[11px] text-[#241416]/60 block font-medium">Investment Guide</span>
             <span className="font-serif text-lg font-bold text-[#8F3D30]">
               {formatPrice()}
             </span>
@@ -152,14 +154,13 @@ export default function ServiceCard({ service }: { service: ServiceData }) {
 
           <a
             href={`/enquire?service=${service.id}`}
-            className="inline-flex items-center gap-1.5 bg-[#FAF5EE] hover:bg-[#B35D4D] text-[#8F3D30] hover:text-white border border-[#C5A059]/40 hover:border-[#B35D4D] px-4 py-2 rounded-xl text-xs font-semibold shadow-xs transition-colors group/btn"
+            className="btn-elevated-primary text-xs px-4 py-2.5 gap-1.5 group/btn"
           >
             <span>Enquire</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+            <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
           </a>
         </div>
       </div>
     </div>
   );
 }
-

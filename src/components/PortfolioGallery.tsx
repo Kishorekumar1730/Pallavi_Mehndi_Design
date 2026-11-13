@@ -14,45 +14,43 @@ export interface PortfolioItemData {
   featured: boolean;
   collectionYear?: string | null;
   hasClientConsent: boolean;
+  consentNotes?: string | null;
 }
 
 const CATEGORIES = [
-  { key: 'ALL', label: 'All Designs' },
+  { key: 'ALL', label: 'All Collections' },
   { key: 'BRIDAL', label: 'Bridal Artistry' },
-  { key: 'ARABIC', label: 'Arabic & Indo-Arabic' },
-  { key: 'TRADITIONAL', label: 'Traditional Rajasthani / South' },
-  { key: 'MINIMAL', label: 'Minimal & Contemporary' },
-  { key: 'FESTIVE', label: 'Festive & Baby Shower' },
-  { key: 'BESPOKE', label: 'Bespoke Custom' },
+  { key: 'ARABIC', label: 'Arabic & Floral' },
+  { key: 'TRADITIONAL', label: 'Traditional Rajasthani' },
+  { key: 'MINIMAL', label: 'Minimal Contemporary' },
+  { key: 'FESTIVE', label: 'Festive & Occasions' },
+  { key: 'BESPOKE', label: 'Bespoke Concepts' },
 ];
 
 export default function PortfolioGallery({ items }: { items: PortfolioItemData[] }) {
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const filteredItems = items.filter(
-    (item) => activeCategory === 'ALL' || item.category === activeCategory
-  );
+  const filteredItems = items.filter((item) => {
+    if (activeCategory === 'ALL') return true;
+    return item.category === activeCategory;
+  });
 
-  const openLightbox = (index: number) => {
-    setLightboxIndex(index);
-  };
+  const currentItem = lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
 
-  const closeLightbox = () => {
-    setLightboxIndex(null);
-  };
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
 
   const showNext = useCallback(() => {
     if (lightboxIndex === null) return;
-    setLightboxIndex((prev) => (prev !== null && prev < filteredItems.length - 1 ? prev + 1 : 0));
+    setLightboxIndex((prev) => ((prev! + 1) % filteredItems.length));
   }, [lightboxIndex, filteredItems.length]);
 
   const showPrev = useCallback(() => {
     if (lightboxIndex === null) return;
-    setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : filteredItems.length - 1));
+    setLightboxIndex((prev) => (prev! - 1 + filteredItems.length) % filteredItems.length);
   }, [lightboxIndex, filteredItems.length]);
 
-  // Keyboard navigation for lightbox
+  // Keyboard navigation for accessible lightbox
   useEffect(() => {
     if (lightboxIndex === null) return;
 
@@ -64,26 +62,28 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxIndex, showNext, showPrev]);
+  }, [lightboxIndex, closeLightbox, showNext, showPrev]);
 
-  const currentItem = lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+  };
 
   return (
     <div className="w-full">
       {/* Official Instagram Live Banner */}
-      <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-white border border-[#EADBCE] shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] p-0.5 shrink-0">
-            <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+      <div className="mb-8 p-5 sm:p-6 rounded-2xl bg-white border border-[#EADBCE] shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left card-floating">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] p-0.5 shrink-0 shadow-xs">
+            <div className="w-full h-full bg-white rounded-[9px] flex items-center justify-center">
               <Camera className="w-5 h-5 text-[#DD2A7B]" />
             </div>
           </div>
           <div>
-            <h4 className="font-serif text-sm font-bold text-[#241416]">
+            <h4 className="font-serif text-sm sm:text-base font-bold text-[#241416]">
               Real Mehndi Photography Archive
             </h4>
-            <p className="text-xs text-[#241416]/70">
-              Only genuine client work is shown. Browse Pallavi’s full live feed, bridal reels, and stain progressions on Instagram.
+            <p className="text-xs text-[#241416]/75">
+              Only genuine client work is shown. Explore Pallavi&apos;s full live feed, bridal reels, and stain progressions on Instagram.
             </p>
           </div>
         </div>
@@ -92,14 +92,14 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
           href="https://www.instagram.com/salem_mehandi_artist_pallavi/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] hover:bg-[#FAF5EE]/70 text-[#8F3D30] border border-[#C5A059]/40 hover:border-[#8F3D30] transition-colors shrink-0"
+          className="btn-elevated-secondary text-xs px-4 py-2 gap-1.5 shrink-0"
         >
           <span>@salem_mehandi_artist_pallavi</span>
-          <ExternalLink className="w-3.5 h-3.5" />
+          <ExternalLink className="w-3.5 h-3.5 text-[#8F3D30]" />
         </a>
       </div>
 
-      {/* Category Filter Pills */}
+      {/* Category Filter Pills (Elevated) */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.key;
@@ -110,10 +110,10 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
                 setActiveCategory(cat.key);
                 setLightboxIndex(null);
               }}
-              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#B35D4D] text-white shadow-sm'
-                  : 'bg-[#FAF5EE] text-[#241416]/80 hover:bg-[#EADBCE] border border-[#EADBCE]'
+                  ? 'btn-elevated-primary'
+                  : 'btn-elevated-secondary'
               }`}
             >
               {cat.label}
@@ -122,7 +122,7 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
         })}
       </div>
 
-      {/* Portfolio Grid */}
+      {/* Portfolio Grid (Lightly Floating Cards) */}
       {filteredItems.length === 0 ? (
         <div className="text-center py-16 bg-[#FAF5EE] rounded-2xl border border-dashed border-[#EADBCE]">
           <Sparkles className="w-8 h-8 text-[#C5A059] mx-auto mb-2 opacity-60" />
@@ -134,7 +134,7 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
             <div
               key={item.id}
               onClick={() => openLightbox(index)}
-              className="group relative bg-[#FFFFFF] rounded-2xl border border-[#EADBCE] overflow-hidden shadow-xs hover:shadow-xl hover:border-[#C5A059] transition-all duration-300 cursor-pointer flex flex-col"
+              className="card-floating group overflow-hidden cursor-pointer flex flex-col focus-visible:ring-2 focus-visible:ring-[#C5A059] focus-visible:outline-none"
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
@@ -145,22 +145,22 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
               }}
               aria-label={`View full details of ${item.title}`}
             >
-              <div className="relative aspect-4/5 overflow-hidden bg-[#FAF5EE]">
+              <div className="relative aspect-4/5 overflow-hidden bg-[#FAF5EE] border-b border-[#EADBCE]">
                 <img
                   src={item.imageUrl}
                   alt={item.altText}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#241416]/80 via-[#241416]/20 to-transparent opacity-60 group-hover:opacity-85 transition-opacity" />
 
                 {/* Badges */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                  <span className="text-[11px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-[#FAF5EE]/90 backdrop-blur-xs text-[#8F3D30]">
+                  <span className="text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-[#FAF5EE]/95 backdrop-blur-xs text-[#8F3D30] border border-[#EADBCE] shadow-xs">
                     {item.category}
                   </span>
                   {item.collectionYear && (
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-black/50 text-[#E6C875] backdrop-blur-xs">
+                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#241416]/75 text-[#E6C875] backdrop-blur-xs border border-white/10 shadow-xs">
                       {item.collectionYear}
                     </span>
                   )}
@@ -168,37 +168,32 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
 
                 {/* Hover overlay hint */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="inline-flex items-center gap-1.5 bg-[#FAF5EE]/90 text-[#241416] px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-md">
-                    <Eye className="w-3.5 h-3.5 text-[#B35D4D]" />
+                  <span className="btn-elevated-secondary text-xs px-4 py-2 gap-1.5 shadow-md">
+                    <Eye className="w-3.5 h-3.5 text-[#8F3D30]" />
                     <span>View In Lightbox</span>
                   </span>
                 </div>
 
                 {/* Bottom title on image */}
-                <div className="absolute bottom-3 left-3 right-3 text-white">
+                <div className="absolute bottom-3.5 left-3.5 right-3.5 text-white">
                   <h4 className="font-serif text-lg font-bold leading-tight drop-shadow-sm">
                     {item.title}
                   </h4>
-                  {item.titleTa && (
-                    <p className="text-xs text-[#E6C875] mt-0.5 drop-shadow-sm">
-                      {item.titleTa}
-                    </p>
-                  )}
                 </div>
               </div>
 
               {/* Caption excerpt */}
               {item.caption && (
-                <div className="p-4 bg-white flex-1 flex flex-col justify-between">
+                <div className="p-5 bg-white flex-1 flex flex-col justify-between">
                   <p className="text-xs text-[#241416]/75 line-clamp-2 leading-relaxed">
                     {item.caption}
                   </p>
-                  <div className="mt-2 pt-2 border-t border-[#FAF5EE] flex items-center justify-between text-[11px] text-[#241416]/50">
+                  <div className="mt-3 pt-2.5 border-t border-[#FAF5EE] flex items-center justify-between text-[11px] text-[#241416]/55">
                     <span className="flex items-center gap-1">
-                      <ShieldCheck className="w-3 h-3 text-[#C5A059]" />
-                      <span>Consented Portfolio</span>
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>Consented Work</span>
                     </span>
-                    <span className="text-[#8F3D30] font-medium">Click to expand</span>
+                    <span className="text-[#8F3D30] font-semibold group-hover:underline">Click to view</span>
                   </div>
                 </div>
               )}
@@ -210,21 +205,21 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
       {/* Accessible Lightbox Modal */}
       {currentItem && lightboxIndex !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
           aria-label="Image Lightbox"
           onClick={closeLightbox}
         >
           <div
-            className="relative max-w-4xl w-full max-h-[92vh] bg-[#FAF5EE] rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
+            className="relative max-w-4xl w-full max-h-[92vh] bg-[#FAF5EE] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row border border-[#EADBCE]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={closeLightbox}
               aria-label="Close Lightbox"
-              className="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="absolute top-3.5 right-3.5 z-20 w-9 h-9 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -269,7 +264,7 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
             <div className="md:w-2/5 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#B35D4D] text-white">
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#8F3D30] text-white">
                     {currentItem.category}
                   </span>
                   {currentItem.collectionYear && (
@@ -282,11 +277,6 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
                 <h3 className="font-serif text-2xl font-bold text-[#241416]">
                   {currentItem.title}
                 </h3>
-                {currentItem.titleTa && (
-                  <p className="text-sm text-[#8F3D30] font-medium">
-                    {currentItem.titleTa}
-                  </p>
-                )}
 
                 {currentItem.caption && (
                   <p className="text-sm text-[#241416]/80 leading-relaxed pt-2 border-t border-[#EADBCE]">
@@ -294,7 +284,7 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
                   </p>
                 )}
 
-                <div className="bg-white p-3 rounded-xl border border-[#EADBCE] text-xs text-[#241416]/75 space-y-1">
+                <div className="bg-white p-3.5 rounded-xl border border-[#EADBCE] text-xs text-[#241416]/75 space-y-1">
                   <span className="font-semibold text-[#8F3D30] block">Image Description / Alt:</span>
                   <p className="italic">{currentItem.altText}</p>
                 </div>
@@ -308,7 +298,7 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
               <div className="pt-6 mt-6 border-t border-[#EADBCE] space-y-2.5">
                 <a
                   href={`/enquire?style=${encodeURIComponent(currentItem.title)}`}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-[#B35D4D] hover:bg-[#8F3D30] text-white font-medium py-2.5 px-4 rounded-xl text-sm transition-colors shadow-sm"
+                  className="w-full btn-elevated-primary py-3 px-4 text-xs gap-2"
                 >
                   <Sparkles className="w-4 h-4 text-[#E6C875]" />
                   <span>Enquire for a Similar Style</span>
@@ -318,7 +308,7 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
                   href="https://www.instagram.com/salem_mehandi_artist_pallavi/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 border border-[#C5A059] hover:bg-[#FAF5EE] text-[#241416] font-medium py-2 px-4 rounded-xl text-xs transition-colors"
+                  className="w-full btn-elevated-secondary py-2.5 px-4 text-xs gap-2"
                 >
                   <Camera className="w-4 h-4 text-[#8F3D30]" />
                   <span>View Authentic Work on Instagram</span>
@@ -335,4 +325,3 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
     </div>
   );
 }
-

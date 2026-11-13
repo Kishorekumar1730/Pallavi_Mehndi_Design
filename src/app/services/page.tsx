@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import ServiceCard from '@/components/ServiceCard';
 import { Sparkles, CalendarCheck, HelpCircle, FileText, MapPin, Clock } from 'lucide-react';
 
+export const revalidate = 60;
 
 export default async function ServicesPage() {
   const settings = await prisma.businessSettings.findUnique({
@@ -27,6 +28,7 @@ export default async function ServicesPage() {
   const serviceArea = settings?.serviceArea || 'Salem, Tamil Nadu & Destination Travel';
   const phone = settings?.phone || '+91 98765 43210';
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
+  const backgroundThemeUrl = settings?.backgroundThemeUrl;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7]">
@@ -39,9 +41,16 @@ export default async function ServicesPage() {
 
       <main className="flex-1">
         {/* Page Header */}
-        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/60 text-center">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/80 text-center relative overflow-hidden">
+          {backgroundThemeUrl ? (
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-[0.05] mix-blend-multiply pointer-events-none"
+              style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
+            />
+          ) : null}
+
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative z-10">
+            <span className="heritage-pill text-xs">
               Studio Catalog &amp; Investment Guide
             </span>
             <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#241416]">
@@ -62,11 +71,6 @@ export default async function ServicesPage() {
                   <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#241416]">
                     {cat.name}
                   </h2>
-                  {cat.nameTa && (
-                    <span className="text-xs text-[#8F3D30] font-semibold bg-[#FAF5EE] px-2.5 py-1 rounded-full border border-[#EADBCE]">
-                      {cat.nameTa}
-                    </span>
-                  )}
                 </div>
                 {cat.description && (
                   <p className="text-xs sm:text-sm text-[#241416]/70 mt-1 max-w-3xl">
@@ -84,7 +88,7 @@ export default async function ServicesPage() {
                       key={service.id}
                       service={{
                         ...service,
-                        category: { name: cat.name, nameTa: cat.nameTa },
+                        category: { name: cat.name },
                       }}
                     />
                   ))}
@@ -95,10 +99,10 @@ export default async function ServicesPage() {
         </section>
 
         {/* What Information We Need for a Bespoke Quote */}
-        <section className="py-16 bg-[#FAF5EE] border-t border-[#EADBCE]/60">
+        <section className="py-16 bg-[#FAF5EE] border-t border-[#EADBCE]/80">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+              <span className="heritage-pill text-xs">
                 Planning Your Booking
               </span>
               <h2 className="font-serif text-3xl font-bold text-[#241416]">
@@ -110,8 +114,8 @@ export default async function ServicesPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white p-5 rounded-2xl border border-[#EADBCE] space-y-2">
-                <span className="w-8 h-8 rounded-full bg-[#FAF5EE] text-[#B35D4D] font-bold text-xs flex items-center justify-center border border-[#C5A059]/40">
+              <div className="card-floating p-6 space-y-2.5 text-center sm:text-left">
+                <span className="w-8 h-8 rounded-full bg-[#FAF5EE] text-[#8F3D30] font-bold text-xs flex items-center justify-center border border-[#C5A059]/40 shadow-xs mx-auto sm:mx-0">
                   1
                 </span>
                 <h4 className="font-serif text-base font-bold text-[#241416]">Exact Event Date</h4>
@@ -120,8 +124,8 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="bg-white p-5 rounded-2xl border border-[#EADBCE] space-y-2">
-                <span className="w-8 h-8 rounded-full bg-[#FAF5EE] text-[#B35D4D] font-bold text-xs flex items-center justify-center border border-[#C5A059]/40">
+              <div className="card-floating p-6 space-y-2.5 text-center sm:text-left">
+                <span className="w-8 h-8 rounded-full bg-[#FAF5EE] text-[#8F3D30] font-bold text-xs flex items-center justify-center border border-[#C5A059]/40 shadow-xs mx-auto sm:mx-0">
                   2
                 </span>
                 <h4 className="font-serif text-base font-bold text-[#241416]">Venue Location</h4>
@@ -130,8 +134,8 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="bg-white p-5 rounded-2xl border border-[#EADBCE] space-y-2">
-                <span className="w-8 h-8 rounded-full bg-[#FAF5EE] text-[#B35D4D] font-bold text-xs flex items-center justify-center border border-[#C5A059]/40">
+              <div className="card-floating p-6 space-y-2.5 text-center sm:text-left">
+                <span className="w-8 h-8 rounded-full bg-[#FAF5EE] text-[#8F3D30] font-bold text-xs flex items-center justify-center border border-[#C5A059]/40 shadow-xs mx-auto sm:mx-0">
                   3
                 </span>
                 <h4 className="font-serif text-base font-bold text-[#241416]">Coverage Scope</h4>
@@ -140,8 +144,8 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="bg-white p-5 rounded-2xl border border-[#EADBCE] space-y-2">
-                <span className="w-8 h-8 rounded-full bg-[#FAF5EE] text-[#B35D4D] font-bold text-xs flex items-center justify-center border border-[#C5A059]/40">
+              <div className="card-floating p-6 space-y-2.5 text-center sm:text-left">
+                <span className="w-8 h-8 rounded-full bg-[#FAF5EE] text-[#8F3D30] font-bold text-xs flex items-center justify-center border border-[#C5A059]/40 shadow-xs mx-auto sm:mx-0">
                   4
                 </span>
                 <h4 className="font-serif text-base font-bold text-[#241416]">Style Vision</h4>
@@ -154,7 +158,7 @@ export default async function ServicesPage() {
             <div className="text-center pt-10">
               <a
                 href="/enquire"
-                className="inline-flex items-center gap-2 bg-[#B35D4D] hover:bg-[#8F3D30] text-white font-medium text-sm px-8 py-3.5 rounded-full shadow-md transition-all"
+                className="btn-elevated-primary text-sm px-8 py-3.5 gap-2"
               >
                 <CalendarCheck className="w-4 h-4 text-[#E6C875]" />
                 <span>Submit Your Date Enquiry</span>

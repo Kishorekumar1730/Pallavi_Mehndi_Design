@@ -30,6 +30,7 @@ model BusinessSettings {
   taglineTa           String   @default("பாரம்பரியம் மற்றும் சமகால மருதாணி கலை")
   heroHeadline        String?  @default("Bespoke Bridal & Contemporary Henna Artistry")
   heroImageUrl        String?
+  backgroundThemeUrl  String?
   artistImageUrl      String?  @default("/placeholders/artist-portrait.svg")
   serviceArea         String   @default("Salem, Tamil Nadu & Destination Travel")
   serviceAreaTa       String   @default("சேலம் மற்றும் அனைத்து இடங்களுக்கும் பயணம்")

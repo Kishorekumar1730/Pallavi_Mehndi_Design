@@ -9,44 +9,43 @@ import {
   Sparkles,
   CalendarCheck,
   ShieldCheck,
-  CheckCircle,
-  MapPin,
+  Award,
   Clock,
+  MapPin,
   ArrowRight,
-  Heart,
   Droplets,
   Star,
-  Award,
 } from 'lucide-react';
 
+export const revalidate = 60;
 
 export default async function HomePage() {
-  // Load business settings
-  const settings = await prisma.businessSettings.findUnique({
-    where: { id: 'default-settings' },
-  });
-
-  // Load featured services
-  const featuredServices = await prisma.service.findMany({
-    where: { isPublished: true, isFeatured: true },
-    include: { category: true },
-    orderBy: { displayOrder: 'asc' },
-    take: 3,
-  });
-
-  // Load featured portfolio items
-  const featuredPortfolio = await prisma.portfolioItem.findMany({
-    where: { published: true, featured: true },
-    orderBy: { displayOrder: 'asc' },
-    take: 6,
-  });
-
-  // Load approved testimonials only!
-  const approvedTestimonials = await prisma.testimonial.findMany({
-    where: { isApproved: true },
-    orderBy: { displayOrder: 'asc' },
-    take: 3,
-  });
+  const [settings, featuredServices, featuredPortfolio, approvedTestimonials] =
+    await Promise.all([
+      prisma.businessSettings.findUnique({
+        where: { id: 'default-settings' },
+      }),
+      prisma.service.findMany({
+        where: { isPublished: true, isFeatured: true },
+        orderBy: { displayOrder: 'asc' },
+        take: 3,
+        include: {
+          category: {
+            select: { name: true, nameTa: true },
+          },
+        },
+      }),
+      prisma.portfolioItem.findMany({
+        where: { published: true, featured: true },
+        orderBy: { displayOrder: 'asc' },
+        take: 6,
+      }),
+      prisma.testimonial.findMany({
+        where: { isApproved: true },
+        orderBy: { displayOrder: 'asc' },
+        take: 3,
+      }),
+    ]);
 
   const businessName = settings?.businessName || 'Pallavi Mehndi Artistry';
   const tagline = settings?.tagline || 'Bespoke Bridal & Contemporary Henna Artistry';
@@ -54,6 +53,7 @@ export default async function HomePage() {
   const phone = settings?.phone || '+91 98765 43210';
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
   const instagramUrl = settings?.instagramUrl || 'https://www.instagram.com/salem_mehandi_artist_pallavi/';
+  const backgroundThemeUrl = settings?.backgroundThemeUrl;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -93,20 +93,27 @@ export default async function HomePage() {
 
       <main className="flex-1">
         {/* ================= HERO SECTION ================= */}
-        <section className="relative overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-24 border-b border-[#EADBCE]/60">
-          {/* Subtle background decoration */}
-          <div className="absolute inset-0 mandala-bg-subtle opacity-30 pointer-events-none" />
+        <section className="relative overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-24 border-b border-[#EADBCE]/80">
+          {/* Authentic Henna Background Theme Overlay (Only when owner uploads authentic photo) */}
+          {backgroundThemeUrl ? (
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-[0.06] mix-blend-multiply pointer-events-none z-0"
+              style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
+            />
+          ) : null}
+
+          {/* Traditional Ambient Layering */}
           <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#E6C875]/15 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-[#B35D4D]/10 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-[#8F3D30]/10 blur-3xl pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
               {/* Left Column: Brand copy and actions */}
               <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-                {/* Organic badge */}
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF5EE] border border-[#C5A059]/40 text-[#8F3D30] text-xs font-semibold shadow-xs">
-                  <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-                  <span>100% Hand-Blended Organic Henna • Pure Essential Oils</span>
+                {/* Heritage organic badge */}
+                <div className="heritage-pill-green">
+                  <Sparkles className="w-3.5 h-3.5 text-[#2D4A3E]" />
+                  <span>100% Hand-Blended Organic Henna • Pure Botanical Oils</span>
                 </div>
 
                 <div className="space-y-3">
@@ -117,16 +124,16 @@ export default async function HomePage() {
                     </span>
                   </h1>
 
-                  <p className="text-base sm:text-lg text-[#241416]/75 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+                  <p className="text-base sm:text-lg text-[#241416]/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
                     Exquisite bespoke bridal adornment and celebration mehndi crafted with intentional precision. Based in {serviceArea}.
                   </p>
                 </div>
 
-                {/* CTAs */}
+                {/* CTAs (Polished Raised & Floating Buttons) */}
                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                   <a
                     href="/enquire"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#B35D4D] hover:bg-[#8F3D30] text-white font-medium text-sm px-7 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all group"
+                    className="w-full sm:w-auto btn-elevated-primary text-sm px-8 py-3.5 gap-2.5 group"
                   >
                     <CalendarCheck className="w-4 h-4 text-[#E6C875] group-hover:scale-110 transition-transform" />
                     <span>Enquire About Your Date</span>
@@ -134,32 +141,32 @@ export default async function HomePage() {
 
                   <a
                     href="/portfolio"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#C5A059] hover:bg-[#FAF5EE] text-[#241416] font-medium text-sm px-6 py-3.5 rounded-full transition-colors"
+                    className="w-full sm:w-auto btn-elevated-secondary text-sm px-7 py-3.5 gap-2"
                   >
                     <span>View Selected Works</span>
-                    <ArrowRight className="w-4 h-4 text-[#C5A059]" />
+                    <ArrowRight className="w-4 h-4 text-[#8F3D30]" />
                   </a>
                 </div>
 
                 {/* Visible Booking disclaimer */}
                 <div className="pt-2">
-                  <p className="text-xs text-[#241416]/60 flex items-center justify-center lg:justify-start gap-2 bg-[#FAF5EE] p-2.5 rounded-xl border border-[#EADBCE]/80 max-w-lg mx-auto lg:mx-0">
+                  <p className="text-xs text-[#241416]/70 flex items-center justify-center lg:justify-start gap-2 bg-[#FAF5EE] p-3 rounded-2xl border border-[#EADBCE] max-w-lg mx-auto lg:mx-0 shadow-xs">
                     <ShieldCheck className="w-4 h-4 text-[#C5A059] shrink-0" />
                     <span>
-                      <strong>Notice:</strong> Submitting a request sends an enquiry. Dates are confirmed only after personal artist consultation and advance deposit.
+                      <strong className="text-[#241416]">Notice:</strong> Submitting a request sends an enquiry. Dates are confirmed only after personal artist consultation and advance deposit.
                     </span>
                   </p>
                 </div>
 
                 {/* Service Area Pill */}
-                <div className="flex items-center justify-center lg:justify-start gap-4 pt-2 text-xs text-[#241416]/70">
-                  <span className="flex items-center gap-1.5 font-medium">
-                    <MapPin className="w-4 h-4 text-[#B35D4D]" />
+                <div className="flex items-center justify-center lg:justify-start gap-4 pt-2 text-xs text-[#241416]/75">
+                  <span className="flex items-center gap-1.5 font-semibold">
+                    <MapPin className="w-4 h-4 text-[#8F3D30]" />
                     <span>{serviceArea}</span>
                   </span>
-                  <span className="text-[#EADBCE]">•</span>
-                  <span className="flex items-center gap-1.5 font-medium">
-                    <Award className="w-4 h-4 text-[#C5A059]" />
+                  <span className="text-[#C5A059]">✦</span>
+                  <span className="flex items-center gap-1.5 font-semibold">
+                    <Award className="w-4 h-4 text-[#2D4A3E]" />
                     <span>Zero Chemicals / No PPD</span>
                   </span>
                 </div>
@@ -178,11 +185,23 @@ export default async function HomePage() {
         </section>
 
         {/* ================= THE PALLAVI PHILOSOPHY & INGREDIENTS ================= */}
-        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/60">
+        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/80 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+              <span className="heritage-pill text-xs">
+                Sacred Botanical Heritage
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#241416]">
+                Pure Ingredients &amp; Safe Application
+              </h2>
+              <p className="text-xs sm:text-sm text-[#241416]/75">
+                Every batch of henna is prepared by hand with organic Rajasthani leaf powder and pure aromatherapeutic oils.
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-7 rounded-2xl border border-[#EADBCE] shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-[#FAF5EE] border border-[#C5A059]/40 flex items-center justify-center text-[#B35D4D]">
+              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-[#FAF5EE] border border-[#C5A059]/40 flex items-center justify-center text-[#8F3D30] shadow-xs">
                   <Droplets className="w-6 h-6 text-[#8F3D30]" />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-[#241416]">
@@ -193,8 +212,8 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              <div className="bg-white p-7 rounded-2xl border border-[#EADBCE] shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-[#FAF5EE] border border-[#C5A059]/40 flex items-center justify-center text-[#B35D4D]">
+              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-[#FAF5EE] border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059] shadow-xs">
                   <Sparkles className="w-6 h-6 text-[#C5A059]" />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-[#241416]">
@@ -205,12 +224,12 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              <div className="bg-white p-7 rounded-2xl border border-[#EADBCE] shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-[#FAF5EE] border border-[#C5A059]/40 flex items-center justify-center text-[#B35D4D]">
-                  <ShieldCheck className="w-6 h-6 text-[#8F3D30]" />
+              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-[#FAF5EE] border border-[#C5A059]/40 flex items-center justify-center text-[#2D4A3E] shadow-xs">
+                  <ShieldCheck className="w-6 h-6 text-[#2D4A3E]" />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-[#241416]">
-                  Dedicated Safety & Care
+                  Dedicated Safety &amp; Care
                 </h3>
                 <p className="text-xs sm:text-sm text-[#241416]/75 leading-relaxed">
                   Single-use cones for hygiene, skin patch-testing upon request, and comprehensive aftercare sealant balm provided to guarantee a deep, luminous mahogany stain.
@@ -224,7 +243,7 @@ export default async function HomePage() {
         <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+              <span className="heritage-pill text-xs">
                 Artistic Offerings
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#241416]">
@@ -238,10 +257,10 @@ export default async function HomePage() {
             <div className="mt-4 md:mt-0">
               <a
                 href="/services"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8F3D30] hover:text-[#241416] transition-colors"
+                className="btn-elevated-secondary text-xs px-5 py-2.5 gap-2"
               >
                 <span>View All Services &amp; Inclusions</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#8F3D30]" />
               </a>
             </div>
           </div>
@@ -254,11 +273,11 @@ export default async function HomePage() {
         </section>
 
         {/* ================= NATURAL STAIN PROGRESSION TIMELINE ================= */}
-        <section className="py-16 bg-[#FAF5EE] border-y border-[#EADBCE]/60">
+        <section className="py-16 bg-[#FAF5EE] border-y border-[#EADBCE]/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
-                The Magic of Natural Henna
+              <span className="heritage-pill text-xs">
+                The Science of Natural Henna
               </span>
               <h2 className="font-serif text-3xl font-bold text-[#241416]">
                 Stain Maturation Timeline
@@ -269,33 +288,33 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-white p-6 rounded-2xl border border-[#EADBCE] text-center space-y-2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAF5EE] text-[#C5A059]">
+              <div className="card-floating p-6 sm:p-7 text-center space-y-2.5">
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAF5EE] text-[#C5A059] border border-[#EADBCE]">
                   Hour 0 - 12 (Application)
                 </span>
-                <div className="w-12 h-12 rounded-full bg-[#F4A261] mx-auto my-3 border-2 border-white shadow-inner" />
+                <div className="w-12 h-12 rounded-full bg-[#F4A261] mx-auto my-3 border-2 border-white shadow-md" />
                 <h4 className="font-serif text-base font-bold text-[#241416]">Bright Pumpkin Orange</h4>
                 <p className="text-xs text-[#241416]/70 leading-relaxed">
                   Upon paste removal, the design appears bright orange. Do not wash with water; apply natural post-care balm.
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-[#EADBCE] text-center space-y-2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAF5EE] text-[#B35D4D]">
+              <div className="card-floating p-6 sm:p-7 text-center space-y-2.5">
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAF5EE] text-[#8F3D30] border border-[#EADBCE]">
                   Hour 24 - 36 (Oxidation)
                 </span>
-                <div className="w-12 h-12 rounded-full bg-[#9E2A2B] mx-auto my-3 border-2 border-white shadow-inner" />
+                <div className="w-12 h-12 rounded-full bg-[#9E2A2B] mx-auto my-3 border-2 border-white shadow-md" />
                 <h4 className="font-serif text-base font-bold text-[#241416]">Deepening Crimson Red</h4>
                 <p className="text-xs text-[#241416]/70 leading-relaxed">
                   Natural essential oils react with body heat, transforming the orange into a rich warm crimson.
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-[#EADBCE] text-center space-y-2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAF5EE] text-[#8F3D30]">
+              <div className="card-floating p-6 sm:p-7 text-center space-y-2.5">
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#2D4A3E] text-white">
                   Hour 48+ (Peak Color)
                 </span>
-                <div className="w-12 h-12 rounded-full bg-[#49111C] mx-auto my-3 border-2 border-white shadow-inner" />
+                <div className="w-12 h-12 rounded-full bg-[#49111C] mx-auto my-3 border-2 border-white shadow-md" />
                 <h4 className="font-serif text-base font-bold text-[#241416]">Rich Mahogany / Burgundy</h4>
                 <p className="text-xs text-[#241416]/70 leading-relaxed">
                   Peak stain for your wedding ceremony! Lasts 1 to 2 weeks with gentle moisturizing and care.
@@ -309,7 +328,7 @@ export default async function HomePage() {
         <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+              <span className="heritage-pill text-xs">
                 Design Archive
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#241416]">
@@ -323,10 +342,10 @@ export default async function HomePage() {
             <div className="mt-4 md:mt-0">
               <a
                 href="/portfolio"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8F3D30] hover:text-[#241416] transition-colors"
+                className="btn-elevated-secondary text-xs px-5 py-2.5 gap-2"
               >
                 <span>View Full Gallery &amp; Lightbox</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#8F3D30]" />
               </a>
             </div>
           </div>
@@ -334,12 +353,12 @@ export default async function HomePage() {
           <PortfolioGallery items={featuredPortfolio} />
         </section>
 
-        {/* ================= APPROVED CLIENT TESTIMONIALS ================= */}
+        {/* ================= APPROVED CLIENT TESTIMONIALS (ENGLISH ONLY) ================= */}
         {approvedTestimonials.length > 0 && (
-          <section className="py-20 bg-[#FAF5EE] border-t border-[#EADBCE]/60">
+          <section className="py-20 bg-[#FAF5EE] border-t border-[#EADBCE]/80">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+                <span className="heritage-pill text-xs">
                   Client Experiences
                 </span>
                 <h2 className="font-serif text-3xl font-bold text-[#241416]">
@@ -354,7 +373,7 @@ export default async function HomePage() {
                 {approvedTestimonials.map((t) => (
                   <div
                     key={t.id}
-                    className="bg-white p-7 rounded-2xl border border-[#EADBCE] shadow-xs flex flex-col justify-between"
+                    className="card-floating p-7 sm:p-8 flex flex-col justify-between"
                   >
                     <div className="space-y-3">
                       <div className="flex items-center gap-1 text-[#C5A059]">
@@ -362,14 +381,9 @@ export default async function HomePage() {
                           <Star key={i} className="w-4 h-4 fill-current" />
                         ))}
                       </div>
-                      <p className="text-xs sm:text-sm text-[#241416]/80 italic leading-relaxed">
-                        "{t.quote}"
+                      <p className="text-xs sm:text-sm text-[#241416]/85 italic leading-relaxed">
+                        &ldquo;{t.quote}&rdquo;
                       </p>
-                      {t.quoteTa && (
-                        <p className="text-xs text-[#8F3D30] font-medium pt-1">
-                          "{t.quoteTa}"
-                        </p>
-                      )}
                     </div>
 
                     <div className="pt-4 mt-4 border-t border-[#FAF5EE] flex items-center justify-between text-xs">
@@ -387,23 +401,30 @@ export default async function HomePage() {
         )}
 
         {/* ================= FINAL BOOKING CALLOUT BANNER ================= */}
-        <section className="py-16 sm:py-20 bg-[#241416] text-[#FAF5EE] relative overflow-hidden">
-          <div className="absolute inset-0 mandala-bg-subtle opacity-10 pointer-events-none" />
+        <section className="py-18 sm:py-24 bg-[#241416] text-[#FAF5EE] relative overflow-hidden">
+          {/* Subtle Henna Background Watermark */}
+          {backgroundThemeUrl ? (
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-10 mix-blend-overlay pointer-events-none"
+              style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
+            />
+          ) : null}
+
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#E6C875]">
+            <span className="heritage-pill text-xs bg-white/10 text-[#E6C875] border-[#C5A059]/40">
               Planning Your Wedding or Celebration?
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
-              Let's Create Timeless Ephemeral Art for Your Special Date
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
+              Let&apos;s Create Timeless Ephemeral Art for Your Special Date
             </h2>
-            <p className="text-sm sm:text-base text-[#FAF5EE]/80 max-w-xl mx-auto leading-relaxed font-light">
+            <p className="text-sm sm:text-base text-[#FAF5EE]/85 max-w-xl mx-auto leading-relaxed font-light">
               We recommend reserving 3 to 6 months in advance for auspicious muhurtham dates. Check availability and receive a tailored quote today.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
               <a
                 href="/enquire"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#B35D4D] hover:bg-[#8F3D30] text-white font-medium text-sm px-8 py-3.5 rounded-full shadow-lg transition-all"
+                className="w-full sm:w-auto btn-elevated-primary text-sm px-9 py-3.5 gap-2"
               >
                 <CalendarCheck className="w-4 h-4 text-[#E6C875]" />
                 <span>Check Date Availability</span>
@@ -413,14 +434,14 @@ export default async function HomePage() {
                 href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#C5A059] hover:bg-white/10 text-[#FAF5EE] font-medium text-sm px-6 py-3.5 rounded-full transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#C5A059] hover:bg-white/10 text-[#FAF5EE] font-semibold text-sm px-7 py-3.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0.5 transition-all"
               >
                 <Sparkles className="w-4 h-4 text-[#C5A059]" />
                 <span>Quick WhatsApp Query</span>
               </a>
             </div>
 
-            <p className="text-[11px] text-[#FAF5EE]/50 pt-2">
+            <p className="text-[11px] text-[#FAF5EE]/60 pt-2">
               All bookings are verified personally by the artist before confirmation.
             </p>
           </div>

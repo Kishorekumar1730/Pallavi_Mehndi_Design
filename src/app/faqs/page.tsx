@@ -14,6 +14,7 @@ import {
   MapPin,
 } from 'lucide-react';
 
+export const revalidate = 60;
 
 export default async function FaqsPage() {
   const settings = await prisma.businessSettings.findUnique({
@@ -30,6 +31,7 @@ export default async function FaqsPage() {
   const serviceArea = settings?.serviceArea || 'Salem, Tamil Nadu & Destination Travel';
   const phone = settings?.phone || '+91 98765 43210';
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
+  const backgroundThemeUrl = settings?.backgroundThemeUrl;
   const cancellationPolicy =
     settings?.cancellationPolicy ||
     'Cancellations made 14 days prior to the event are eligible for a partial credit voucher. Deposits are non-refundable to secure the dedicated date.';
@@ -54,9 +56,16 @@ export default async function FaqsPage() {
 
       <main className="flex-1">
         {/* Header */}
-        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/60 text-center">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+        <section className="py-16 sm:py-20 bg-[#FAF5EE] border-b border-[#EADBCE]/80 text-center relative overflow-hidden">
+          {backgroundThemeUrl ? (
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-[0.05] mix-blend-multiply pointer-events-none"
+              style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
+            />
+          ) : null}
+
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative z-10">
+            <span className="heritage-pill text-xs">
               Clarity &amp; Transparency
             </span>
             <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#241416]">
@@ -71,11 +80,14 @@ export default async function FaqsPage() {
         {/* FAQs Section */}
         <section className="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center sm:text-left">
+            <span className="heritage-pill text-xs mb-2">
+              Frequently Asked Questions
+            </span>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#241416]">
-              Questions &amp; Answers
+              Everything You Need to Know
             </h2>
             <p className="text-xs sm:text-sm text-[#241416]/70 mt-1">
-              Tap any topic to read our approach to bridal adornment and henna care.
+              Select any topic below to explore our approach to bridal adornment and natural henna care.
             </p>
           </div>
 
@@ -83,28 +95,18 @@ export default async function FaqsPage() {
             {faqs.map((faq) => (
               <details
                 key={faq.id}
-                className="group bg-white rounded-2xl border border-[#EADBCE] p-6 shadow-xs [&_summary::-webkit-details-marker]:none cursor-pointer open:border-[#C5A059] transition-all"
+                className="card-floating p-6 [&_summary::-webkit-details-marker]:none cursor-pointer open:border-[#C5A059] transition-all"
               >
                 <summary className="flex items-center justify-between text-base font-semibold text-[#241416] group-open:text-[#8F3D30] list-none">
-                  <div className="space-y-1 pr-4">
+                  <div className="pr-4">
                     <span>{faq.question}</span>
-                    {faq.questionTa && (
-                      <span className="block text-xs text-[#8F3D30] font-normal">
-                        {faq.questionTa}
-                      </span>
-                    )}
                   </div>
-                  <span className="text-xl font-light text-[#C5A059] group-open:rotate-45 transition-transform shrink-0">
+                  <span className="text-xl font-light text-[#C5A059] transition-transform shrink-0">
                     +
                   </span>
                 </summary>
-                <div className="mt-4 pt-4 border-t border-[#FAF5EE] text-xs sm:text-sm text-[#241416]/80 leading-relaxed space-y-2">
+                <div className="mt-4 pt-4 border-t border-[#FAF5EE] text-xs sm:text-sm text-[#241416]/80 leading-relaxed">
                   <p>{faq.answer}</p>
-                  {faq.answerTa && (
-                    <p className="text-xs text-[#8F3D30] italic pt-1 border-t border-[#FAF5EE]">
-                      {faq.answerTa}
-                    </p>
-                  )}
                 </div>
               </details>
             ))}
@@ -112,10 +114,10 @@ export default async function FaqsPage() {
         </section>
 
         {/* Studio Policies & Terms Section */}
-        <section className="py-16 bg-[#FAF5EE] border-t border-[#EADBCE]/60">
+        <section className="py-16 bg-[#FAF5EE] border-t border-[#EADBCE]/80">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <div className="text-center space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+              <span className="heritage-pill text-xs">
                 Terms of Engagement
               </span>
               <h2 className="font-serif text-3xl font-bold text-[#241416]">
@@ -128,9 +130,9 @@ export default async function FaqsPage() {
 
             <div className="space-y-6">
               {/* Booking Confirmation Terms */}
-              <div id="booking-terms" className="bg-white p-7 rounded-2xl border border-[#EADBCE] space-y-3">
+              <div id="booking-terms" className="card-floating p-7 sm:p-8 space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#B35D4D]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30] border border-[#EADBCE]">
                     <CalendarCheck className="w-5 h-5 text-[#8F3D30]" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-[#241416]">
@@ -143,9 +145,9 @@ export default async function FaqsPage() {
               </div>
 
               {/* Deposit & Cancellation Policy */}
-              <div id="deposit-policy" className="bg-white p-7 rounded-2xl border border-[#EADBCE] space-y-3">
+              <div id="deposit-policy" className="card-floating p-7 sm:p-8 space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#B35D4D]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30] border border-[#EADBCE]">
                     <CreditCard className="w-5 h-5 text-[#8F3D30]" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-[#241416]">
@@ -162,9 +164,9 @@ export default async function FaqsPage() {
               </div>
 
               {/* Destination Travel Policy */}
-              <div id="travel-terms" className="bg-white p-7 rounded-2xl border border-[#EADBCE] space-y-3">
+              <div id="travel-terms" className="card-floating p-7 sm:p-8 space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#B35D4D]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30] border border-[#EADBCE]">
                     <MapPin className="w-5 h-5 text-[#8F3D30]" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-[#241416]">
@@ -177,9 +179,9 @@ export default async function FaqsPage() {
               </div>
 
               {/* Henna Aftercare & Stain Care */}
-              <div id="aftercare" className="bg-white p-7 rounded-2xl border border-[#C5A059]/40 shadow-xs space-y-3">
+              <div id="aftercare" className="card-floating p-7 sm:p-8 space-y-3 border-[#C5A059]/50">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#B35D4D]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30] border border-[#EADBCE]">
                     <Droplets className="w-5 h-5 text-[#8F3D30]" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-[#241416]">
@@ -189,16 +191,16 @@ export default async function FaqsPage() {
                 <div className="text-xs sm:text-sm text-[#241416]/80 leading-relaxed space-y-2">
                   <p>{aftercareGuide}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-[11px]">
-                    <div className="p-3 bg-[#FAF5EE] rounded-xl border border-[#EADBCE]">
-                      <strong className="block text-[#8F3D30] font-semibold mb-1">1. Keep Paste Intact</strong>
+                    <div className="p-3.5 bg-[#FAF5EE] rounded-2xl border border-[#EADBCE]">
+                      <strong className="block text-[#8F3D30] font-bold mb-1">1. Keep Paste Intact</strong>
                       <span>Leave paste on for 6 to 8 hours (or overnight) to allow full dye penetration.</span>
                     </div>
-                    <div className="p-3 bg-[#FAF5EE] rounded-xl border border-[#EADBCE]">
-                      <strong className="block text-[#8F3D30] font-semibold mb-1">2. Avoid Water 24h</strong>
+                    <div className="p-3.5 bg-[#FAF5EE] rounded-2xl border border-[#EADBCE]">
+                      <strong className="block text-[#8F3D30] font-bold mb-1">2. Avoid Water 24h</strong>
                       <span>Scrape gently off; do not wash with soap or water for the initial 24 hours.</span>
                     </div>
-                    <div className="p-3 bg-[#FAF5EE] rounded-xl border border-[#EADBCE]">
-                      <strong className="block text-[#8F3D30] font-semibold mb-1">3. Heat &amp; Natural Balm</strong>
+                    <div className="p-3.5 bg-[#FAF5EE] rounded-2xl border border-[#EADBCE]">
+                      <strong className="block text-[#8F3D30] font-bold mb-1">3. Heat &amp; Natural Balm</strong>
                       <span>Apply organic coconut oil or eucalyptus balm to seal and protect the developing stain.</span>
                     </div>
                   </div>
@@ -206,9 +208,9 @@ export default async function FaqsPage() {
               </div>
 
               {/* Privacy Notice */}
-              <div id="privacy-policy" className="bg-white p-7 rounded-2xl border border-[#EADBCE] space-y-3">
+              <div id="privacy-policy" className="card-floating p-7 sm:p-8 space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#B35D4D]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#FAF5EE] flex items-center justify-center text-[#8F3D30] border border-[#EADBCE]">
                     <ShieldCheck className="w-5 h-5 text-[#8F3D30]" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-[#241416]">

@@ -30,6 +30,7 @@ export interface BusinessSettingsData {
   taglineTa?: string | null;
   heroHeadline?: string | null;
   heroImageUrl?: string | null;
+  backgroundThemeUrl?: string | null;
   artistImageUrl?: string | null;
   serviceArea: string;
   serviceAreaTa?: string | null;
@@ -260,26 +261,15 @@ export default function SettingsManager({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block font-semibold text-[#241416] mb-1">Tagline (English) *</label>
-              <input
-                type="text"
-                required
-                value={form.tagline}
-                onChange={(e) => setForm({ ...form, tagline: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
-              />
-            </div>
-            <div>
-              <label className="block font-semibold text-[#241416] mb-1">Tagline (Tamil)</label>
-              <input
-                type="text"
-                value={form.taglineTa || ''}
-                onChange={(e) => setForm({ ...form, taglineTa: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
-              />
-            </div>
+          <div>
+            <label className="block font-semibold text-[#241416] mb-1">Tagline *</label>
+            <input
+              type="text"
+              required
+              value={form.tagline}
+              onChange={(e) => setForm({ ...form, tagline: e.target.value })}
+              className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -305,21 +295,41 @@ export default function SettingsManager({
             </div>
           </div>
 
-          {/* Artist Portrait Upload */}
-          <div className="p-4 bg-[#FAF5EE]/70 rounded-2xl border border-[#EADBCE] space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#241416]">
-              Artist Profile &amp; Studio Portrait Media
-            </h4>
-            <p className="text-[11px] text-[#241416]/60">
-              Upload genuine photo of Pallavi or her studio work. If not set, the verified artistic placeholder is shown.
-            </p>
-            <ImageUploader
-              value={form.artistImageUrl || ''}
-              onChange={(url) => setForm({ ...form, artistImageUrl: url })}
-              folder="brand"
-              label="Artist Portrait Photo"
-              helperText="Upload genuine photo of the artist or studio banner (Max 5 MB)"
-            />
+          {/* Authentic Imagery & Background Media */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Artist Portrait Upload */}
+            <div className="p-4 bg-[#FAF5EE]/70 rounded-2xl border border-[#EADBCE] space-y-3">
+              <h4 className="font-serif text-sm font-bold text-[#241416]">
+                Artist Profile &amp; Studio Portrait Media
+              </h4>
+              <p className="text-[11px] text-[#241416]/60">
+                Upload genuine photo of Pallavi or her studio work. If not set, the verified artistic placeholder is shown.
+              </p>
+              <ImageUploader
+                value={form.artistImageUrl || ''}
+                onChange={(url) => setForm({ ...form, artistImageUrl: url })}
+                folder="brand"
+                label="Artist Portrait Photo"
+                helperText="Upload genuine photo of the artist or studio banner (Max 5 MB)"
+              />
+            </div>
+
+            {/* Authentic Background Theme Watermark */}
+            <div className="p-4 bg-[#FAF5EE]/70 rounded-2xl border border-[#EADBCE] space-y-3">
+              <h4 className="font-serif text-sm font-bold text-[#241416]">
+                Authentic Mehndi Background Theme Photo
+              </h4>
+              <p className="text-[11px] text-[#241416]/60">
+                Upload an authentic photo of Pallavi&apos;s real henna work from Instagram. It will appear as a subtle, low-contrast, softly faded watermark behind key website sections.
+              </p>
+              <ImageUploader
+                value={form.backgroundThemeUrl || ''}
+                onChange={(url) => setForm({ ...form, backgroundThemeUrl: url })}
+                folder="brand"
+                label="Subtle Background Henna Photo"
+                helperText="Authentic client photograph only. Leave blank for plain warm ivory background."
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -402,22 +412,12 @@ export default function SettingsManager({
             </h4>
 
             <div>
-              <label className="block font-semibold text-[#241416] mb-1">Biography (English) *</label>
+              <label className="block font-semibold text-[#241416] mb-1">Biography *</label>
               <textarea
-                rows={3}
+                rows={4}
                 required
                 value={form.bioEn}
                 onChange={(e) => setForm({ ...form, bioEn: e.target.value })}
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold text-[#241416] mb-1">Biography (Tamil)</label>
-              <textarea
-                rows={2}
-                value={form.bioTa || ''}
-                onChange={(e) => setForm({ ...form, bioTa: e.target.value })}
                 className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
               />
             </div>
@@ -471,7 +471,7 @@ export default function SettingsManager({
             <button
               type="submit"
               disabled={savingSettings || currentRole !== 'OWNER'}
-              className="px-6 py-2.5 rounded-xl text-xs font-semibold bg-[#B35D4D] text-white hover:bg-[#8F3D30] transition-colors shadow-xs disabled:opacity-50 cursor-pointer"
+              className="btn-elevated-primary px-6 py-2.5 text-xs"
             >
               {savingSettings ? 'Saving Settings...' : 'Save Business Settings'}
             </button>

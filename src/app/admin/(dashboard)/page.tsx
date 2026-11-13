@@ -78,14 +78,14 @@ export default async function AdminDashboardOverviewPage() {
         <div className="flex items-center gap-3">
           <a
             href="/admin/enquiries"
-            className="inline-flex items-center gap-2 bg-[#B35D4D] hover:bg-[#8F3D30] text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xs transition-colors"
+            className="btn-elevated-primary text-xs px-4 py-2.5 gap-2"
           >
             <Inbox className="w-4 h-4 text-[#E6C875]" />
             <span>Review Enquiries ({newEnquiriesCount} New)</span>
           </a>
           <a
             href="/admin/bookings"
-            className="inline-flex items-center gap-2 bg-[#FAF5EE] hover:bg-[#EADBCE] text-[#241416] border border-[#EADBCE] text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors"
+            className="btn-elevated-secondary text-xs px-4 py-2.5 gap-2"
           >
             <CalendarDays className="w-4 h-4 text-[#8F3D30]" />
             <span>Calendar</span>
@@ -96,7 +96,7 @@ export default async function AdminDashboardOverviewPage() {
       {/* Metric Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Metric 1: New Enquiries */}
-        <div className="bg-white p-6 rounded-2xl border border-[#EADBCE] shadow-xs flex items-center justify-between">
+        <div className="card-floating p-6 flex items-center justify-between">
           <div>
             <span className="text-xs text-[#241416]/60 font-medium block">Action Needed</span>
             <span className="font-serif text-3xl font-bold text-[#8F3D30] block mt-1">
@@ -104,13 +104,13 @@ export default async function AdminDashboardOverviewPage() {
             </span>
             <span className="text-[11px] text-[#241416]/70 mt-1 block">New Unread Enquiries</span>
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700">
+          <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 shadow-xs">
             <Inbox className="w-6 h-6" />
           </div>
         </div>
 
         {/* Metric 2: Confirmed Bookings */}
-        <div className="bg-white p-6 rounded-2xl border border-[#EADBCE] shadow-xs flex items-center justify-between">
+        <div className="card-floating p-6 flex items-center justify-between">
           <div>
             <span className="text-xs text-[#241416]/60 font-medium block">Total Confirmed</span>
             <span className="font-serif text-3xl font-bold text-[#241416] block mt-1">
@@ -118,13 +118,13 @@ export default async function AdminDashboardOverviewPage() {
             </span>
             <span className="text-[11px] text-[#241416]/70 mt-1 block">Locked Event Dates</span>
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700">
+          <div className="w-12 h-12 rounded-2xl bg-[#EBF1ED] border border-[#2D4A3E]/30 flex items-center justify-center text-[#2D4A3E] shadow-xs">
             <CalendarCheck className="w-6 h-6" />
           </div>
         </div>
 
         {/* Metric 3: Total Enquiries Pipeline */}
-        <div className="bg-white p-6 rounded-2xl border border-[#EADBCE] shadow-xs flex items-center justify-between">
+        <div className="card-floating p-6 flex items-center justify-between">
           <div>
             <span className="text-xs text-[#241416]/60 font-medium block">Lifetime Pipeline</span>
             <span className="font-serif text-3xl font-bold text-[#241416] block mt-1">
@@ -132,13 +132,13 @@ export default async function AdminDashboardOverviewPage() {
             </span>
             <span className="text-[11px] text-[#241416]/70 mt-1 block">Total Enquiries Received</span>
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-[#FAF5EE] border border-[#C5A059]/40 flex items-center justify-center text-[#8F3D30]">
+          <div className="w-12 h-12 rounded-2xl bg-[#FAF5EE] border border-[#C5A059]/40 flex items-center justify-center text-[#8F3D30] shadow-xs">
             <TrendingUp className="w-6 h-6 text-[#C5A059]" />
           </div>
         </div>
 
         {/* Metric 4: Conversion Rate */}
-        <div className="bg-white p-6 rounded-2xl border border-[#EADBCE] shadow-xs flex items-center justify-between">
+        <div className="card-floating p-6 flex items-center justify-between">
           <div>
             <span className="text-xs text-[#241416]/60 font-medium block">Enquiry Conversion</span>
             <span className="font-serif text-3xl font-bold text-[#241416] block mt-1">
@@ -148,7 +148,7 @@ export default async function AdminDashboardOverviewPage() {
               {convertedEnquiriesCount} of {totalEnquiries} converted
             </span>
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-[#FAF5EE] border border-[#EADBCE] flex items-center justify-center text-[#8F3D30]">
+          <div className="w-12 h-12 rounded-2xl bg-[#FAF5EE] border border-[#EADBCE] flex items-center justify-center text-[#8F3D30] shadow-xs">
             <Sparkles className="w-6 h-6 text-[#8F3D30]" />
           </div>
         </div>
@@ -157,7 +157,7 @@ export default async function AdminDashboardOverviewPage() {
       {/* Main Content: Upcoming Bookings & Audit Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Upcoming Bookings (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-3xl border border-[#EADBCE] p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="lg:col-span-8 card-floating p-6 sm:p-8 space-y-6">
           <div className="flex items-center justify-between border-b border-[#FAF5EE] pb-4">
             <div>
               <h2 className="font-serif text-xl font-bold text-[#241416]">
@@ -238,7 +238,7 @@ export default async function AdminDashboardOverviewPage() {
         {/* Right Column: Shortcuts & Audit Feed (4 cols) */}
         <div className="lg:col-span-4 space-y-6">
           {/* Quick Shortcuts */}
-          <div className="bg-white p-6 rounded-3xl border border-[#EADBCE] shadow-xs space-y-4">
+          <div className="card-floating p-6 space-y-4">
             <h3 className="font-serif text-lg font-bold text-[#241416]">
               Quick Shortcuts
             </h3>
@@ -279,7 +279,7 @@ export default async function AdminDashboardOverviewPage() {
           </div>
 
           {/* Recent Activity Audit Feed */}
-          <div className="bg-white p-6 rounded-3xl border border-[#EADBCE] shadow-xs space-y-4">
+          <div className="card-floating p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-serif text-lg font-bold text-[#241416]">
                 Recent Studio Activity

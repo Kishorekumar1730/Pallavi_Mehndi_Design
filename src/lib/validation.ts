@@ -101,6 +101,13 @@ export const settingsSchema = z.object({
     })
     .optional()
     .or(z.literal('')),
+  backgroundThemeUrl: z
+    .string()
+    .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'), {
+      message: 'Must be a valid image URL or path',
+    })
+    .optional()
+    .or(z.literal('')),
   artistImageUrl: z
     .string()
     .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'), {

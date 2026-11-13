@@ -170,7 +170,7 @@ export default function ServiceManager({
 
         <button
           onClick={startCreate}
-          className="inline-flex items-center gap-1.5 bg-[#B35D4D] hover:bg-[#8F3D30] text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-xs transition-colors cursor-pointer self-start sm:self-center"
+          className="btn-elevated-primary px-4 py-2.5 text-xs gap-1.5 self-start sm:self-center"
         >
           <Plus className="w-4 h-4 text-[#E6C875]" />
           <span>Add New Service</span>
@@ -291,26 +291,16 @@ export default function ServiceManager({
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Service Name (English) *</label>
-                  <input
-                    type="text"
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold text-[#241416] mb-1">Service Name (Tamil)</label>
-                  <input
-                    type="text"
-                    value={form.nameTa}
-                    onChange={(e) => setForm({ ...form, nameTa: e.target.value })}
-                    className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
-                  />
-                </div>
+              <div>
+                <label className="block font-semibold text-[#241416] mb-1">Service Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="e.g. Royal Heritage Bridal Package"
+                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -431,14 +421,14 @@ export default function ServiceManager({
                     setIsCreating(false);
                     setEditingItem(null);
                   }}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] text-[#241416]/70"
+                  className="btn-elevated-secondary px-4 py-2 text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="px-6 py-2 rounded-xl text-xs font-semibold bg-[#B35D4D] text-white hover:bg-[#8F3D30] transition-colors disabled:opacity-50"
+                  className="btn-elevated-primary px-6 py-2 text-xs"
                 >
                   {isSaving ? 'Saving...' : 'Save Service'}
                 </button>

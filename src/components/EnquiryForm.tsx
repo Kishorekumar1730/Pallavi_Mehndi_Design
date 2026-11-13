@@ -252,16 +252,16 @@ export default function EnquiryForm({
               href={`https://wa.me/${rawCleanPhone}?text=${generateWhatsAppMessage()}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-medium py-3 px-6 rounded-xl text-sm transition-all shadow-md group"
+              className="btn-elevated-green py-3 px-6 text-sm gap-2"
             >
               <MessageCircle className="w-5 h-5 fill-current" />
               <span>Connect on WhatsApp</span>
             </a>
             <a
               href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
-              className="inline-flex items-center justify-center gap-2 border border-[#C5A059] hover:bg-[#FAF5EE] text-[#241416] font-medium py-3 px-6 rounded-xl text-sm transition-all"
+              className="btn-elevated-secondary py-3 px-6 text-sm gap-2"
             >
-              <Phone className="w-4 h-4 text-[#C5A059]" />
+              <Phone className="w-4 h-4 text-[#8F3D30]" />
               <span>Call Studio Directly</span>
             </a>
           </div>
@@ -271,7 +271,7 @@ export default function EnquiryForm({
   }
 
   return (
-    <div className="bg-white rounded-3xl border border-[#EADBCE] p-6 sm:p-10 shadow-xl max-w-2xl mx-auto">
+    <div className="card-floating-prominent p-6 sm:p-10 max-w-2xl mx-auto">
       {/* Progress Stepper */}
       <div className="mb-8">
         <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#241416]/60 mb-3">
@@ -702,13 +702,13 @@ export default function EnquiryForm({
           </div>
         )}
 
-        {/* Navigation Buttons */}
+        {/* Navigation Buttons (Polished Raised & Floating) */}
         <div className="flex items-center justify-between pt-8 mt-6 border-t border-[#EADBCE]">
           {step > 1 ? (
             <button
               type="button"
               onClick={prevStep}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-[#241416]/70 hover:text-[#241416] bg-[#FAF5EE] hover:bg-[#EADBCE] transition-colors"
+              className="btn-elevated-secondary px-5 py-2.5 text-xs gap-1.5"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back</span>
@@ -721,7 +721,7 @@ export default function EnquiryForm({
             <button
               type="button"
               onClick={nextStep}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-semibold text-white bg-[#B35D4D] hover:bg-[#8F3D30] transition-colors shadow-sm"
+              className="btn-elevated-primary px-7 py-3 text-xs gap-2"
             >
               <span>Continue</span>
               <ArrowRight className="w-4 h-4" />
@@ -730,7 +730,7 @@ export default function EnquiryForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-xs font-semibold text-white bg-[#B35D4D] hover:bg-[#8F3D30] transition-colors shadow-md disabled:opacity-50"
+              className="btn-elevated-primary px-8 py-3.5 text-xs gap-2"
             >
               {isSubmitting ? (
                 <>

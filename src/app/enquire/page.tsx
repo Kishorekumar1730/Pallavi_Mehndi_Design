@@ -5,7 +5,6 @@ import Footer from '@/components/Footer';
 import EnquiryForm from '@/components/EnquiryForm';
 import { CalendarCheck, Sparkles, ShieldCheck, Phone, Clock } from 'lucide-react';
 
-
 export const dynamic = 'force-dynamic';
 
 export default async function EnquirePage({
@@ -37,6 +36,7 @@ export default async function EnquirePage({
   const serviceArea = settings?.serviceArea || 'Salem, Tamil Nadu & Destination Travel';
   const phone = settings?.phone || '+91 98765 43210';
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
+  const backgroundThemeUrl = settings?.backgroundThemeUrl;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7]">
@@ -47,11 +47,18 @@ export default async function EnquirePage({
         whatsappNumber={whatsappNumber}
       />
 
-      <main className="flex-1 py-12 sm:py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 py-12 sm:py-16 relative overflow-hidden">
+        {backgroundThemeUrl ? (
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-[0.04] mix-blend-multiply pointer-events-none"
+            style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
+          />
+        ) : null}
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
           <div className="text-center space-y-3 mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#8F3D30]">
+            <span className="heritage-pill text-xs">
               Availability Check &amp; Bespoke Consultation
             </span>
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#241416]">
@@ -62,7 +69,7 @@ export default async function EnquirePage({
             </p>
 
             <div className="pt-2">
-              <span className="inline-flex items-center gap-2 text-xs text-[#8F3D30] bg-[#FAF5EE] border border-[#EADBCE] px-3.5 py-1 rounded-full">
+              <span className="inline-flex items-center gap-2 text-xs text-[#8F3D30] bg-white border border-[#EADBCE] px-4 py-1.5 rounded-full shadow-xs">
                 <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
                 <span>Non-binding enquiry • No immediate charge</span>
               </span>

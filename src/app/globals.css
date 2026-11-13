@@ -4,10 +4,27 @@
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   
+  /* Heritage Henna & Indian Artistry Palette */
   --bg-ivory: #FDFBF7;
   --bg-cream: #FAF5EE;
   --bg-card: #FFFFFF;
+  --bg-card-warm: #FAF6F0;
   
+  --henna-deep-brown: #241416;
+  --henna-espresso: #1F110B;
+  --henna-terracotta: #8F3D30;
+  --henna-terracotta-light: #B35D4D;
+  --henna-oxblood: #6E261A;
+  --henna-green: #2D4A3E;
+  --henna-green-light: #EBF1ED;
+  --henna-green-border: #4D6E5D;
+  --henna-gold: #C5A059;
+  --henna-gold-light: #E6C875;
+  --henna-gold-muted: #D4AF37;
+  --henna-border: #EADBCE;
+  --henna-border-gold: #E2CFB4;
+
+  /* Legacy aliases for backward compatibility */
   --brand-terracotta: #B35D4D;
   --brand-rose: #C87D6E;
   --brand-plum: #241416;
@@ -18,8 +35,10 @@
 
 body {
   background-color: var(--bg-ivory);
-  color: var(--brand-plum);
+  color: var(--henna-deep-brown);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, .font-serif {
@@ -35,27 +54,243 @@ h1, h2, h3, .font-serif {
   background: #FAF5EE;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D4AF37;
+  background: #C5A059;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B35D4D;
+  background: #8F3D30;
 }
 
 /* Accessible focus ring */
 :focus-visible {
   outline: 2px solid #C5A059;
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
-/* Subtle mandala pattern background */
-.mandala-bg-subtle {
-  background-image: radial-gradient(#C5A059 0.75px, transparent 0.75px);
-  background-size: 24px 24px;
-  background-position: 0 0;
+/* -------------------------------------------------------------
+   MODERN ELEVATED & LIGHTLY FLOATING CARDS
+   ------------------------------------------------------------- */
+.card-floating {
+  background-color: #FFFFFF;
+  border: 1px solid #EADBCE;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 20px -2px rgba(36, 20, 22, 0.05), 0 2px 6px -1px rgba(36, 20, 22, 0.03);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.28s ease;
+  position: relative;
+}
+
+.card-floating:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -6px rgba(36, 20, 22, 0.10), 0 6px 14px -2px rgba(36, 20, 22, 0.05);
+  border-color: rgba(197, 160, 89, 0.65);
+}
+
+.card-floating:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(36, 20, 22, 0.08);
+  border-color: rgba(197, 160, 89, 0.85);
+}
+
+.card-floating:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+/* Featured / Prominent floating surface */
+.card-floating-prominent {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAF6F0 100%);
+  border: 1px solid #E2CFB4;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 30px -4px rgba(36, 20, 22, 0.08), 0 4px 10px -2px rgba(36, 20, 22, 0.04);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.28s ease;
+}
+
+.card-floating-prominent:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 45px -8px rgba(36, 20, 22, 0.12), 0 8px 18px -3px rgba(36, 20, 22, 0.06);
+  border-color: #C5A059;
+}
+
+/* -------------------------------------------------------------
+   POLISHED RAISED & ELEVATED BUTTONS
+   ------------------------------------------------------------- */
+/* Primary Terracotta / Oxblood Button */
+.btn-elevated-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #9C4332 0%, #802E20 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(128, 46, 32, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-elevated-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #A84B38 0%, #8F3D30 100%);
+  box-shadow: 0 8px 24px rgba(128, 46, 32, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.btn-elevated-primary:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(128, 46, 32, 0.25);
+}
+
+.btn-elevated-primary:focus-visible {
+  outline: 2px solid #C5A059;
+  outline-offset: 3px;
+}
+
+.btn-elevated-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Rich Henna Green Accent Button */
+.btn-elevated-green {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #375B4C 0%, #233C31 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(35, 60, 49, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-elevated-green:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #426A59 0%, #2D4A3E 100%);
+  box-shadow: 0 8px 24px rgba(35, 60, 49, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+}
+
+.btn-elevated-green:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(35, 60, 49, 0.25);
+}
+
+/* Secondary Elevated Ivory Button */
+.btn-elevated-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  color: #241416;
+  border: 1px solid #EADBCE;
+  box-shadow: 0 2px 8px rgba(36, 20, 22, 0.05);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-elevated-secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #C5A059;
+  background-color: #FAF5EE;
+  box-shadow: 0 6px 18px rgba(36, 20, 22, 0.09);
+}
+
+.btn-elevated-secondary:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 1px 4px rgba(36, 20, 22, 0.05);
+}
+
+/* -------------------------------------------------------------
+   TRADITIONAL INDIAN AESTHETIC VISUAL ACCENTS (SPARINGLY USED)
+   ------------------------------------------------------------- */
+/* Delicate Traditional Indian Ornamental Divider */
+.ornamental-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.ornamental-divider::before,
+.ornamental-divider::after {
+  content: '';
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #C5A059, transparent);
+}
+
+/* Heritage Henna Pill Badge */
+.heritage-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  background-color: rgba(250, 245, 238, 0.92);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  color: #8F3D30;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(36, 20, 22, 0.04);
+}
+
+/* Henna Green Heritage Badge */
+.heritage-pill-green {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  background-color: #EBF1ED;
+  border: 1px solid rgba(45, 74, 62, 0.35);
+  color: #2D4A3E;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(36, 20, 22, 0.04);
+}
+
+/* Delicate Traditional Inner Border Frame */
+.traditional-frame-inner {
+  position: relative;
+}
+
+.traditional-frame-inner::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(197, 160, 89, 0.28);
+  border-radius: calc(inherit - 4px);
+  pointer-events: none;
+}
+
+/* Subtle Authentic Background Overlay Container */
+.authentic-henna-backdrop {
+  position: relative;
+  overflow: hidden;
+}
+
+.authentic-henna-backdrop-overlay {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Smooth transitions */
 .transition-luxury {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
 }

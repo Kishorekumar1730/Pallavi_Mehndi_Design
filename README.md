@@ -12,22 +12,24 @@ Built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Prisma 
 
 ### 1. Public Creative Studio Website
 - **Original Visual Identity**: Inspired by the artist's genuine henna work and high-end beauty atelier aesthetics. Warm, luminous pearl/ivory base (`#FDFBF7`), deep espresso text (`#241416`), restrained accents of terracotta/oxblood (`#B35D4D`, `#8F3D30`), and antique champagne gold (`#C5A059`).
-- **Interactive 3D Hero Motif (`<Hero3D />`)**: Sculptural 3D golden henna cone and sacred geometric concentric mandala rendered via Three.js. Supports pointer tracking with smooth damping, automatically respects `prefers-reduced-motion`, and gracefully falls back to a layered SVG ornamental motif if WebGL is unsupported or disabled. Completely non-blocking to content and booking CTAs.
+- **Official Instagram Atelier Showcase (`<InstagramHeroCard />`)**: Verified studio card featuring direct links to [@salem_mehandi_artist_pallavi](https://www.instagram.com/salem_mehandi_artist_pallavi/), 100% natural organic henna certifications, verified Salem location, and live portfolio links.
 - **Truthful Content & Replacement Placeholder System**:
   - In strict compliance with creative ethics, **no stock photography or AI-generated images are presented as Pallavi's actual work**.
-  - All default portfolio and service items feature custom, elegant SVG vector placeholders with unmistakable watermarks (`[Verified Portfolio Placeholder — Awaiting Media Upload from @salem_mehandi_artist_pallavi]`).
-  - The artist can effortlessly replace these placeholders with her genuine high-resolution client photos directly from her phone or computer using the Admin Dashboard.
+  - All default portfolio and service items feature clean, minimalist neutral photography frames with camera icons and clear notices awaiting genuine photo upload from [@salem_mehandi_artist_pallavi](https://www.instagram.com/salem_mehandi_artist_pallavi/).
+  - The artist can replace these placeholders with her genuine high-resolution client photos directly from her phone or computer using the Admin Dashboard.
+- **Real Mehndi Background Theme**: Authentic photos of Pallavi's real henna work can be uploaded in Business Settings and displayed as a subtle, low-contrast, softly faded watermark behind key sections, backed by a solid backing layer to ensure 100% text readability.
+- **Modern, Elevated & Lightly Floating UI**: Refined multi-stop warm shadows, layered surfaces, subtle separation from the background, gentle lift on hover/focus, and polished raised buttons with clear pressed/tap feedback.
+- **English-Only**: 100% English across all public pages, navigation, booking forms, admin labels, messages, FAQs, and setup instructions.
 - **Curated Offerings & Services (`/services`)**: Admin-managed packages (Royal Heritage Bridal, Contemporary Elegant Bridal, Sangeet & Bridesmaid Henna Lounge, Festive & Baby Shower, Bespoke Concepts) with transparent price type options (`STARTING_FROM`, `FIXED`, or `QUOTE_ONLY`), duration, inclusions, and travel guidelines.
 - **Portfolio Showcase with Accessible Lightbox (`/portfolio`)**: Category filters (Bridal, Arabic, Traditional Rajasthani/South, Minimal, Festive, Bespoke). Keyboard-accessible lightbox modal (`ArrowLeft`, `ArrowRight`, `Escape`, touch swipe) with screen-reader descriptive alt text and explicit client consent tracking.
 - **The Artist & Organic Henna Philosophy (`/about`)**: Biography, artistic philosophy, 100% natural Rajasthani Lawsonia inermis powder, pure eucalyptus and cajeput essential oils, skin patch-testing policy, and zero chemicals / no PPD guarantee. Linked directly to verified Instagram profile `@salem_mehandi_artist_pallavi`.
 - **Multi-Step Booking Enquiry System (`/enquire`)**: Mobile-first progressive form with 4 steps + review step:
   - Step 1: Event Details (Date, Event Type, City/Location, Venue)
-  - Step 2: Service Package, Estimated Persons/Hands, Style Notes, and **Inspiration Image File Upload** (drag & drop, max 5 MB, JPEG/PNG/WebP validation)
+  - Step 2: Service Package, Estimated Persons/Hands, Style Notes, and **Inspiration Image File Upload** (drag & drop, max 5 MB, JPEG/PNG/WebP/AVIF validation)
   - Step 3: Contact Details (Name, Mobile Phone, Email, Preferred Contact Method)
   - Step 4: Summary Review, explicit Privacy Consent, and anti-spam protection (honeypot + submission timing threshold)
   - Step 5: Submission confirmation with dedicated reference number (`PMA-2026-XXXX`), WhatsApp direct connect button with pre-assembled prefilled text, and clear disclaimer that submitting an inquiry does NOT automatically confirm an appointment.
 - **Frequently Asked Questions & Studio Policies (`/faqs`)**: Natural henna oxidation & stain maturation timeline (Hour 0 orange ➔ Hour 24 crimson ➔ Hour 48 peak mahogany burgundy), comprehensive aftercare instructions, deposit rules, cancellation policy, destination travel policy, and client privacy notice.
-- **Bilingual English & Tamil (தமிழ்) Support**: Integrated language switcher with reactive custom event dispatching and local storage persistence.
 
 ---
 

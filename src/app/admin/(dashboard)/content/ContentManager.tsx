@@ -139,7 +139,7 @@ export default function ContentManager({
           {activeTab === 'TESTIMONIALS' ? (
             <button
               onClick={() => setShowTestimonialModal(true)}
-              className="inline-flex items-center gap-1.5 bg-[#B35D4D] hover:bg-[#8F3D30] text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+              className="btn-elevated-primary px-4 py-2.5 text-xs gap-1.5"
             >
               <Plus className="w-4 h-4 text-[#E6C875]" />
               <span>Add Verified Review</span>
@@ -147,7 +147,7 @@ export default function ContentManager({
           ) : (
             <button
               onClick={() => setShowFaqModal(true)}
-              className="inline-flex items-center gap-1.5 bg-[#B35D4D] hover:bg-[#8F3D30] text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+              className="btn-elevated-primary px-4 py-2.5 text-xs gap-1.5"
             >
               <Plus className="w-4 h-4 text-[#E6C875]" />
               <span>Add New FAQ</span>
@@ -330,7 +330,7 @@ export default function ContentManager({
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Review Quote (English) *</label>
+                <label className="block font-semibold text-[#241416] mb-1">Review Quote *</label>
                 <textarea
                   rows={3}
                   required
@@ -341,24 +341,13 @@ export default function ContentManager({
                 />
               </div>
 
-              <div>
-                <label className="block font-semibold text-[#241416] mb-1">Review Quote (Tamil)</label>
-                <textarea
-                  rows={2}
-                  value={testimonialForm.quoteTa}
-                  onChange={(e) => setTestimonialForm({ ...testimonialForm, quoteTa: e.target.value })}
-                  placeholder="தமிழ் வடிவம்..."
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
-                />
-              </div>
-
               <div className="flex items-center gap-3 pt-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={testimonialForm.isApproved}
                     onChange={(e) => setTestimonialForm({ ...testimonialForm, isApproved: e.target.checked })}
-                    className="rounded text-[#B35D4D]"
+                    className="rounded text-[#8F3D30]"
                   />
                   <span className="font-semibold text-[#8F3D30]">Approve for Public Website Display</span>
                 </label>
@@ -368,13 +357,13 @@ export default function ContentManager({
                 <button
                   type="button"
                   onClick={() => setShowTestimonialModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] text-[#241416]/70"
+                  className="btn-elevated-secondary px-4 py-2 text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-xs font-semibold bg-[#B35D4D] text-white hover:bg-[#8F3D30]"
+                  className="btn-elevated-primary px-5 py-2 text-xs"
                 >
                   Save Testimonial
                 </button>
@@ -408,22 +397,13 @@ export default function ContentManager({
 
             <form onSubmit={handleSaveFaq} className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Question (English) *</label>
+                <label className="block font-semibold text-[#241416] mb-1">Question *</label>
                 <input
                   type="text"
                   required
                   value={faqForm.question}
                   onChange={(e) => setFaqForm({ ...faqForm, question: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-[#241416] mb-1">Question (Tamil)</label>
-                <input
-                  type="text"
-                  value={faqForm.questionTa}
-                  onChange={(e) => setFaqForm({ ...faqForm, questionTa: e.target.value })}
+                  placeholder="e.g. When should I book my bridal Mehndi date?"
                   className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
                 />
               </div>
@@ -444,22 +424,13 @@ export default function ContentManager({
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Answer (English) *</label>
+                <label className="block font-semibold text-[#241416] mb-1">Answer *</label>
                 <textarea
-                  rows={3}
+                  rows={4}
                   required
                   value={faqForm.answer}
                   onChange={(e) => setFaqForm({ ...faqForm, answer: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-[#241416] mb-1">Answer (Tamil)</label>
-                <textarea
-                  rows={2}
-                  value={faqForm.answerTa}
-                  onChange={(e) => setFaqForm({ ...faqForm, answerTa: e.target.value })}
+                  placeholder="Detailed answer for clients..."
                   className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
                 />
               </div>
@@ -468,13 +439,13 @@ export default function ContentManager({
                 <button
                   type="button"
                   onClick={() => setShowFaqModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] text-[#241416]/70"
+                  className="btn-elevated-secondary px-4 py-2 text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-xs font-semibold bg-[#B35D4D] text-white hover:bg-[#8F3D30]"
+                  className="btn-elevated-primary px-5 py-2 text-xs"
                 >
                   Save FAQ
                 </button>
