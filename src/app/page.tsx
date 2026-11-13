@@ -2,7 +2,7 @@ import React from 'react';
 import prisma from '@/lib/prisma';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Hero3D from '@/components/Hero3D';
+import InstagramHeroCard from '@/components/InstagramHeroCard';
 import ServiceCard from '@/components/ServiceCard';
 import PortfolioGallery from '@/components/PortfolioGallery';
 import {
@@ -53,6 +53,7 @@ export default async function HomePage() {
   const serviceArea = settings?.serviceArea || 'Salem, Tamil Nadu & Destination Travel';
   const phone = settings?.phone || '+91 98765 43210';
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
+  const instagramUrl = settings?.instagramUrl || 'https://www.instagram.com/salem_mehandi_artist_pallavi/';
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -164,17 +165,13 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              {/* Right Column: 3D Ornamental Henna Sculpture */}
+              {/* Right Column: Official Instagram Profile Card */}
               <div className="lg:col-span-5 flex items-center justify-center relative">
-                <div className="relative">
-                  <Hero3D />
-                  {/* Subtle caption */}
-                  <div className="text-center mt-2">
-                    <span className="text-[11px] uppercase tracking-wider text-[#8F3D30]/80 font-medium">
-                      Sculptural Sacred Henna Motif • Interactive 3D
-                    </span>
-                  </div>
-                </div>
+                <InstagramHeroCard
+                  instagramUrl={instagramUrl}
+                  artistImageUrl={settings?.artistImageUrl}
+                  serviceArea={serviceArea}
+                />
               </div>
             </div>
           </div>

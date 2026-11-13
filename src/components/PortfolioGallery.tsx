@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, Sparkles, ShieldCheck, Eye } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Sparkles, ShieldCheck, Eye, Camera, ExternalLink } from 'lucide-react';
 
 export interface PortfolioItemData {
   id: string;
@@ -70,6 +70,35 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
 
   return (
     <div className="w-full">
+      {/* Official Instagram Live Banner */}
+      <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-white border border-[#EADBCE] shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] p-0.5 shrink-0">
+            <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+              <Camera className="w-5 h-5 text-[#DD2A7B]" />
+            </div>
+          </div>
+          <div>
+            <h4 className="font-serif text-sm font-bold text-[#241416]">
+              Real Mehndi Photography Archive
+            </h4>
+            <p className="text-xs text-[#241416]/70">
+              Only genuine client work is shown. Browse Pallavi’s full live feed, bridal reels, and stain progressions on Instagram.
+            </p>
+          </div>
+        </div>
+
+        <a
+          href="https://www.instagram.com/salem_mehandi_artist_pallavi/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-[#FAF5EE] hover:bg-[#FAF5EE]/70 text-[#8F3D30] border border-[#C5A059]/40 hover:border-[#8F3D30] transition-colors shrink-0"
+        >
+          <span>@salem_mehandi_artist_pallavi</span>
+          <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+      </div>
+
       {/* Category Filter Pills */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
         {CATEGORIES.map((cat) => {
@@ -276,7 +305,7 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
                 </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-[#EADBCE] space-y-2">
+              <div className="pt-6 mt-6 border-t border-[#EADBCE] space-y-2.5">
                 <a
                   href={`/enquire?style=${encodeURIComponent(currentItem.title)}`}
                   className="w-full inline-flex items-center justify-center gap-2 bg-[#B35D4D] hover:bg-[#8F3D30] text-white font-medium py-2.5 px-4 rounded-xl text-sm transition-colors shadow-sm"
@@ -284,6 +313,17 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
                   <Sparkles className="w-4 h-4 text-[#E6C875]" />
                   <span>Enquire for a Similar Style</span>
                 </a>
+
+                <a
+                  href="https://www.instagram.com/salem_mehandi_artist_pallavi/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 border border-[#C5A059] hover:bg-[#FAF5EE] text-[#241416] font-medium py-2 px-4 rounded-xl text-xs transition-colors"
+                >
+                  <Camera className="w-4 h-4 text-[#8F3D30]" />
+                  <span>View Authentic Work on Instagram</span>
+                </a>
+
                 <p className="text-[11px] text-center text-[#241416]/50">
                   Customized bespoke motifs are sketched uniquely for each bride.
                 </p>

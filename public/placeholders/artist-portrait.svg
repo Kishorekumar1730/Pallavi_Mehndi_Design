@@ -1,65 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
   <defs>
-    <linearGradient id="bgArtist" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="artistFrameBg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#FAF5EE" />
-      <stop offset="50%" stop-color="#F2E6D8" />
-      <stop offset="100%" stop-color="#E5D2BF" />
-    </linearGradient>
-    <linearGradient id="goldArtist" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#D4AF37" />
-      <stop offset="100%" stop-color="#AA771C" />
+      <stop offset="100%" stop-color="#F2E8DC" />
     </linearGradient>
   </defs>
 
-  <rect width="800" height="1000" fill="url(#bgArtist)" />
-  <rect x="24" y="24" width="752" height="952" rx="20" fill="none" stroke="#C5A059" stroke-width="2" stroke-dasharray="6 4" opacity="0.7" />
-  <rect x="36" y="36" width="728" height="928" rx="16" fill="none" stroke="#B35D4D" stroke-width="1.2" opacity="0.4" />
+  <rect width="800" height="1000" fill="url(#artistFrameBg)" />
+  <rect x="28" y="28" width="744" height="944" rx="16" fill="none" stroke="#EADBCE" stroke-width="2" />
+  <rect x="36" y="36" width="728" height="928" rx="12" fill="none" stroke="#C5A059" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" />
 
-  <!-- Artist Monogram Emblem -->
-  <g transform="translate(400, 350)">
-    <!-- Concentric Sunburst / Henna Ring -->
-    <circle cx="0" cy="0" r="150" fill="#FAF5EE" stroke="#C5A059" stroke-width="2" />
-    <circle cx="0" cy="0" r="130" fill="none" stroke="#B35D4D" stroke-width="1.5" stroke-dasharray="4 4" />
-    <circle cx="0" cy="0" r="100" fill="#FDFBF7" stroke="#8F3D30" stroke-width="2" />
-
-    <!-- Henna Cone Illustration -->
-    <path d="M-25 50 L 25 50 L 0 -50 Z" fill="#8F3D30" stroke="#C5A059" stroke-width="2" />
-    <circle cx="0" cy="-55" r="5" fill="url(#goldArtist)" />
-
-    <!-- Stylized Artist Monogram 'P' -->
-    <text x="0" y="35" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="72" font-weight="700" fill="#FAF5EE">
+  <!-- Clean Monogram Frame -->
+  <g transform="translate(400, 330)">
+    <circle cx="0" cy="0" r="90" fill="#FFFFFF" stroke="#C5A059" stroke-width="2" />
+    <circle cx="0" cy="0" r="78" fill="#FAF5EE" stroke="#EADBCE" stroke-width="1" />
+    <text x="0" y="24" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="76" font-weight="700" fill="#8F3D30">
       P
     </text>
   </g>
 
-  <!-- Typography -->
-  <g text-anchor="middle" font-family="'Playfair Display', Georgia, serif">
-    <rect x="230" y="580" width="340" height="38" rx="19" fill="#FAF5EE" stroke="#C5A059" stroke-width="1" />
-    <text x="400" y="604" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#8F3D30" letter-spacing="2">
-      ARTIST &amp; STUDIO MEDIA SLOT
+  <g text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif">
+    <rect x="230" y="460" width="340" height="34" rx="17" fill="#FAF5EE" stroke="#C5A059" stroke-width="1.2" />
+    <text x="400" y="482" font-size="12" font-weight="700" fill="#8F3D30" letter-spacing="1.5">
+      PROFESSIONAL MEHANDI ARTIST
     </text>
 
-    <text x="400" y="660" font-size="34" font-weight="700" fill="#241416">
+    <text x="400" y="545" font-family="'Playfair Display', Georgia, serif" font-size="34" font-weight="700" fill="#241416">
       Pallavi
     </text>
-    <text x="400" y="695" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="15" font-weight="600" fill="#8F3D30" letter-spacing="1">
-      Professional Mehandi Artist &amp; Entrepreneur
-    </text>
-    <text x="400" y="725" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="13" fill="#241416" fill-opacity="0.7">
-      Salem, Tamil Nadu
+
+    <text x="400" y="585" font-size="14" font-weight="600" fill="#8F3D30" letter-spacing="0.5">
+      Salem, Tamil Nadu, India
     </text>
 
-    <!-- Verified Handle Link badge -->
-    <rect x="180" y="760" width="440" height="90" rx="14" fill="#FFFFFF" fill-opacity="0.95" stroke="#EADBCE" stroke-width="1.5" />
-    <text x="400" y="790" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#B35D4D" letter-spacing="1">
-      ★ OFFICIAL INSTAGRAM PROFILE REFERENCE
+    <text x="400" y="625" font-size="13" fill="#241416" fill-opacity="0.75">
+      Original photography awaiting owner upload.
     </text>
-    <text x="400" y="818" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="16" font-weight="700" fill="#241416">
-      @salem_mehandi_artist_pallavi
+    <text x="400" y="648" font-size="13" fill="#241416" fill-opacity="0.75">
+      No stock, generated, or 3D images are used.
     </text>
 
-    <text x="400" y="885" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="12" fill="#241416" fill-opacity="0.6">
-      Upload genuine portrait or studio photo in Admin Settings
+    <!-- Verified Instagram Box -->
+    <g transform="translate(160, 690)">
+      <rect x="0" y="0" width="480" height="120" rx="16" fill="#FFFFFF" stroke="#EADBCE" stroke-width="1.5" />
+      <text x="240" y="36" font-size="12" font-weight="700" fill="#8F3D30" letter-spacing="1">
+        OFFICIAL INSTAGRAM PROFILE REFERENCE
+      </text>
+      <text x="240" y="68" font-size="18" font-weight="700" fill="#241416">
+        @salem_mehandi_artist_pallavi
+      </text>
+      <text x="240" y="96" font-size="12" fill="#241416" fill-opacity="0.6">
+        Visit Instagram for live client photos, reels, and highlights
+      </text>
+    </g>
+
+    <text x="400" y="865" font-size="12" fill="#241416" fill-opacity="0.5">
+      Owner: Upload genuine portrait or studio photo in Admin Settings
     </text>
   </g>
 </svg>
