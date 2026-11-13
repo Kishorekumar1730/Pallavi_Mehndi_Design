@@ -18,7 +18,7 @@ export default function Footer({
   whatsappNumber = '+919876543210',
   email = 'enquiries@pallavimehndi.com',
   serviceArea = 'Salem, Tamil Nadu & Destination Travel',
-  instagramUrl = 'https://instagram.com/pallavi_mehndi_artistry',
+  instagramUrl = 'https://www.instagram.com/salem_mehandi_artist_pallavi/',
 }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
@@ -139,7 +139,7 @@ export default function Footer({
                 className="flex items-center gap-2 hover:text-[#E6C875] transition-colors"
               >
                 <Camera className="w-4 h-4 text-[#C5A059] shrink-0" />
-                <span>Instagram Profile</span>
+                <span>@salem_mehandi_artist_pallavi</span>
               </a>
             </div>
 

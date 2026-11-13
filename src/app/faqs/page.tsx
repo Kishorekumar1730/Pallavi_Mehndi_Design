@@ -39,6 +39,9 @@ export default async function FaqsPage() {
   const privacyPolicy =
     settings?.privacyPolicy ||
     'We respect your privacy. Contact information and event details submitted through our forms are strictly used for booking consultation, quotes, and communication. We never sell or share your data.';
+  const aftercareGuide =
+    settings?.aftercareGuide ||
+    'Keep henna paste on skin for 6-8 hours. Gently scrape paste off; avoid water contact for the first 24 hours. Natural warmth and pure coconut/eucalyptus balm enhance stain depth.';
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7]">
@@ -171,6 +174,35 @@ export default async function FaqsPage() {
                 <p className="text-xs sm:text-sm text-[#241416]/80 leading-relaxed">
                   Local appointments within Salem city limits include complimentary travel. For outstation locations (Erode, Coimbatore, Chennai, Bangalore, or destination resorts), direct transportation (cab/train/flight) and safe hotel accommodation must be provided or reimbursed at actual cost by the client.
                 </p>
+              </div>
+
+              {/* Henna Aftercare & Stain Care */}
+              <div id="aftercare" className="bg-white p-7 rounded-2xl border border-[#C5A059]/40 shadow-xs space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-[#FAF5EE] flex items-center justify-center text-[#B35D4D]">
+                    <Droplets className="w-5 h-5 text-[#8F3D30]" />
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-[#241416]">
+                    Bridal Henna Aftercare &amp; Stain Maximization
+                  </h3>
+                </div>
+                <div className="text-xs sm:text-sm text-[#241416]/80 leading-relaxed space-y-2">
+                  <p>{aftercareGuide}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-[11px]">
+                    <div className="p-3 bg-[#FAF5EE] rounded-xl border border-[#EADBCE]">
+                      <strong className="block text-[#8F3D30] font-semibold mb-1">1. Keep Paste Intact</strong>
+                      <span>Leave paste on for 6 to 8 hours (or overnight) to allow full dye penetration.</span>
+                    </div>
+                    <div className="p-3 bg-[#FAF5EE] rounded-xl border border-[#EADBCE]">
+                      <strong className="block text-[#8F3D30] font-semibold mb-1">2. Avoid Water 24h</strong>
+                      <span>Scrape gently off; do not wash with soap or water for the initial 24 hours.</span>
+                    </div>
+                    <div className="p-3 bg-[#FAF5EE] rounded-xl border border-[#EADBCE]">
+                      <strong className="block text-[#8F3D30] font-semibold mb-1">3. Heat &amp; Natural Balm</strong>
+                      <span>Apply organic coconut oil or eucalyptus balm to seal and protect the developing stain.</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Privacy Notice */}

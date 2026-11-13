@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { saveService, deleteService } from '@/actions/admin';
+import ImageUploader from '@/components/ImageUploader';
 import {
   Sparkles,
   Plus,
@@ -67,7 +68,7 @@ export default function ServiceManager({
     priceType: 'STARTING_FROM',
     travelDetails: 'Salem city complimentary. Outstation travel reimbursed.',
     availabilityNotes: 'Booking in advance recommended.',
-    imageUrl: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/placeholders/portfolio-bridal.svg',
     displayOrder: 0,
     isFeatured: false,
     isPublished: true,
@@ -91,7 +92,7 @@ export default function ServiceManager({
       priceType: 'STARTING_FROM',
       travelDetails: 'Salem city complimentary. Outstation travel reimbursed.',
       availabilityNotes: 'Booking in advance recommended.',
-      imageUrl: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80',
+      imageUrl: '/placeholders/portfolio-bridal.svg',
       displayOrder: items.length + 1,
       isFeatured: false,
       isPublished: true,
@@ -392,12 +393,12 @@ export default function ServiceManager({
               </div>
 
               <div>
-                <label className="block font-semibold text-[#241416] mb-1">Image URL</label>
-                <input
-                  type="url"
-                  value={form.imageUrl}
-                  onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-                  className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+                <ImageUploader
+                  value={form.imageUrl || ''}
+                  onChange={(url) => setForm({ ...form, imageUrl: url })}
+                  folder="portfolio"
+                  label="Package Feature Image"
+                  helperText="Upload JPEG, PNG, or WebP photo of genuine henna artwork (Max 5 MB)"
                 />
               </div>
 

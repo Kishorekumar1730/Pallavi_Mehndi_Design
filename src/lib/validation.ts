@@ -20,7 +20,13 @@ export const enquirySchema = z.object({
   eventLocation: z.string().min(3, 'Please specify event location/city (e.g. Salem, Fairlands)').max(200),
   venueDetails: z.string().max(250).optional().or(z.literal('')),
   styleNotes: z.string().max(1000).optional().or(z.literal('')),
-  referenceImageUrl: z.string().url('Must be a valid image URL').optional().or(z.literal('')),
+  referenceImageUrl: z
+    .string()
+    .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'), {
+      message: 'Must be a valid image URL or uploaded file path',
+    })
+    .optional()
+    .or(z.literal('')),
   referralSource: z.string().optional().or(z.literal('')),
   referralCode: z.string().max(50).optional().or(z.literal('')),
   privacyConsent: z.boolean().refine((val) => val === true, {
@@ -50,7 +56,13 @@ export const serviceSchema = z.object({
   priceType: z.enum(['FIXED', 'STARTING_FROM', 'QUOTE_ONLY']).default('STARTING_FROM'),
   travelDetails: z.string().max(300).optional().or(z.literal('')),
   availabilityNotes: z.string().max(300).optional().or(z.literal('')),
-  imageUrl: z.string().url().optional().or(z.literal('')),
+  imageUrl: z
+    .string()
+    .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'), {
+      message: 'Must be a valid image URL or path',
+    })
+    .optional()
+    .or(z.literal('')),
   displayOrder: z.coerce.number().default(0),
   isFeatured: z.boolean().default(false),
   isPublished: z.boolean().default(true),
@@ -61,7 +73,13 @@ export const portfolioSchema = z.object({
   titleTa: z.string().max(150).optional().or(z.literal('')),
   caption: z.string().max(400).optional().or(z.literal('')),
   category: z.enum(['BRIDAL', 'ARABIC', 'TRADITIONAL', 'MINIMAL', 'FESTIVE', 'BESPOKE']),
-  imageUrl: z.string().url('Please provide a valid image URL'),
+  imageUrl: z
+    .string()
+    .min(1, 'Image is required')
+    .refine((val) => val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'), {
+      message: 'Please provide a valid image URL or uploaded file path',
+    }),
+  additionalImages: z.string().optional().or(z.literal('')),
   altText: z.string().min(5, 'Descriptive alt text is required for accessibility').max(200),
   featured: z.boolean().default(false),
   published: z.boolean().default(true),
@@ -75,6 +93,21 @@ export const settingsSchema = z.object({
   businessName: z.string().min(2).max(100),
   tagline: z.string().min(5).max(200),
   taglineTa: z.string().max(200).optional().or(z.literal('')),
+  heroHeadline: z.string().max(200).optional().or(z.literal('')),
+  heroImageUrl: z
+    .string()
+    .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'), {
+      message: 'Must be a valid image URL or path',
+    })
+    .optional()
+    .or(z.literal('')),
+  artistImageUrl: z
+    .string()
+    .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'), {
+      message: 'Must be a valid image URL or path',
+    })
+    .optional()
+    .or(z.literal('')),
   serviceArea: z.string().min(3).max(200),
   serviceAreaTa: z.string().max(200).optional().or(z.literal('')),
   phone: z.string().min(8).max(30),
@@ -83,7 +116,13 @@ export const settingsSchema = z.object({
   currency: z.string().min(2).max(5).default('INR'),
   currencySymbol: z.string().min(1).max(5).default('₹'),
   timezone: z.string().min(2).max(50).default('Asia/Kolkata'),
-  instagramUrl: z.string().url().optional().or(z.literal('')),
+  instagramUrl: z
+    .string()
+    .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://'), {
+      message: 'Must be a valid Instagram URL',
+    })
+    .optional()
+    .or(z.literal('')),
   bookingNoticeDays: z.coerce.number().min(0).max(365).default(7),
   depositPercent: z.coerce.number().min(0).max(100).default(30),
   cancellationPolicy: z.string().min(10).max(1500),
@@ -93,6 +132,7 @@ export const settingsSchema = z.object({
   bioTa: z.string().max(2000).optional().or(z.literal('')),
   philosophyEn: z.string().min(10).max(1000),
   hygienePractices: z.string().min(10).max(1000),
+  aftercareGuide: z.string().max(2000).optional().or(z.literal('')),
   enableWorkshops: z.boolean().default(false),
   enableGiftCards: z.boolean().default(false),
   enableOnlineDeposits: z.boolean().default(false),

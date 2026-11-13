@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import ImageUploader from '@/components/ImageUploader';
 import {
   updateBusinessSettings,
   createStaffUser,
@@ -27,6 +28,9 @@ export interface BusinessSettingsData {
   businessName: string;
   tagline: string;
   taglineTa?: string | null;
+  heroHeadline?: string | null;
+  heroImageUrl?: string | null;
+  artistImageUrl?: string | null;
   serviceArea: string;
   serviceAreaTa?: string | null;
   phone: string;
@@ -45,6 +49,7 @@ export interface BusinessSettingsData {
   bioTa?: string | null;
   philosophyEn: string;
   hygienePractices: string;
+  aftercareGuide?: string | null;
   enableWorkshops: boolean;
   enableGiftCards: boolean;
   enableOnlineDeposits: boolean;
@@ -277,6 +282,46 @@ export default function SettingsManager({
             </div>
           </div>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-semibold text-[#241416] mb-1">Hero Headline</label>
+              <input
+                type="text"
+                value={form.heroHeadline || ''}
+                onChange={(e) => setForm({ ...form, heroHeadline: e.target.value })}
+                placeholder="e.g. Bespoke Bridal & Contemporary Henna Artistry"
+                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+              />
+            </div>
+            <div>
+              <label className="block font-semibold text-[#241416] mb-1">Official Instagram URL</label>
+              <input
+                type="url"
+                value={form.instagramUrl || ''}
+                onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })}
+                placeholder="https://www.instagram.com/salem_mehandi_artist_pallavi/"
+                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+              />
+            </div>
+          </div>
+
+          {/* Artist Portrait Upload */}
+          <div className="p-4 bg-[#FAF5EE]/70 rounded-2xl border border-[#EADBCE] space-y-3">
+            <h4 className="font-serif text-sm font-bold text-[#241416]">
+              Artist Profile &amp; Studio Portrait Media
+            </h4>
+            <p className="text-[11px] text-[#241416]/60">
+              Upload genuine photo of Pallavi or her studio work. If not set, the verified artistic placeholder is shown.
+            </p>
+            <ImageUploader
+              value={form.artistImageUrl || ''}
+              onChange={(url) => setForm({ ...form, artistImageUrl: url })}
+              folder="brand"
+              label="Artist Portrait Photo"
+              helperText="Upload genuine photo of the artist or studio banner (Max 5 MB)"
+            />
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block font-semibold text-[#241416] mb-1">Phone Number *</label>
@@ -406,6 +451,17 @@ export default function SettingsManager({
                 required
                 value={form.privacyPolicy}
                 onChange={(e) => setForm({ ...form, privacyPolicy: e.target.value })}
+                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-[#241416] mb-1">Henna Aftercare &amp; Stain Maturation Guidance</label>
+              <textarea
+                rows={3}
+                value={form.aftercareGuide || ''}
+                onChange={(e) => setForm({ ...form, aftercareGuide: e.target.value })}
+                placeholder="Guidance for brides on keeping paste, avoiding water, and natural oils for peak stain color"
                 className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-3 py-2 text-xs"
               />
             </div>

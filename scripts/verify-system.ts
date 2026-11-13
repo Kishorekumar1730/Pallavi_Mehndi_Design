@@ -84,7 +84,7 @@ async function runVerification() {
   // Date 2026-12-05 has a seeded confirmed booking
   const conflictTest1 = await checkDateAvailability('2026-12-05');
   assert(
-    conflictTest1.hasConflict && conflictTest1.reason?.includes('confirmed booking'),
+    Boolean(conflictTest1.hasConflict && conflictTest1.reason?.includes('confirmed booking')),
     `Conflict prevention caught existing confirmed booking: "${conflictTest1.reason}"`
   );
 
@@ -131,6 +131,7 @@ async function runVerification() {
 
   await prisma.$disconnect();
   if (failed > 0) process.exit(1);
+  process.exit(0);
 }
 
 runVerification().catch((err) => {

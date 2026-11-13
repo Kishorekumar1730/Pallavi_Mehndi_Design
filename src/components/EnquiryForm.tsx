@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { submitEnquiry } from '@/actions/enquiry';
+import ImageUploader from '@/components/ImageUploader';
 import {
   Calendar,
   Sparkles,
@@ -474,17 +475,12 @@ export default function EnquiryForm({
             </div>
 
             <div>
-              <label htmlFor="referenceImageUrl" className="block text-xs font-semibold text-[#241416] mb-1.5">
-                Reference Image URL (Optional)
-              </label>
-              <input
-                id="referenceImageUrl"
-                type="url"
-                name="referenceImageUrl"
+              <ImageUploader
                 value={formData.referenceImageUrl}
-                onChange={handleChange}
-                placeholder="https://... (Link to an image or Pinterest design)"
-                className="w-full bg-[#FAF5EE] border border-[#EADBCE] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]"
+                onChange={(url) => setFormData((prev) => ({ ...prev, referenceImageUrl: url }))}
+                folder="enquiries"
+                label="Inspiration Photo / Design Reference (Optional)"
+                helperText="Upload a Pinterest screenshot or motif reference (Max 5 MB, JPEG/PNG/WebP)"
               />
             </div>
           </div>

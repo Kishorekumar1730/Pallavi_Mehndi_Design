@@ -24,6 +24,8 @@ export default async function AboutPage() {
   const serviceArea = settings?.serviceArea || 'Salem, Tamil Nadu & Destination Travel';
   const phone = settings?.phone || '+91 98765 43210';
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
+  const artistImageUrl = settings?.artistImageUrl || '/placeholders/artist-portrait.svg';
+  const instagramUrl = settings?.instagramUrl || 'https://www.instagram.com/salem_mehandi_artist_pallavi/';
   const bioEn =
     settings?.bioEn ||
     'Pallavi is a passionate henna artist blending intricate South Indian heritage motifs with contemporary Arabic and bespoke geometric aesthetics. Using only 100% natural, hand-blended organic henna, she ensures a rich, dark stain with maximum safety and care.';
@@ -34,6 +36,9 @@ export default async function AboutPage() {
   const hygienePractices =
     settings?.hygienePractices ||
     'Freshly mixed chemical-free henna, organic certified cajeput and eucalyptus essential oils, single-use application cones, and pre-application skin prep.';
+  const aftercareGuide =
+    settings?.aftercareGuide ||
+    'Keep henna paste on skin for 6-8 hours. Gently scrape paste off; avoid water contact for the first 24 hours. Natural warmth and pure coconut/eucalyptus balm enhance stain depth.';
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7]">
@@ -67,18 +72,23 @@ export default async function AboutPage() {
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl overflow-hidden border-2 border-[#EADBCE] shadow-xl bg-[#FAF5EE] aspect-4/5">
                 <img
-                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80"
-                  alt="Pallavi Mehndi Artistry Studio"
+                  src={artistImageUrl}
+                  alt="Pallavi Mehndi Artist Salem"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#E6C875] block">
-                    Bespoke Bridal Specialist
+                    Salem Mehandi Artist
                   </span>
-                  <span className="font-serif text-lg font-bold">
-                    Salem, Tamil Nadu
-                  </span>
+                  <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-serif text-lg font-bold hover:text-[#E6C875] transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>@salem_mehandi_artist_pallavi</span>
+                  </a>
                 </div>
               </div>
               <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-2xl border border-[#EADBCE] shadow-lg flex items-center gap-3">

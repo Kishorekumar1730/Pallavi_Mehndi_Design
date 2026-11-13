@@ -47,12 +47,20 @@ async function main() {
   // 2. Business Settings
   await prisma.businessSettings.upsert({
     where: { id: 'default-settings' },
-    update: {},
+    update: {
+      instagramUrl: 'https://www.instagram.com/salem_mehandi_artist_pallavi/',
+      artistImageUrl: '/placeholders/artist-portrait.svg',
+      heroHeadline: 'Bespoke Bridal & Contemporary Henna Artistry',
+      aftercareGuide: 'Keep henna paste on skin for 6-8 hours. Gently scrape paste off; avoid water contact for the first 24 hours. Natural warmth and pure coconut/eucalyptus balm enhance stain depth.',
+    },
     create: {
       id: 'default-settings',
       businessName: 'Pallavi Mehndi Artistry',
       tagline: 'Bespoke Bridal & Contemporary Henna Artistry',
       taglineTa: 'பாரம்பரியம் மற்றும் சமகால மருதாணி கலை',
+      heroHeadline: 'Bespoke Bridal & Contemporary Henna Artistry',
+      heroImageUrl: null,
+      artistImageUrl: '/placeholders/artist-portrait.svg',
       serviceArea: 'Salem, Tamil Nadu & Destination Travel',
       serviceAreaTa: 'சேலம் மற்றும் அனைத்து இடங்களுக்கும் பயணம்',
       phone: '+91 98765 43210',
@@ -61,7 +69,7 @@ async function main() {
       currency: 'INR',
       currencySymbol: '₹',
       timezone: 'Asia/Kolkata',
-      instagramUrl: 'https://instagram.com/pallavi_mehndi_artistry',
+      instagramUrl: 'https://www.instagram.com/salem_mehandi_artist_pallavi/',
       bookingNoticeDays: 7,
       depositPercent: 30,
       cancellationPolicy: 'Cancellations made 14 days prior to the event are eligible for a partial credit voucher. Deposits are non-refundable to secure the dedicated date.',
@@ -71,6 +79,7 @@ async function main() {
       bioTa: 'பல்லவி பாரம்பரிய தென்னிந்திய மற்றும் நவீன அரபு மருதாணி கலைகளில் கைதேர்ந்தவர். 100% இயற்கை மருதாணியை மட்டுமே பயன்படுத்தி அழகு சேர்க்கிறார்.',
       philosophyEn: 'Every bride’s journey is unique. We craft personalized motifs that celebrate love, personal heritage, and timeless celebration.',
       hygienePractices: 'Freshly mixed chemical-free henna powder, certified organic cajeput and eucalyptus essential oils, single-use application cones, and skin patch testing upon request.',
+      aftercareGuide: 'Keep henna paste on skin for 6-8 hours. Gently scrape paste off; avoid water contact for the first 24 hours. Natural warmth and pure coconut/eucalyptus balm enhance stain depth.',
       enableWorkshops: false,
       enableGiftCards: false,
       enableOnlineDeposits: false,
@@ -138,7 +147,7 @@ async function main() {
       priceType: 'STARTING_FROM',
       travelDetails: 'Complimentary within Salem municipal limits. Travel and stay reimbursed for outstation bookings.',
       availabilityNotes: 'Advance booking of 3 to 6 months recommended for wedding dates.',
-      imageUrl: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: '/placeholders/portfolio-bridal.svg',
       displayOrder: 1,
       isFeatured: true,
       isPublished: true,
@@ -157,7 +166,7 @@ async function main() {
       priceType: 'STARTING_FROM',
       travelDetails: 'Salem & surrounding districts (Erode, Namakkal, Dharmapuri) with nominal travel fee.',
       availabilityNotes: '2 slots available per weekend.',
-      imageUrl: 'https://images.unsplash.com/photo-1582234372722-50d7ccc30ebd?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: '/placeholders/portfolio-minimal.svg',
       displayOrder: 2,
       isFeatured: true,
       isPublished: true,
@@ -176,7 +185,7 @@ async function main() {
       priceType: 'STARTING_FROM',
       travelDetails: 'Available across Salem and surrounding banquet venues.',
       availabilityNotes: 'Can be booked alongside bridal package or standalone.',
-      imageUrl: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: '/placeholders/portfolio-arabic.svg',
       displayOrder: 3,
       isFeatured: true,
       isPublished: true,
@@ -195,7 +204,7 @@ async function main() {
       priceType: 'STARTING_FROM',
       travelDetails: 'In-studio or home visit in Salem.',
       availabilityNotes: 'Weekday and weekend morning slots available.',
-      imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: '/placeholders/portfolio-festive.svg',
       displayOrder: 4,
       isFeatured: false,
       isPublished: true,
@@ -214,7 +223,7 @@ async function main() {
       priceType: 'QUOTE_ONLY',
       travelDetails: 'Worldwide travel available upon request.',
       availabilityNotes: 'Limited to 2 bookings per month.',
-      imageUrl: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: '/placeholders/portfolio-bespoke.svg',
       displayOrder: 5,
       isFeatured: false,
       isPublished: true,
@@ -232,89 +241,89 @@ async function main() {
   }
   console.log('✓ Services seeded');
 
-  // 5. Portfolio Items
+  // 5. Portfolio Items (Honest Replacement Placeholders — Awaiting Artist Uploads)
   const portfolioData = [
     {
       title: 'Heirloom South Indian Bridal Palms',
       titleTa: 'பாரம்பரிய தென்னிந்திய மணப்பெண் மருதாணி',
-      caption: 'Detailed symmetrical mandalas surrounded by delicate peacocks, temple bells, and fine lattice work.',
+      caption: 'Detailed symmetrical mandalas surrounded by delicate peacocks, temple bells, and fine lattice work. Placeholder slot ready for real photo upload.',
       category: 'BRIDAL',
-      imageUrl: 'https://images.unsplash.com/photo-1582234372722-50d7ccc30ebd?auto=format&fit=crop&w=1000&q=80',
-      altText: 'Intricate bridal henna on palms featuring temple bells and sacred mandala motifs',
+      imageUrl: '/placeholders/portfolio-bridal.svg',
+      altText: 'Bridal mehndi showcase placeholder slot awaiting media upload from @salem_mehandi_artist_pallavi',
       featured: true,
       published: true,
       hasClientConsent: true,
-      consentNotes: 'Portfolio display consented by client for digital portfolio.',
+      consentNotes: 'Curated showcase placeholder slot. Replace via Admin Dashboard.',
       collectionYear: '2026 Collection',
       displayOrder: 1,
     },
     {
       title: 'Minimalist Floral Finger Trails',
       titleTa: 'நவீன மலர் வடிவமைப்பு',
-      caption: 'Airy negative space botanical trails stretching delicately across fingers and wrist.',
+      caption: 'Airy negative space botanical trails stretching delicately across fingers and wrist. Placeholder slot ready for real photo upload.',
       category: 'MINIMAL',
-      imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80',
-      altText: 'Minimal contemporary henna with negative space leaves and wristlet bracelet',
+      imageUrl: '/placeholders/portfolio-minimal.svg',
+      altText: 'Minimal contemporary henna showcase placeholder slot awaiting media upload',
       featured: true,
       published: true,
       hasClientConsent: true,
-      consentNotes: 'Editorial photoshoot with signed model release.',
+      consentNotes: 'Curated showcase placeholder slot. Replace via Admin Dashboard.',
       collectionYear: '2026 Collection',
       displayOrder: 2,
     },
     {
       title: 'Gulf Arabic Shaded Florals',
       titleTa: 'வளைகுடா அரபு மலர் மருதாணி',
-      caption: 'Bold flowing petals with distinctive graduated shading and delicate lace wristbands.',
+      caption: 'Bold flowing petals with distinctive graduated shading and delicate lace wristbands. Placeholder slot ready for real photo upload.',
       category: 'ARABIC',
-      imageUrl: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80',
-      altText: 'Arabic mehndi design with bold shading and swirling vines on back of hand',
+      imageUrl: '/placeholders/portfolio-arabic.svg',
+      altText: 'Arabic mehndi design showcase placeholder slot awaiting media upload',
       featured: true,
       published: true,
       hasClientConsent: true,
-      consentNotes: 'Approved client demonstration item.',
+      consentNotes: 'Curated showcase placeholder slot. Replace via Admin Dashboard.',
       collectionYear: '2025 Collection',
       displayOrder: 3,
     },
     {
       title: 'Traditional Rajasthani Peacock & Jali',
       titleTa: 'ராஜஸ்தானி மயில் மற்றும் ஜாலி வேலைப்பாடு',
-      caption: 'High-density geometric jaal work with dancing peacocks and intricate wrist kalash.',
+      caption: 'High-density geometric jaal work with dancing peacocks and intricate wrist kalash. Placeholder slot ready for real photo upload.',
       category: 'TRADITIONAL',
-      imageUrl: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=80',
-      altText: 'High-density Rajasthani henna design with intricate grid and peacock motifs',
+      imageUrl: '/placeholders/portfolio-traditional.svg',
+      altText: 'Traditional Rajasthani jaal showcase placeholder slot awaiting media upload',
       featured: true,
       published: true,
       hasClientConsent: true,
-      consentNotes: 'Wedding photography archive.',
+      consentNotes: 'Curated showcase placeholder slot. Replace via Admin Dashboard.',
       collectionYear: '2025 Collection',
       displayOrder: 4,
     },
     {
       title: 'Festive Lotus & Moon Mandala',
       titleTa: 'தாமரை மற்றும் சந்திரன் மண்டலம்',
-      caption: 'Central radiating moon medallion adorned with blooming lotuses for festive evenings.',
+      caption: 'Central radiating moon medallion adorned with blooming lotuses for festive evenings. Placeholder slot ready for real photo upload.',
       category: 'FESTIVE',
-      imageUrl: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1000&q=80',
-      altText: 'Festive henna mandala featuring lotus petals on back of hand',
+      imageUrl: '/placeholders/portfolio-festive.svg',
+      altText: 'Festive lotus mandala showcase placeholder slot awaiting media upload',
       featured: false,
       published: true,
       hasClientConsent: true,
-      consentNotes: 'Festival pop-up showcase.',
+      consentNotes: 'Curated showcase placeholder slot. Replace via Admin Dashboard.',
       collectionYear: '2026 Collection',
       displayOrder: 5,
     },
     {
       title: 'Bespoke Storyline & Couple Monogram',
       titleTa: 'தனிப்பயன் ஜோடி பெயர் மருதாணி',
-      caption: 'Customized bridal palm integrating the couple’s meeting coordinates and interlocking initials.',
+      caption: 'Customized bridal palm integrating the couple’s meeting coordinates and interlocking initials. Placeholder slot ready for real photo upload.',
       category: 'BESPOKE',
-      imageUrl: 'https://images.unsplash.com/photo-1582234372722-50d7ccc30ebd?auto=format&fit=crop&w=1000&q=80',
-      altText: 'Custom bridal mehndi design featuring hidden initials and love story symbols',
+      imageUrl: '/placeholders/portfolio-bespoke.svg',
+      altText: 'Bespoke custom henna concept showcase placeholder slot awaiting media upload',
       featured: false,
       published: true,
       hasClientConsent: true,
-      consentNotes: 'Client permission granted for anonymised portfolio view.',
+      consentNotes: 'Curated showcase placeholder slot. Replace via Admin Dashboard.',
       collectionYear: '2026 Collection',
       displayOrder: 6,
     },
@@ -381,46 +390,21 @@ async function main() {
   }
   console.log('✓ FAQs seeded');
 
-  // 7. Approved & Pending Testimonials
+  // 7. Client Testimonials (Draft Samples — All unapproved by default until owner verifies genuine client permission)
   await prisma.testimonial.deleteMany({});
   await prisma.testimonial.create({
     data: {
-      clientName: 'Deepika & Karthik',
+      clientName: 'Sample Review Draft (Requires Owner Verification)',
       event: 'Bridal Muhurtham, Salem',
-      quote: 'Pallavi’s artistry is breathtaking. Her organic henna gave me the deepest, richest stain that lasted well over two weeks. Her calm demeanor during the bridal rush was a blessing!',
-      quoteTa: 'பல்லவியின் மருதாணி கலை மிகவும் அற்புதம். நல்ல அடர்ந்த நிறம் கிடைத்தது. மிகுந்த பொறுமையுடன் செய்து கொடுத்தார்.',
+      quote: 'Pallavi’s bespoke bridal henna session. Sample review draft awaiting actual client consent before publishing.',
+      quoteTa: 'மாதிரி மதிப்பாய்வு வரைவு.',
       rating: 5,
-      isApproved: true,
-      date: 'January 2026',
+      isApproved: false, // Strictly unapproved until owner enters verified review
+      date: 'Pending Owner Review',
       displayOrder: 1,
     },
   });
-
-  await prisma.testimonial.create({
-    data: {
-      clientName: 'Sowmya R.',
-      event: 'Sangeet Party, Erode',
-      quote: 'She and her team handled 15 bridesmaids with such speed and poise. Every single design was fresh, elegant, and neat. Highly recommended!',
-      rating: 5,
-      isApproved: true,
-      date: 'December 2025',
-      displayOrder: 2,
-    },
-  });
-
-  // Pending approval testimonial (tests the owner approval workflow in admin!)
-  await prisma.testimonial.create({
-    data: {
-      clientName: 'Pooja Venkatesh (Sample Review awaiting moderation)',
-      event: 'Engagement Henna',
-      quote: 'Loved the custom lotus bells motif designed specifically for our engagement ceremony!',
-      rating: 5,
-      isApproved: false, // Intentionally unapproved for moderation test
-      date: 'February 2026',
-      displayOrder: 3,
-    },
-  });
-  console.log('✓ Testimonials seeded (including moderation test item)');
+  console.log('✓ Testimonials seeded (moderation draft item)');
 
   // 8. Sample Enquiries in pipeline states
   await prisma.enquiry.deleteMany({});

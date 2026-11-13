@@ -54,8 +54,35 @@ export default async function HomePage() {
   const phone = settings?.phone || '+91 98765 43210';
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BeautySalon',
+    name: businessName,
+    description: tagline,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Salem',
+      addressRegion: 'Tamil Nadu',
+      addressCountry: 'IN',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 11.6643,
+      longitude: 78.146,
+    },
+    telephone: phone,
+    priceRange: '₹₹₹',
+    currenciesAccepted: 'INR',
+    paymentAccepted: 'UPI, Cash, Bank Transfer',
+    areaServed: serviceArea,
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar
         businessName={businessName}
         tagline={tagline}

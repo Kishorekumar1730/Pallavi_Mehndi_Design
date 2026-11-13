@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/navigation';
 import { Sparkles, Menu, X, Phone, CalendarCheck, ShieldCheck } from 'lucide-react';
 import { translations, Language } from '@/lib/language';
 
@@ -48,9 +47,7 @@ export default function Navbar({
           <a href="/" className="flex items-center gap-3 group focus:outline-none">
             <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#C5A059] via-[#B35D4D] to-[#241416] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-[#FAF5EE] rounded-full flex items-center justify-center text-[#B35D4D]">
-                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.41 0 8 3.59 8 8 0 1.85-.63 3.55-1.69 4.9z"/>
-                </svg>
+                <Sparkles className="w-5 h-5 text-[#C5A059]" style={{ width: 20, height: 20 }} />
               </div>
             </div>
             <div>
