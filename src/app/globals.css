@@ -217,6 +217,32 @@ h1, h2, h3, .font-serif {
   box-shadow: 0 2px 6px rgba(43, 31, 42, 0.3);
 }
 
+/* -------------------------------------------------------------
+   MODERN GLASSMORPHIC & AMBIENT UTILITY STYLES
+   ------------------------------------------------------------- */
+.glass-pill {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(198, 161, 91, 0.35);
+  box-shadow: 0 2px 8px -1px rgba(43, 31, 42, 0.05);
+}
+
+.glass-card-modern {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 48px -10px rgba(43, 31, 42, 0.09), 0 1px 3px rgba(43, 31, 42, 0.04);
+}
+
+.story-ring-glow {
+  background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF);
+  padding: 2.5px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px -2px rgba(221, 42, 123, 0.3);
+}
+
 /* Authentic Instagram Elevated Button */
 .btn-elevated-instagram {
   display: inline-flex;
