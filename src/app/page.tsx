@@ -6,6 +6,7 @@ import InstagramHeroCard from '@/components/InstagramHeroCard';
 import InstagramLogo from '@/components/InstagramLogo';
 import ServiceCard from '@/components/ServiceCard';
 import PortfolioGallery from '@/components/PortfolioGallery';
+import BotanicalShadowOverlay from '@/components/BotanicalShadowOverlay';
 import {
   Sparkles,
   CalendarCheck,
@@ -95,65 +96,52 @@ export default async function HomePage() {
 
       <main className="flex-1">
         {/* ================= HERO SECTION ================= */}
-        <section className="relative overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-24 border-b border-[#C6A15B]/25">
+        <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28 border-b border-[#C6A15B]/30 bg-[radial-gradient(ellipse_at_50%_15%,#FFFDF9_0%,#F5EBDD_55%,#EADBCA_100%)]">
           {/* Authentic Henna Background Theme Layer (When uploaded from Instagram) */}
           {backgroundThemeUrl ? (
             <div
-              className="absolute inset-0 bg-cover bg-center opacity-[0.07] mix-blend-multiply pointer-events-none z-0"
+              className="absolute inset-0 bg-cover bg-center opacity-[0.05] mix-blend-multiply pointer-events-none z-0"
               style={{ backgroundImage: `url(${backgroundThemeUrl})` }}
             />
           ) : null}
 
-          {/* Ceremonial Ambient Layering & Luminous Mesh Gradients */}
-          <div className="absolute -top-32 -right-20 w-[550px] h-[550px] rounded-full bg-[radial-gradient(circle,rgba(198,161,91,0.18)_0%,transparent_70%)] blur-2xl pointer-events-none" />
-          <div className="absolute -bottom-32 -left-20 w-[550px] h-[550px] rounded-full bg-[radial-gradient(circle,rgba(142,52,69,0.10)_0%,transparent_70%)] blur-2xl pointer-events-none" />
+          {/* Dappled Botanical Leaf Shadows */}
+          <BotanicalShadowOverlay />
+
+          {/* Ceremonial Ambient Glows */}
+          <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#C6A15B]/10 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-10 left-10 w-[400px] h-[400px] rounded-full bg-[#8E3445]/8 blur-3xl pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
               {/* Left Column: Brand copy and actions */}
-              <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-                {/* Modern Atelier Eyebrow Pill */}
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/75 backdrop-blur-md border border-[#C6A15B]/40 shadow-2xs text-[11px] font-bold text-[#8E3445] tracking-wider uppercase">
+              <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
+                {/* Heritage Badge */}
+                <div className="glass-pill inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold text-[#8E3445] tracking-wider uppercase">
                   <Sparkles className="w-3.5 h-3.5 text-[#C6A15B]" />
-                  <span>Salem&apos;s Premier Bridal Henna Atelier</span>
+                  <span>100% Hand-Blended Organic Henna • Pure Botanical Oils</span>
                 </div>
 
                 <div className="space-y-3">
-                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#2B1F2A] leading-[1.12]">
-                    {tagline.split('&')[0]} &amp; <br />
-                    <span className="font-serif italic font-normal text-[#8E3445] relative inline-block">
-                      {tagline.split('&')[1] || 'Contemporary Henna'}
-                    </span>
+                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#2B1F2A] leading-[1.12]">
+                    Bespoke Bridal &amp; <br />
+                    <span className="text-[#8E3445] italic font-normal">
+                      Contemporary Henna
+                    </span>{' '}
+                    <br />
+                    Artistry
                   </h1>
 
-                  {/* Social Proof & Purity Rating Bar */}
-                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/70 backdrop-blur-xs border border-[#C6A15B]/25 text-xs text-[#2B1F2A] shadow-2xs">
-                      <div className="flex text-[#C6A15B]">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-[#C6A15B] text-[#C6A15B]" />
-                        ))}
-                      </div>
-                      <span className="font-bold text-[#8E3445]">5.0</span>
-                      <span className="text-[#2B2421]/60 font-normal">• Verified Brides</span>
-                    </div>
-
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/70 backdrop-blur-xs border border-[#C6A15B]/25 text-xs text-[#713E2E] font-medium shadow-2xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                      <span>100% Organic Rajasthani Henna</span>
-                    </div>
-                  </div>
-
-                  <p className="text-base sm:text-lg text-[#2B2421]/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+                  <p className="text-sm sm:text-base text-[#2B2421]/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
                     Exquisite bespoke bridal adornment and celebration mehndi crafted with intentional precision. Based in {serviceArea}.
                   </p>
                 </div>
 
-                {/* CTAs (Modern Elevated Pill Buttons) */}
+                {/* CTAs (Glossy Modern 3D Buttons matching mockup) */}
                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
                   <a
                     href="/enquire"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#8E3445] via-[#9A384D] to-[#8E3445] hover:from-[#A13D51] hover:to-[#9A384D] text-white text-sm font-semibold shadow-md shadow-[#8E3445]/25 hover:shadow-xl hover:shadow-[#8E3445]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 border border-white/20 group"
+                    className="w-full sm:w-auto btn-glossy-primary text-xs sm:text-sm px-6 sm:px-7 py-3 gap-2 group shadow-lg"
                   >
                     <CalendarCheck className="w-4 h-4 text-[#F4EADD] group-hover:scale-110 transition-transform" />
                     <span>Enquire About Your Date</span>
@@ -161,7 +149,7 @@ export default async function HomePage() {
 
                   <a
                     href="/portfolio"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white/85 hover:bg-white text-[#2B1F2A] hover:text-[#8E3445] text-sm font-semibold border border-[#C6A15B]/40 hover:border-[#8E3445]/50 shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
+                    className="w-full sm:w-auto btn-glossy-secondary text-xs sm:text-sm px-5 sm:px-6 py-3 gap-2 group shadow-sm"
                   >
                     <span>View Selected Works</span>
                     <ArrowRight className="w-4 h-4 text-[#8E3445] group-hover:translate-x-1 transition-transform" />
@@ -172,37 +160,39 @@ export default async function HomePage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Follow Pallavi on Instagram (opens in a new tab)"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-[#2B1F2A] hover:text-[#8E3445] transition-colors rounded-full hover:bg-white/50"
+                    className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-[#2B1F2A] hover:text-[#8E3445] transition-colors py-2"
                   >
-                    <InstagramLogo size={16} variant="gradient-badge" />
-                    <span>Instagram</span>
-                    <ExternalLink className="w-3 h-3 text-[#8E3445]" />
+                    <span>Instagram Profile</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-[#8E3445]" />
                   </a>
                 </div>
 
-                {/* Visible Booking Reassurance */}
-                <div className="pt-1 flex items-center justify-center lg:justify-start gap-2 text-xs text-[#2B2421]/70">
-                  <ShieldCheck className="w-4 h-4 text-[#C6A15B] shrink-0" />
-                  <span>
-                    <strong className="text-[#2B1F2A] font-semibold">Artist Consultation:</strong> Dates are reserved exclusively upon personal consultation &amp; advance deposit.
-                  </span>
+                {/* Visible Booking disclaimer */}
+                <div className="pt-2">
+                  <p className="text-xs text-[#2B2421]/80 flex items-center justify-center lg:justify-start gap-2.5 glass-pill p-3 sm:py-2.5 sm:px-4 rounded-2xl sm:rounded-full max-w-lg mx-auto lg:mx-0 shadow-2xs">
+                    <ShieldCheck className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                    <span>
+                      <strong className="text-[#2B1F2A]">Notice:</strong> Submitting a request sends an enquiry. Dates are confirmed only after personal artist consultation and advance deposit.
+                    </span>
+                  </p>
                 </div>
 
-                {/* Service Area & Purity Pills */}
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-2 text-xs text-[#2B2421]/75">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/70 border border-[#C6A15B]/30 text-[#713E2E] font-medium shadow-2xs">
-                    <MapPin className="w-3.5 h-3.5 text-[#8E3445]" />
+                {/* Service Area Pill */}
+                <div className="flex items-center justify-center lg:justify-start gap-4 pt-1 text-xs text-[#2B2421]/75">
+                  <span className="flex items-center gap-1.5 font-semibold text-[#713E2E]">
+                    <MapPin className="w-4 h-4 text-[#8E3445]" />
                     <span>{serviceArea}</span>
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/70 border border-[#C6A15B]/30 text-[#713E2E] font-medium shadow-2xs">
-                    <Award className="w-3.5 h-3.5 text-[#C6A15B]" />
-                    <span>Zero Chemicals / Pure Rajasthani Leaves</span>
+                  <span className="text-[#C6A15B]">✦</span>
+                  <span className="flex items-center gap-1.5 font-semibold text-[#713E2E]">
+                    <Award className="w-4 h-4 text-[#C6A15B]" />
+                    <span>Zero Chemicals / No PPD</span>
                   </span>
                 </div>
               </div>
 
-              {/* Right Column: Official Instagram Profile Card */}
-              <div className="lg:col-span-5 flex items-center justify-center relative">
+              {/* Right Column: Multi-Card Glossy Showcase */}
+              <div className="lg:col-span-7 flex items-center justify-center relative">
                 <InstagramHeroCard
                   instagramUrl={instagramUrl}
                   artistImageUrl={settings?.artistImageUrl}
@@ -229,7 +219,7 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+              <div className="card-glassmorphic card-glassmorphic-hover p-7 sm:p-8 space-y-3.5">
                 <div className="w-12 h-12 rounded-2xl bg-[#F4EADD] border border-[#C6A15B]/40 flex items-center justify-center text-[#8E3445] shadow-xs">
                   <Droplets className="w-6 h-6 text-[#8E3445]" />
                 </div>
@@ -241,7 +231,7 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+              <div className="card-glassmorphic card-glassmorphic-hover p-7 sm:p-8 space-y-3.5">
                 <div className="w-12 h-12 rounded-2xl bg-[#F4EADD] border border-[#C6A15B]/40 flex items-center justify-center text-[#C6A15B] shadow-xs">
                   <Sparkles className="w-6 h-6 text-[#C6A15B]" />
                 </div>
@@ -253,7 +243,7 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              <div className="card-floating p-7 sm:p-8 space-y-3.5">
+              <div className="card-glassmorphic card-glassmorphic-hover p-7 sm:p-8 space-y-3.5">
                 <div className="w-12 h-12 rounded-2xl bg-[#F4EADD] border border-[#C6A15B]/40 flex items-center justify-center text-[#713E2E] shadow-xs">
                   <ShieldCheck className="w-6 h-6 text-[#713E2E]" />
                 </div>
@@ -317,7 +307,7 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="card-floating p-6 sm:p-7 text-center space-y-2.5">
+              <div className="card-glassmorphic card-glassmorphic-hover p-6 sm:p-7 text-center space-y-2.5">
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#F4EADD] text-[#C6A15B] border border-[#C6A15B]/40">
                   Hour 0 - 12 (Application)
                 </span>
@@ -328,7 +318,7 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              <div className="card-floating p-6 sm:p-7 text-center space-y-2.5">
+              <div className="card-glassmorphic card-glassmorphic-hover p-6 sm:p-7 text-center space-y-2.5">
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#F4EADD] text-[#8E3445] border border-[#C6A15B]/40">
                   Hour 24 - 36 (Oxidation)
                 </span>
@@ -339,7 +329,7 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              <div className="card-floating p-6 sm:p-7 text-center space-y-2.5">
+              <div className="card-glassmorphic card-glassmorphic-hover p-6 sm:p-7 text-center space-y-2.5">
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#2B1F2A] text-[#F4EADD] border border-[#C6A15B]/40">
                   Hour 48+ (Peak Color)
                 </span>
@@ -453,7 +443,7 @@ export default async function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
               <a
                 href="/enquire"
-                className="w-full sm:w-auto btn-elevated-primary text-sm px-9 py-3.5 gap-2"
+                className="w-full sm:w-auto btn-glossy-primary text-sm px-9 py-3.5 gap-2 shadow-lg"
               >
                 <CalendarCheck className="w-4 h-4 text-[#F4EADD]" />
                 <span>Check Date Availability</span>
@@ -464,7 +454,7 @@ export default async function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="View Pallavi's Instagram profile (opens in a new tab)"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#C6A15B] hover:bg-white/10 text-[#F4EADD] font-semibold text-sm px-7 py-3.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0.5 transition-all"
+                className="w-full sm:w-auto btn-glossy-secondary text-sm px-7 py-3.5 gap-2 shadow-md"
               >
                 <InstagramLogo size={18} variant="gradient-badge" />
                 <span>Visit Instagram @salem_mehandi_artist_pallavi</span>
