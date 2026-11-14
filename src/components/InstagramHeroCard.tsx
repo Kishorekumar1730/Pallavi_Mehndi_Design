@@ -88,10 +88,10 @@ export default function InstagramHeroCard({
       <div className="w-full max-w-[290px] sm:max-w-[320px] card-glassmorphic p-5 sm:p-6 space-y-4 relative z-10 sm:mt-0 mt-8">
         
         {/* Profile Header */}
-        <div className="flex items-center justify-between pb-3.5 border-b border-[#C6A15B]/25">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-[#C6A15B]/25">
+          <div className="flex items-center gap-3 min-w-0">
             {/* Avatar with Metallic Golden Ring */}
-            <div className="relative">
+            <div className="relative shrink-0">
               <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full p-0.5 bg-gradient-to-tr from-[#DFBF7D] via-[#C6A15B] to-[#9C7A35] shadow-xs">
                 <img
                   src={avatarPhoto}
@@ -101,13 +101,13 @@ export default function InstagramHeroCard({
               </div>
             </div>
 
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-serif text-base sm:text-lg font-bold text-[#2B1F2A] leading-tight">
+            <div className="min-w-0 flex flex-col justify-center">
+              <div className="flex items-center gap-1.5 leading-none">
+                <span className="font-serif text-base sm:text-lg font-bold text-[#2B1F2A] truncate">
                   Pallavi
                 </span>
                 <span
-                  className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-[#C6A15B] text-white text-[9px] font-bold shadow-xs"
+                  className="shrink-0 inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-[#C6A15B] text-white text-[9px] font-bold shadow-xs"
                   title="Verified Professional Mehndi Artist"
                 >
                   <Check className="w-2.5 h-2.5 stroke-[3]" />
@@ -118,7 +118,7 @@ export default function InstagramHeroCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Visit Pallavi's Instagram profile @salem_mehandi__ (opens in a new tab)"
-                className="text-[11px] font-semibold text-[#8E3445] hover:text-[#2B1F2A] transition-colors block"
+                className="text-[11px] font-semibold text-[#8E3445] hover:text-[#2B1F2A] transition-colors mt-1 block truncate"
               >
                 @salem_mehandi__
               </a>
@@ -126,9 +126,10 @@ export default function InstagramHeroCard({
           </div>
 
           {/* Official Studio Capsule Badge */}
-          <span className="px-2.5 py-1 rounded-full bg-[#FAF5EE] text-[#713E2E] border border-[#C6A15B]/50 text-[9px] uppercase font-bold tracking-wider shadow-2xs">
-            OFFICIAL STUDIO
-          </span>
+          <div className="shrink-0 inline-flex flex-col items-center justify-center text-center px-3 py-1 rounded-full bg-[#FAF5EE] text-[#713E2E] border border-[#C6A15B]/50 text-[9px] uppercase font-bold tracking-wider leading-tight shadow-2xs">
+            <span>OFFICIAL</span>
+            <span>STUDIO</span>
+          </div>
         </div>
 
         {/* 3 Authentic Feature Points */}
