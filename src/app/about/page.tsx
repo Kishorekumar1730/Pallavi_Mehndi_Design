@@ -26,7 +26,10 @@ export default async function AboutPage() {
   const serviceArea = settings?.serviceArea || 'Salem, Tamil Nadu & Destination Travel';
   const phone = settings?.phone || '+91 98765 43210';
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
-  const artistImageUrl = settings?.artistImageUrl || '/placeholders/artist-portrait.svg';
+  const artistImageUrl =
+    settings?.artistImageUrl && !settings.artistImageUrl.includes('/placeholders/')
+      ? settings.artistImageUrl
+      : '/images/pallavi-portrait-full.jpg';
   const instagramUrl = settings?.instagramUrl || 'https://www.instagram.com/salem_mehandi_artist_pallavi/';
   const backgroundThemeUrl = settings?.backgroundThemeUrl;
   const bioEn =
