@@ -91,13 +91,16 @@ export default function InstagramHeroCard({
         <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-[#C6A15B]/25">
           <div className="flex items-center gap-3 min-w-0">
             {/* Avatar with Metallic Golden Ring */}
-            <div className="relative shrink-0">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full p-0.5 bg-gradient-to-tr from-[#DFBF7D] via-[#C6A15B] to-[#9C7A35] shadow-xs flex items-center justify-center">
-                <img
-                  src={avatarPhoto}
-                  alt="Pallavi Avatar"
-                  className="w-full h-full rounded-full object-cover object-center border border-white"
-                />
+            <div className="relative shrink-0 flex items-center justify-center">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 aspect-square rounded-full p-[2px] bg-gradient-to-tr from-[#DFBF7D] via-[#C6A15B] to-[#9C7A35] shadow-xs flex items-center justify-center">
+                <div className="w-full h-full rounded-full overflow-hidden border border-white flex items-center justify-center bg-[#FAF5EE]">
+                  <img
+                    src={avatarPhoto}
+                    alt="Pallavi Avatar"
+                    className="w-full h-full rounded-full object-cover object-center"
+                    style={{ objectFit: 'cover', objectPosition: 'center', borderRadius: '50%' }}
+                  />
+                </div>
               </div>
             </div>
 
