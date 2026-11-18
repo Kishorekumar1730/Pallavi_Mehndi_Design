@@ -85,14 +85,14 @@ export default function InstagramHeroCard({
       {/* ==============================================================
           RIGHT COMPOSITE: 3D GLOSSY FLOATING PEARL CARD
           ============================================================== */}
-      <div className="w-full max-w-[340px] sm:max-w-[365px] card-floating-3d-glossy p-6 sm:p-7 space-y-5 relative z-10 sm:mt-0 mt-8">
+      <div className="w-full max-w-[340px] sm:max-w-[370px] card-floating-3d-glossy p-6 sm:p-7 space-y-5 relative z-10 sm:mt-0 mt-8">
         
         {/* Profile Header */}
-        <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#C6A15B]/25">
+        <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#EBDDC8]/70">
           <div className="flex items-center gap-3.5 min-w-0">
             {/* Avatar with Concentric Metallic Golden & White Rings */}
             <div className="relative shrink-0 flex items-center justify-center">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 aspect-square rounded-full p-[2px] bg-gradient-to-tr from-[#DFBF7D] via-[#C6A15B] to-[#9C7A35] shadow-sm flex items-center justify-center">
+              <div className="w-13 h-13 sm:w-14 sm:h-14 aspect-square rounded-full p-[2px] bg-gradient-to-tr from-[#DFBF7D] via-[#C6A15B] to-[#9C7A35] shadow-xs flex items-center justify-center">
                 <div className="w-full h-full rounded-full overflow-hidden border border-white flex items-center justify-center bg-[#FAF5EE]">
                   <img
                     src={avatarPhoto}
@@ -105,12 +105,12 @@ export default function InstagramHeroCard({
             </div>
 
             <div className="min-w-0 flex flex-col justify-center">
-              <div className="flex items-center gap-1.5 leading-none">
+              <div className="flex items-center gap-1 leading-none">
                 <span className="font-serif text-lg sm:text-xl font-bold text-[#2B1F2A] truncate">
                   Pallavi
                 </span>
                 <span
-                  className="shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#B88746] text-white text-[9px] font-bold shadow-2xs"
+                  className="shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#B88746] text-white text-[9px] font-bold shadow-2xs ml-0.5"
                   title="Verified Professional Mehndi Artist"
                 >
                   <Check className="w-2.5 h-2.5 stroke-[3]" />
@@ -121,15 +121,16 @@ export default function InstagramHeroCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Visit Pallavi's Instagram profile @salem_mehandi__ (opens in a new tab)"
-                className="text-xs font-semibold text-[#8E3445] hover:text-[#2B1F2A] transition-colors mt-1 block truncate"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8E3445] hover:text-[#2B1F2A] transition-colors mt-1 truncate"
               >
-                @salem_mehandi__
+                <InstagramLogo size={12} variant="glyph-only" className="text-[#8E3445] shrink-0" />
+                <span>@salem_mehandi__</span>
               </a>
             </div>
           </div>
 
           {/* Official Studio Capsule Badge */}
-          <div className="shrink-0 inline-flex flex-col items-center justify-center text-center px-3.5 py-1.5 rounded-full bg-[#FAF5EE] text-[#713E2E] border border-[#C6A15B]/45 text-[9px] sm:text-[10px] uppercase font-bold tracking-wider leading-tight shadow-2xs">
+          <div className="shrink-0 inline-flex flex-col items-center justify-center text-center px-3.5 py-1.5 rounded-full bg-[#FAF5EE] text-[#713E2E] border border-[#C6A15B]/40 text-[9px] uppercase font-bold tracking-wider leading-tight shadow-2xs">
             <span>OFFICIAL</span>
             <span>STUDIO</span>
           </div>
@@ -139,14 +140,14 @@ export default function InstagramHeroCard({
         <div className="space-y-4 text-xs text-[#2B2421]/85">
           {/* Location */}
           <div className="flex items-start gap-3">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#8E3445]/10 text-[#8E3445] flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
-              <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <div className="w-9 h-9 rounded-full bg-[#F5EBE8] text-[#8E3445] flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
+              <MapPin className="w-4 h-4" />
             </div>
             <div>
-              <strong className="text-[#2B1F2A] block font-semibold text-xs sm:text-[13px]">
+              <strong className="text-[#2B1F2A] block font-semibold text-[13px]">
                 Verified Location
               </strong>
-              <span className="text-[11px] sm:text-xs text-[#2B2421]/75 leading-relaxed block mt-0.5">
+              <span className="text-xs text-[#5C504A] leading-relaxed block mt-0.5">
                 {serviceArea}
               </span>
             </div>
@@ -154,14 +155,14 @@ export default function InstagramHeroCard({
 
           {/* 100% Organic Henna */}
           <div className="flex items-start gap-3">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#C6A15B]/15 text-[#9C7A35] flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
-              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#9C7A35]" />
+            <div className="w-9 h-9 rounded-full bg-[#F7F2E6] text-[#A67C37] flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
+              <Sparkles className="w-4 h-4 text-[#A67C37]" />
             </div>
             <div>
-              <strong className="text-[#2B1F2A] block font-semibold text-xs sm:text-[13px]">
+              <strong className="text-[#2B1F2A] block font-semibold text-[13px]">
                 100% Organic Rajasthani Henna
               </strong>
-              <span className="text-[11px] sm:text-xs text-[#2B2421]/75 leading-relaxed block mt-0.5">
+              <span className="text-xs text-[#5C504A] leading-relaxed block mt-0.5">
                 Triple-sifted natural leaf powder, eucalyptus &amp; cajeput pure essential oils. Chemical-free, no black henna or synthetic PPD.
               </span>
             </div>
@@ -169,14 +170,14 @@ export default function InstagramHeroCard({
 
           {/* Authentic Photography Notice */}
           <div className="flex items-start gap-3">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#8E3445]/10 text-[#8E3445] flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
-              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <div className="w-9 h-9 rounded-full bg-[#F5EBE8] text-[#8E3445] flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
+              <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <strong className="text-[#2B1F2A] block font-semibold text-xs sm:text-[13px]">
+              <strong className="text-[#2B1F2A] block font-semibold text-[13px]">
                 Authentic Photography Notice
               </strong>
-              <span className="text-[11px] sm:text-xs text-[#2B2421]/75 leading-relaxed block mt-0.5">
+              <span className="text-xs text-[#5C504A] leading-relaxed block mt-0.5">
                 All genuine client designs, bridal reels, and stain progressions are showcased directly on Pallavi&apos;s official Instagram.
               </span>
             </div>
@@ -184,7 +185,7 @@ export default function InstagramHeroCard({
         </div>
 
         {/* 3D Glossy Instagram Button with Specular Arc & Glow */}
-        <div className="pt-2 space-y-2.5 border-t border-[#C6A15B]/20">
+        <div className="pt-2 space-y-2.5 border-t border-[#EBDDC8]/70">
           <a
             href={instagramUrl}
             target="_blank"
@@ -193,25 +194,25 @@ export default function InstagramHeroCard({
             className="w-full btn-glossy-instagram-3d py-2.5 sm:py-3 px-3.5 sm:px-4 group/ig"
           >
             <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/20 backdrop-blur-xs border border-white/60 flex items-center justify-center shrink-0 shadow-inner">
-                <InstagramLogo size={16} variant="glyph-only" className="text-white" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 backdrop-blur-xs border border-white/60 flex items-center justify-center shrink-0 shadow-inner">
+                <InstagramLogo size={19} variant="glyph-only" className="text-white" />
               </div>
               <div className="text-left leading-tight min-w-0">
                 <span className="block text-[11px] sm:text-xs font-semibold text-white/95">
                   Explore Real Designs on
                 </span>
-                <span className="block text-xs sm:text-[13px] font-bold text-white tracking-wide">
+                <span className="block text-xs sm:text-[14px] font-bold text-white tracking-wide">
                   Instagram
                 </span>
               </div>
             </div>
 
-            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/15 flex items-center justify-center shrink-0 group-hover/ig:bg-white/25 transition-colors">
-              <ExternalLink className="w-3.5 h-3.5 text-white group-hover/ig:translate-x-0.5 group-hover/ig:-translate-y-0.5 transition-transform" />
+            <div className="w-8 h-8 rounded-xl bg-white/20 border border-white/40 flex items-center justify-center shrink-0 group-hover/ig:bg-white/30 transition-colors shadow-2xs">
+              <ExternalLink className="w-4 h-4 text-white stroke-[2.2] group-hover/ig:translate-x-0.5 group-hover/ig:-translate-y-0.5 transition-transform" />
             </div>
           </a>
 
-          <p className="text-[10px] sm:text-[11px] text-center text-[#2B2421]/65 font-medium">
+          <p className="text-[11px] text-center text-[#5C504A]/75 font-medium tracking-wide pt-1">
             Real brides • Fresh henna stains • Verified client reels
           </p>
         </div>
