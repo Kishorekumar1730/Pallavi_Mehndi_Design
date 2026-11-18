@@ -117,6 +117,21 @@ export const settingsSchema = z.object({
     .or(z.literal('')),
   serviceArea: z.string().min(3).max(200),
   serviceAreaTa: z.string().max(200).optional().or(z.literal('')),
+  studioAddress: z.string().max(300).optional().or(z.literal('')),
+  mapEmbedUrl: z
+    .string()
+    .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://'), {
+      message: 'Must be a valid Google Maps embed URL',
+    })
+    .optional()
+    .or(z.literal('')),
+  mapDirectionsUrl: z
+    .string()
+    .refine((val) => !val || val.startsWith('http://') || val.startsWith('https://'), {
+      message: 'Must be a valid Google Maps directions URL',
+    })
+    .optional()
+    .or(z.literal('')),
   phone: z.string().min(8).max(30),
   whatsappNumber: z.string().min(8).max(30),
   email: z.string().email(),

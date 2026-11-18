@@ -32,6 +32,9 @@ export interface BusinessSettingsData {
   backgroundThemeUrl?: string | null;
   artistImageUrl?: string | null;
   serviceArea: string;
+  studioAddress?: string | null;
+  mapEmbedUrl?: string | null;
+  mapDirectionsUrl?: string | null;
   phone: string;
   whatsappNumber: string;
   email: string;
@@ -255,6 +258,54 @@ export default function SettingsManager({
                 onChange={(e) => setForm({ ...form, serviceArea: e.target.value })}
                 className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
               />
+            </div>
+          </div>
+
+          {/* Studio Location & Interactive Map */}
+          <div className="p-4 bg-[#FAF4EB]/80 rounded-2xl border border-[#C6A15B]/30 space-y-3">
+            <div>
+              <h4 className="font-serif text-sm font-bold text-[#2B1F2A] flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-[#8E3445]" />
+                <span>Public Studio Location &amp; Interactive Map</span>
+              </h4>
+              <p className="text-[11px] text-[#2B2421]/65 mt-0.5">
+                Configures the location card and interactive map in the booking CTA banner. Use only an artist-confirmed public studio or service city (e.g. Salem, Tamil Nadu). Do not publish private home addresses.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label className="block font-semibold text-[#2B2421] mb-1">Public Studio Address / City</label>
+                <input
+                  type="text"
+                  value={form.studioAddress || ''}
+                  onChange={(e) => setForm({ ...form, studioAddress: e.target.value })}
+                  placeholder="Salem, Tamil Nadu, India"
+                  className="w-full bg-white border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold text-[#2B2421] mb-1">Google Maps Embed URL (iframe)</label>
+                <input
+                  type="url"
+                  value={form.mapEmbedUrl || ''}
+                  onChange={(e) => setForm({ ...form, mapEmbedUrl: e.target.value })}
+                  placeholder="https://www.google.com/maps/embed?..."
+                  className="w-full bg-white border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold text-[#2B2421] mb-1">Map Directions URL (Link)</label>
+                <input
+                  type="url"
+                  value={form.mapDirectionsUrl || ''}
+                  onChange={(e) => setForm({ ...form, mapDirectionsUrl: e.target.value })}
+                  placeholder="https://maps.google.com/?q=Salem,+Tamil+Nadu,+India"
+                  className="w-full bg-white border border-[#C6A15B]/30 rounded-xl px-3 py-2 text-xs text-[#2B2421]"
+                />
+              </div>
             </div>
           </div>
 

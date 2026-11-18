@@ -56,6 +56,13 @@ export default async function HomePage() {
   const whatsappNumber = settings?.whatsappNumber || '+919876543210';
   const instagramUrl = settings?.instagramUrl || 'https://www.instagram.com/salem_mehandi_artist_pallavi/';
   const backgroundThemeUrl = settings?.backgroundThemeUrl || settings?.heroImageUrl;
+  const studioAddress = settings?.studioAddress || 'Salem, Tamil Nadu, India';
+  const mapEmbedUrl =
+    settings?.mapEmbedUrl ||
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125026.04415444658!2d78.07765365476532!3d11.664325016259835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3babf1ccf52cba0b%3A0xee9989007068ca47!2sSalem%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin';
+  const mapDirectionsUrl =
+    settings?.mapDirectionsUrl ||
+    'https://maps.google.com/?q=Salem,+Tamil+Nadu,+India';
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -420,7 +427,7 @@ export default async function HomePage() {
         )}
 
         {/* ================= FINAL BOOKING CALLOUT BANNER (MIDNIGHT PLUM) ================= */}
-        <section className="py-18 sm:py-24 bg-[#2B1F2A] text-[#F4EADD] relative overflow-hidden border-t border-[#C6A15B]/35">
+        <section className="py-20 sm:py-28 bg-[#2B1F2A] text-[#F4EADD] relative overflow-hidden border-t border-[#C6A15B]/35">
           {/* Subtle Henna Background Watermark */}
           {backgroundThemeUrl ? (
             <div
@@ -429,41 +436,114 @@ export default async function HomePage() {
             />
           ) : null}
 
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-            <span className="heritage-badge-plum text-xs">
-              Planning Your Wedding or Celebration?
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
-              Let&apos;s Create Timeless Ephemeral Art for Your Special Date
-            </h2>
-            <p className="text-sm sm:text-base text-[#F4EADD]/85 max-w-xl mx-auto leading-relaxed font-light">
-              We recommend reserving 3 to 6 months in advance for auspicious wedding muhurtham dates. Check calendar availability and receive a tailored quote today.
-            </p>
+          {/* Ambient Lighting Orbs */}
+          <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[#8E3445]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#C6A15B]/10 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
-              <a
-                href="/enquire"
-                className="w-full sm:w-auto btn-glossy-primary text-sm px-9 py-3.5 gap-2 shadow-lg"
-              >
-                <CalendarCheck className="w-4 h-4 text-[#F4EADD]" />
-                <span>Check Date Availability</span>
-              </a>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              
+              {/* LEFT COLUMN: Booking Callout Information & CTAs */}
+              <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <span className="heritage-badge-plum text-xs">
+                  Planning Your Wedding or Celebration?
+                </span>
+                <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
+                  Let&apos;s Create Timeless Ephemeral Art for Your Special Date
+                </h2>
+                <p className="text-sm sm:text-base text-[#F4EADD]/85 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+                  We recommend reserving 3 to 6 months in advance for auspicious wedding muhurtham dates. Check calendar availability and receive a tailored quote today.
+                </p>
 
-              <a
-                href={instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View Pallavi's Instagram profile (opens in a new tab)"
-                className="w-full sm:w-auto btn-glossy-secondary text-sm px-7 py-3.5 gap-2 shadow-md"
-              >
-                <InstagramLogo size={18} variant="gradient-badge" />
-                <span>Visit Instagram @salem_mehandi_artist_pallavi</span>
-              </a>
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                  <a
+                    href="/enquire"
+                    className="w-full sm:w-auto btn-glossy-primary text-sm px-8 py-3.5 gap-2 shadow-lg"
+                  >
+                    <CalendarCheck className="w-4 h-4 text-[#F4EADD]" />
+                    <span>Check Date Availability</span>
+                  </a>
+
+                  <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View Pallavi's Instagram profile (opens in a new tab)"
+                    className="w-full sm:w-auto btn-glossy-secondary text-sm px-6 py-3.5 gap-2 shadow-md"
+                  >
+                    <InstagramLogo size={18} variant="gradient-badge" />
+                    <span>Visit Instagram @salem_mehandi_artist_pallavi</span>
+                  </a>
+                </div>
+
+                <p className="text-[11px] sm:text-xs text-[#F4EADD]/60 pt-1">
+                  All bookings are verified personally by the artist before confirmation.
+                </p>
+              </div>
+
+              {/* RIGHT COLUMN: Polished Studio Location Card with Interactive Map */}
+              <div className="lg:col-span-5 w-full">
+                <div className="bg-gradient-to-b from-[#352734]/95 via-[#2E202D]/95 to-[#241923]/95 backdrop-blur-xl border border-[#C6A15B]/35 rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_rgba(255,255,255,0.12)] space-y-4 relative group hover:border-[#C6A15B]/60 transition-all duration-300">
+                  
+                  {/* Location Card Header */}
+                  <div className="flex items-center justify-between pb-3.5 border-b border-[#C6A15B]/20">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#DFBF7D]/25 via-[#C6A15B]/20 to-[#9C7A35]/25 border border-[#C6A15B]/50 flex items-center justify-center text-[#DFBF7D] shadow-inner shrink-0">
+                        <MapPin className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="font-serif text-base sm:text-lg font-bold text-white block leading-tight truncate">
+                          Salem Henna Studio
+                        </span>
+                        <span className="text-[11px] sm:text-xs text-[#DFBF7D] font-medium block truncate">
+                          {serviceArea}
+                        </span>
+                      </div>
+                    </div>
+                    <span className="hidden sm:inline-flex px-2.5 py-1 rounded-full bg-[#FAF5EE]/10 border border-[#C6A15B]/30 text-[10px] text-[#DFBF7D] uppercase font-semibold tracking-wider shrink-0">
+                      Studio &amp; Travel
+                    </span>
+                  </div>
+
+                  {/* Interactive Map Frame */}
+                  <div className="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden border border-[#C6A15B]/30 shadow-inner bg-[#1A1319]">
+                    <iframe
+                      src={mapEmbedUrl}
+                      title="Pallavi Mehndi Artistry Studio & Service Location Map"
+                      className="w-full h-full border-0 filter saturate-[0.9] contrast-[1.05]"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      allowFullScreen
+                    />
+                    
+                    {/* Verified Location Floating Badge */}
+                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#2B1F2A]/90 backdrop-blur-md border border-[#C6A15B]/40 text-[10px] text-white flex items-center gap-1.5 shadow-md pointer-events-none">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                      <span className="font-medium truncate">{studioAddress}</span>
+                    </div>
+                  </div>
+
+                  {/* Address & Directions Action */}
+                  <div className="pt-1 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-2 text-[#F4EADD]/85 min-w-0">
+                      <MapPin className="w-3.5 h-3.5 text-[#DFBF7D] shrink-0" />
+                      <span className="font-medium text-white truncate">{studioAddress}</span>
+                    </div>
+
+                    <a
+                      href={mapDirectionsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#C6A15B]/20 hover:bg-[#C6A15B]/30 border border-[#C6A15B]/50 text-[#DFBF7D] hover:text-white font-semibold text-xs transition-colors shrink-0 cursor-pointer"
+                    >
+                      <span>Get Directions</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
             </div>
-
-            <p className="text-[11px] text-[#F4EADD]/60 pt-2">
-              All bookings are verified personally by the artist before confirmation.
-            </p>
           </div>
         </section>
       </main>
