@@ -123,10 +123,18 @@ export default function Navbar({
 
             <div className="pt-2 flex flex-col gap-2">
               <a
+                href="/enquire"
+                onClick={() => setIsMobileDrawerOpen(false)}
+                className="w-full btn-glossy-primary py-2.5 text-xs justify-center font-bold flex items-center gap-1.5 shadow-md"
+              >
+                <CalendarCheck className="w-4 h-4 text-[#F4EADD]" />
+                <span>Check Date Availability</span>
+              </a>
+              <a
                 href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full btn-elevated-secondary py-2 text-xs justify-center font-bold"
+                className="w-full btn-elevated-secondary py-2 text-xs justify-center font-bold flex items-center gap-1.5"
               >
                 <span>Direct WhatsApp: {phone}</span>
               </a>

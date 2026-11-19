@@ -7,11 +7,6 @@ import InstagramLogo from '@/components/InstagramLogo';
 import ServiceCard from '@/components/ServiceCard';
 import PortfolioGallery from '@/components/PortfolioGallery';
 import BotanicalShadowOverlay from '@/components/BotanicalShadowOverlay';
-import MobileHero from '@/components/mobile/MobileHero';
-import MobileFeaturedDesigns from '@/components/mobile/MobileFeaturedDesigns';
-import MobileServicesShowcase from '@/components/mobile/MobileServicesShowcase';
-import MobileArtistIntro from '@/components/mobile/MobileArtistIntro';
-import MobileBookingCta from '@/components/mobile/MobileBookingCta';
 import {
   Sparkles,
   CalendarCheck,
@@ -107,38 +102,7 @@ export default async function HomePage() {
       />
 
       <main className="flex-1">
-        {/* =========================================================================
-            MOBILE-ONLY EXPERIENCE (Strictly < 768px / max-md)
-            Purpose-built for phones: distinct rhythm, portrait photography, thumb CTAs,
-            swipeable snap carousel, compact services, and touch-friendly map
-            ========================================================================= */}
-        <div className="block md:hidden">
-          <MobileHero
-            businessName={businessName}
-            serviceArea={serviceArea}
-            instagramUrl={instagramUrl}
-            artistImageUrl={settings?.artistImageUrl}
-          />
-          <MobileFeaturedDesigns items={featuredPortfolio} />
-          <MobileServicesShowcase services={featuredServices} />
-          <MobileArtistIntro
-            instagramUrl={instagramUrl}
-            serviceArea={serviceArea}
-          />
-          <MobileBookingCta
-            studioAddress={studioAddress}
-            mapEmbedUrl={mapEmbedUrl}
-            mapDirectionsUrl={mapDirectionsUrl}
-            whatsappNumber={whatsappNumber}
-            phone={phone}
-          />
-        </div>
-
-        {/* =========================================================================
-            DESKTOP & TABLET EXPERIENCE (FROZEN EXACTLY AS ORIGINAL FOR >= 768px / md:)
-            ========================================================================= */}
-        <div className="hidden md:block">
-          {/* ================= HERO SECTION ================= */}
+        {/* ================= HERO SECTION ================= */}
         <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28 border-b border-[#C6A15B]/30 bg-[radial-gradient(ellipse_at_50%_15%,#FFFDF9_0%,#F5EBDD_55%,#EADBCA_100%)]">
           {/* Authentic Henna Background Theme Layer (When uploaded from Instagram) */}
           {backgroundThemeUrl ? (
@@ -582,7 +546,6 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-        </div>
       </main>
 
       <Footer

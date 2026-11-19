@@ -29,6 +29,11 @@
   --text-main: var(--warm-ink);
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   background-color: var(--sandalwood-ivory);
   color: var(--warm-ink);

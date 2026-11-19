@@ -25,7 +25,7 @@ export default function InstagramHeroCard({
   const coneWorkPhoto = '/images/hero-mehndi-cone.jpg';
 
   return (
-    <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-6 sm:gap-7 relative select-none">
+    <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-10 sm:gap-12 xl:gap-7 relative select-none pt-2 pb-4">
       
       {/* ==============================================================
           LEFT COMPOSITE: GOLDEN ARCHED PORTRAIT + OVERLAPPING CARDS
@@ -85,7 +85,7 @@ export default function InstagramHeroCard({
       {/* ==============================================================
           RIGHT COMPOSITE: 3D GLOSSY FLOATING PEARL CARD
           ============================================================== */}
-      <div className="w-full max-w-[340px] sm:max-w-[370px] card-floating-3d-glossy p-6 sm:p-7 space-y-5 relative z-10 sm:mt-0 mt-8">
+      <div className="w-full max-w-[340px] sm:max-w-[370px] card-floating-3d-glossy p-5 sm:p-7 space-y-5 relative z-10 sm:mt-0 mt-4">
         
         {/* Profile Header */}
         <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#EBDDC8]/70">
