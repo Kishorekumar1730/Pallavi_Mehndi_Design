@@ -35,7 +35,7 @@ export default async function PortfolioPage() {
 
       <main className="flex-1">
         {/* Header */}
-        <section className="py-16 sm:py-20 bg-[#FAF4EB] border-b border-[#C6A15B]/25 text-center relative overflow-hidden">
+        <section className="py-10 md:py-20 bg-[#FAF4EB] border-b border-[#C6A15B]/25 text-center relative overflow-hidden">
           {backgroundThemeUrl ? (
             <div
               className="absolute inset-0 bg-cover bg-center opacity-[0.06] mix-blend-multiply pointer-events-none"
@@ -43,20 +43,20 @@ export default async function PortfolioPage() {
             />
           ) : null}
 
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative z-10">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3 md:space-y-4 relative z-10">
             <span className="heritage-badge text-xs">
               Visual Design Showcase
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#2B1F2A]">
+            <h1 className="font-serif text-3xl md:text-5xl font-bold text-[#2B1F2A]">
               Portfolio of Ephemeral Art
             </h1>
-            <p className="text-base text-[#2B2421]/80 max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="text-sm md:text-base text-[#2B2421]/80 max-w-2xl mx-auto leading-relaxed font-light">
               Explore our collection of bridal storytelling palms, intricate traditional jaal work, flowing Arabic florals, and modern minimalist accents.
             </p>
 
-            <div className="pt-2">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs text-[#8E3445] bg-[#FAF4EB] border border-[#C6A15B]/30 shadow-xs">
-                <ShieldCheck className="w-4 h-4 text-[#C6A15B]" />
+            <div className="pt-1 md:pt-2">
+              <span className="inline-flex items-center gap-1.5 md:gap-2 px-3 py-1 md:px-3.5 md:py-1.5 rounded-full text-[11px] md:text-xs text-[#8E3445] bg-[#FAF4EB] border border-[#C6A15B]/30 shadow-xs">
+                <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#C6A15B]" />
                 <span>All client images are displayed with explicit permission &amp; consent</span>
               </span>
             </div>
@@ -64,24 +64,24 @@ export default async function PortfolioPage() {
         </section>
 
         {/* Gallery Section */}
-        <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-8 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <PortfolioGallery items={portfolioItems} />
         </section>
 
         {/* Consultation Callout */}
-        <section className="py-16 bg-[#FAF4EB] border-t border-[#C6A15B]/25 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-            <Sparkles className="w-8 h-8 text-[#C6A15B] mx-auto" />
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#2B1F2A]">
+        <section className="py-10 md:py-16 bg-[#FAF4EB] border-t border-[#C6A15B]/25 text-center">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3 md:space-y-4">
+            <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-[#C6A15B] mx-auto" />
+            <h3 className="font-serif text-2xl md:text-3xl font-bold text-[#2B1F2A]">
               Have a Specific Motif or Vision in Mind?
             </h3>
-            <p className="text-xs sm:text-sm text-[#2B2421]/75 max-w-xl mx-auto leading-relaxed">
+            <p className="text-xs md:text-sm text-[#2B2421]/75 max-w-xl mx-auto leading-relaxed font-light">
               We frequently incorporate bespoke elements—from wedding logo monograms and sacred shlokas to pet illustrations and love story skylines.
             </p>
-            <div className="pt-3">
+            <div className="pt-2 md:pt-3">
               <a
                 href="/enquire"
-                className="btn-elevated-primary text-sm px-8 py-3.5 gap-2"
+                className="btn-elevated-primary text-xs md:text-sm px-6 md:px-8 py-3 md:py-3.5 gap-2"
               >
                 <span>Request a Custom Design Consultation</span>
               </a>

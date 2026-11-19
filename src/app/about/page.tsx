@@ -53,7 +53,7 @@ export default async function AboutPage() {
 
       <main className="flex-1">
         {/* Header with optional subtle henna photo watermark */}
-        <section className="py-16 sm:py-20 bg-[#FAF4EB] border-b border-[#C6A15B]/25 text-center relative overflow-hidden">
+        <section className="py-10 md:py-20 bg-[#FAF4EB] border-b border-[#C6A15B]/25 text-center relative overflow-hidden">
           {backgroundThemeUrl ? (
             <div
               className="absolute inset-0 bg-cover bg-center opacity-[0.06] mix-blend-multiply pointer-events-none"
@@ -61,21 +61,21 @@ export default async function AboutPage() {
             />
           ) : null}
 
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative z-10">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3 md:space-y-4 relative z-10">
             <span className="heritage-badge text-xs">
               The Artist &amp; Studio Story
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#2B1F2A]">
+            <h1 className="font-serif text-3xl md:text-5xl font-bold text-[#2B1F2A]">
               Passion, Heritage &amp; Organic Artistry
             </h1>
-            <p className="text-base text-[#2B2421]/80 max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="text-sm md:text-base text-[#2B2421]/80 max-w-2xl mx-auto leading-relaxed font-light">
               Rooted in Salem, Tamil Nadu, celebrating brides and festive moments with handcrafted natural botanical henna.
             </p>
           </div>
         </section>
 
         {/* Artist Story & Philosophy Section */}
-        <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-10 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Visual Portrait / Artwork Showcase */}
             <div className="lg:col-span-5 relative">

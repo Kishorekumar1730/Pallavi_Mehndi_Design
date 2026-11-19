@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import MobileBottomNav from "@/components/mobile/MobileBottomNav";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -32,8 +33,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfair.variable} ${jakarta.variable} scroll-smooth antialiased`}>
-      <body className="min-h-screen bg-[#F4EADD] text-[#2B2421] font-sans selection:bg-[#C6A15B]/30 selection:text-[#8E3445]">
+      <body className="min-h-screen bg-[#F4EADD] text-[#2B2421] font-sans selection:bg-[#C6A15B]/30 selection:text-[#8E3445] pb-16 md:pb-0">
         {children}
+        <MobileBottomNav />
       </body>
     </html>
   );

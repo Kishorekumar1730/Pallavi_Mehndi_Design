@@ -43,7 +43,7 @@ export default async function ServicesPage() {
 
       <main className="flex-1">
         {/* Page Header */}
-        <section className="py-16 sm:py-20 bg-[#FAF4EB] border-b border-[#C6A15B]/30 text-center relative overflow-hidden">
+        <section className="py-10 md:py-20 bg-[#FAF4EB] border-b border-[#C6A15B]/30 text-center relative overflow-hidden">
           {backgroundThemeUrl ? (
             <div
               className="absolute inset-0 bg-cover bg-center opacity-[0.05] mix-blend-multiply pointer-events-none"
@@ -51,21 +51,21 @@ export default async function ServicesPage() {
             />
           ) : null}
 
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative z-10">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3 md:space-y-4 relative z-10">
             <span className="heritage-badge text-xs">
               Studio Catalog &amp; Investment Guide
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#2B1F2A]">
+            <h1 className="font-serif text-3xl md:text-5xl font-bold text-[#2B1F2A]">
               Curated Services &amp; Packages
             </h1>
-            <p className="text-base text-[#2B2421]/75 max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="text-sm md:text-base text-[#2B2421]/75 max-w-2xl mx-auto leading-relaxed font-light">
               Each session includes freshly prepared, 100% natural Rajasthani henna cones, customized layout planning, and dedicated aftercare guidance.
             </p>
           </div>
         </section>
 
         {/* Services Grouped by Category */}
-        <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        <section className="py-8 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 md:space-y-16">
           {categories.map((cat) => (
             <div key={cat.id} className="space-y-6">
               <div className="border-b border-[#C6A15B]/35 pb-3">

@@ -282,9 +282,18 @@ export default function EnquiryForm({
     <div className="card-floating-prominent bg-white rounded-3xl border border-[#C6A15B]/30 p-6 sm:p-10 max-w-2xl mx-auto shadow-xl">
       {/* Progress Stepper */}
       <div className="mb-8">
-        <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#2B2421]/60 mb-3">
-          <span className={step >= 1 ? 'text-[#8E3445]' : ''}>1. Date & Venue</span>
-          <span className={step >= 2 ? 'text-[#8E3445]' : ''}>2. Scope & Style</span>
+        {/* Mobile Stepper Header (< 640px) */}
+        <div className="flex sm:hidden items-center justify-between text-xs mb-2">
+          <span className="font-serif font-bold text-[#8E3445]">Step {step} of 4</span>
+          <span className="font-semibold text-[#713E2E] text-[11px] uppercase tracking-wide">
+            {step === 1 ? 'Date & Venue' : step === 2 ? 'Scope & Style' : step === 3 ? 'Contact Info' : 'Review & Submit'}
+          </span>
+        </div>
+
+        {/* Desktop & Tablet Stepper Header (>= 640px) */}
+        <div className="hidden sm:flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#2B2421]/60 mb-3">
+          <span className={step >= 1 ? 'text-[#8E3445]' : ''}>1. Date &amp; Venue</span>
+          <span className={step >= 2 ? 'text-[#8E3445]' : ''}>2. Scope &amp; Style</span>
           <span className={step >= 3 ? 'text-[#8E3445]' : ''}>3. Contact</span>
           <span className={step >= 4 ? 'text-[#8E3445]' : ''}>4. Review</span>
         </div>
