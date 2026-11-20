@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InstagramLogo from '@/components/InstagramLogo';
+import AboutStandardsCarousel from '@/components/AboutStandardsCarousel';
 import {
   Sparkles,
   Droplets,
@@ -101,13 +102,13 @@ export default async function AboutPage() {
                   </a>
                 </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-[#FAF4EB] p-4 rounded-2xl border border-[#C6A15B]/30 shadow-lg flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#F4EADD] flex items-center justify-center text-[#8E3445]">
-                  <Sparkles className="w-5 h-5 text-[#C6A15B]" />
+              <div className="absolute bottom-3 right-3 sm:-bottom-4 sm:-right-4 bg-[#FAF4EB] p-3 sm:p-4 rounded-2xl border border-[#C6A15B]/30 shadow-lg flex items-center gap-2.5 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#F4EADD] flex items-center justify-center text-[#8E3445]">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#C6A15B]" />
                 </div>
                 <div>
-                  <span className="text-xs font-bold text-[#2B1F2A] block">100% Natural Henna</span>
-                  <span className="text-[11px] text-[#2B2421]/60">Chemical &amp; Dye Free</span>
+                  <span className="text-[11px] sm:text-xs font-bold text-[#2B1F2A] block">100% Natural Henna</span>
+                  <span className="text-[10px] sm:text-[11px] text-[#2B2421]/60">Chemical &amp; Dye Free</span>
                 </div>
               </div>
             </div>
@@ -171,7 +172,13 @@ export default async function AboutPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Mobile 3D Standards Carousel (< 768px) */}
+            <div className="block md:hidden">
+              <AboutStandardsCarousel />
+            </div>
+
+            {/* Desktop & Tablet Grid (Frozen for >= 768px) */}
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="card-floating p-7 sm:p-8 space-y-3.5 bg-white border border-[#C6A15B]/30 rounded-3xl">
                 <div className="w-11 h-11 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#8E3445] border border-[#C6A15B]/30">
                   <Droplets className="w-5 h-5 text-[#8E3445]" />

@@ -2,7 +2,7 @@ import React from 'react';
 import prisma from '@/lib/prisma';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ServiceCard from '@/components/ServiceCard';
+import ServicesCatalogSection from '@/components/ServicesCatalogSection';
 import { CalendarCheck } from 'lucide-react';
 
 export const revalidate = 60;
@@ -22,6 +22,28 @@ export default async function ServicesPage() {
       },
     },
   });
+
+  const serializedCategories = categories.map((cat) => ({
+    id: cat.id,
+    name: cat.name,
+    nameTa: cat.nameTa,
+    description: cat.description,
+    services: cat.services.map((s) => ({
+      id: s.id,
+      name: s.name,
+      nameTa: s.nameTa,
+      shortDescription: s.shortDescription,
+      fullDescription: s.fullDescription,
+      suitableFor: s.suitableFor,
+      inclusions: s.inclusions,
+      durationMinutes: s.durationMinutes,
+      startingPrice: s.startingPrice,
+      priceType: s.priceType,
+      travelDetails: s.travelDetails,
+      availabilityNotes: s.availabilityNotes,
+      imageUrl: s.imageUrl,
+    })),
+  }));
 
   const businessName = settings?.businessName || 'Pallavi Mehndi Artistry';
   const tagline = settings?.tagline || 'Bespoke Bridal & Contemporary Henna';
@@ -65,39 +87,8 @@ export default async function ServicesPage() {
         </section>
 
         {/* Services Grouped by Category */}
-        <section className="py-8 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 md:space-y-16">
-          {categories.map((cat) => (
-            <div key={cat.id} className="space-y-6">
-              <div className="border-b border-[#C6A15B]/35 pb-3">
-                <div className="flex items-center gap-3">
-                  <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#2B1F2A]">
-                    {cat.name}
-                  </h2>
-                </div>
-                {cat.description && (
-                  <p className="text-xs sm:text-sm text-[#2B2421]/70 mt-1 max-w-3xl">
-                    {cat.description}
-                  </p>
-                )}
-              </div>
-
-              {cat.services.length === 0 ? (
-                <p className="text-xs text-[#2B2421]/50 italic">No services listed under this category yet.</p>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {cat.services.map((service) => (
-                    <ServiceCard
-                      key={service.id}
-                      service={{
-                        ...service,
-                        category: { name: cat.name },
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+        <section className="py-8 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ServicesCatalogSection categories={serializedCategories} />
         </section>
 
         {/* What Information We Need for a Bespoke Quote */}
@@ -115,8 +106,8 @@ export default async function ServicesPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="card-floating p-6 space-y-2.5 text-center sm:text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="card-floating p-4 sm:p-6 space-y-2 sm:space-y-2.5 text-center sm:text-left">
                 <span className="w-8 h-8 rounded-full bg-[#F4EADD] text-[#8E3445] font-bold text-xs flex items-center justify-center border border-[#C6A15B]/40 shadow-xs mx-auto sm:mx-0">
                   1
                 </span>
@@ -126,7 +117,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="card-floating p-6 space-y-2.5 text-center sm:text-left">
+              <div className="card-floating p-4 sm:p-6 space-y-2 sm:space-y-2.5 text-center sm:text-left">
                 <span className="w-8 h-8 rounded-full bg-[#F4EADD] text-[#8E3445] font-bold text-xs flex items-center justify-center border border-[#C6A15B]/40 shadow-xs mx-auto sm:mx-0">
                   2
                 </span>
@@ -136,7 +127,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="card-floating p-6 space-y-2.5 text-center sm:text-left">
+              <div className="card-floating p-4 sm:p-6 space-y-2 sm:space-y-2.5 text-center sm:text-left">
                 <span className="w-8 h-8 rounded-full bg-[#F4EADD] text-[#8E3445] font-bold text-xs flex items-center justify-center border border-[#C6A15B]/40 shadow-xs mx-auto sm:mx-0">
                   3
                 </span>
@@ -146,7 +137,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="card-floating p-6 space-y-2.5 text-center sm:text-left">
+              <div className="card-floating p-4 sm:p-6 space-y-2 sm:space-y-2.5 text-center sm:text-left">
                 <span className="w-8 h-8 rounded-full bg-[#F4EADD] text-[#8E3445] font-bold text-xs flex items-center justify-center border border-[#C6A15B]/40 shadow-xs mx-auto sm:mx-0">
                   4
                 </span>

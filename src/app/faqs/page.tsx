@@ -2,6 +2,7 @@ import React from 'react';
 import prisma from '@/lib/prisma';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import FaqsMobileSection, { MobileAftercareCarousel } from '@/components/FaqsMobileSection';
 import {
   HelpCircle,
   ShieldCheck,
@@ -91,26 +92,7 @@ export default async function FaqsPage() {
             </p>
           </div>
 
-          <div className="space-y-4">
-            {faqs.map((faq) => (
-              <details
-                key={faq.id}
-                className="card-floating bg-white p-6 rounded-2xl border border-[#C6A15B]/30 [&_summary::-webkit-details-marker]:none cursor-pointer open:border-[#C6A15B] transition-all"
-              >
-                <summary className="flex items-center justify-between text-base font-semibold text-[#2B1F2A] group-open:text-[#8E3445] list-none">
-                  <div className="pr-4">
-                    <span>{faq.question}</span>
-                  </div>
-                  <span className="text-xl font-light text-[#C6A15B] transition-transform shrink-0">
-                    +
-                  </span>
-                </summary>
-                <div className="mt-4 pt-4 border-t border-[#C6A15B]/20 text-xs sm:text-sm text-[#2B2421]/80 leading-relaxed">
-                  <p>{faq.answer}</p>
-                </div>
-              </details>
-            ))}
-          </div>
+          <FaqsMobileSection faqs={faqs} />
         </section>
 
         {/* Studio Policies & Terms Section */}
@@ -130,7 +112,7 @@ export default async function FaqsPage() {
 
             <div className="space-y-6">
               {/* Booking Confirmation Terms */}
-              <div id="booking-terms" className="card-floating bg-white p-7 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/30">
+              <div id="booking-terms" className="card-floating bg-white p-5 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/30">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#8E3445] border border-[#C6A15B]/30">
                     <CalendarCheck className="w-5 h-5 text-[#8E3445]" />
@@ -145,12 +127,12 @@ export default async function FaqsPage() {
               </div>
 
               {/* Deposit & Cancellation Policy */}
-              <div id="deposit-policy" className="card-floating bg-white p-7 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/30">
+              <div id="deposit-policy" className="card-floating bg-white p-5 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/30">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#8E3445] border border-[#C6A15B]/30">
                     <CreditCard className="w-5 h-5 text-[#8E3445]" />
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2B1F2A]">
                     Deposit &amp; Cancellation Policy
                   </h3>
                 </div>
@@ -164,12 +146,12 @@ export default async function FaqsPage() {
               </div>
 
               {/* Destination Travel Policy */}
-              <div id="travel-terms" className="card-floating bg-white p-7 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/30">
+              <div id="travel-terms" className="card-floating bg-white p-5 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/30">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#8E3445] border border-[#C6A15B]/30">
                     <MapPin className="w-5 h-5 text-[#8E3445]" />
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2B1F2A]">
                     Travel &amp; Outstation Logistics
                   </h3>
                 </div>
@@ -179,18 +161,25 @@ export default async function FaqsPage() {
               </div>
 
               {/* Henna Aftercare & Stain Care */}
-              <div id="aftercare" className="card-floating bg-white p-7 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/40">
+              <div id="aftercare" className="card-floating bg-white p-5 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/40">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#8E3445] border border-[#C6A15B]/30">
                     <Droplets className="w-5 h-5 text-[#8E3445]" />
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2B1F2A]">
                     Bridal Henna Aftercare &amp; Stain Maximization
                   </h3>
                 </div>
-                <div className="text-xs sm:text-sm text-[#2B2421]/80 leading-relaxed space-y-2">
+                <div className="text-xs sm:text-sm text-[#2B2421]/80 leading-relaxed space-y-3">
                   <p>{aftercareGuide}</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-[11px]">
+
+                  {/* Mobile 3D Aftercare Progression Carousel (< 768px) */}
+                  <div className="block md:hidden pt-2">
+                    <MobileAftercareCarousel />
+                  </div>
+
+                  {/* Desktop & Tablet Grid (Frozen for >= 768px) */}
+                  <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-[11px]">
                     <div className="p-3.5 bg-[#FAF4EB] rounded-2xl border border-[#C6A15B]/25">
                       <strong className="block text-[#8E3445] font-bold mb-1">1. Keep Paste Intact</strong>
                       <span>Leave paste on for 6 to 8 hours (or overnight) to allow full dye penetration.</span>
@@ -208,12 +197,12 @@ export default async function FaqsPage() {
               </div>
 
               {/* Privacy Notice */}
-              <div id="privacy-policy" className="card-floating bg-white p-7 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/30">
+              <div id="privacy-policy" className="card-floating bg-white p-5 sm:p-8 space-y-3 rounded-3xl border border-[#C6A15B]/30">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-[#FAF4EB] flex items-center justify-center text-[#8E3445] border border-[#C6A15B]/30">
                     <ShieldCheck className="w-5 h-5 text-[#8E3445]" />
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-[#2B1F2A]">
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2B1F2A]">
                     Client Privacy &amp; Portfolio Consent Notice
                   </h3>
                 </div>

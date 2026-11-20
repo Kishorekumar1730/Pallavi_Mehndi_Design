@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, Sparkles, ShieldCheck, Eye, ExternalLink } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Sparkles, ShieldCheck, Eye, ExternalLink, LayoutGrid, Layers } from 'lucide-react';
 import InstagramLogo from '@/components/InstagramLogo';
+import Mobile3DCarousel from '@/components/Mobile3DCarousel';
 
 export interface PortfolioItemData {
   id: string;
@@ -30,6 +31,7 @@ const CATEGORIES = [
 
 export default function PortfolioGallery({ items }: { items: PortfolioItemData[] }) {
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
+  const [mobileView, setMobileView] = useState<'spotlight' | 'grid'>('spotlight');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filteredItems = items.filter((item) => {
@@ -168,7 +170,7 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
 
       {/* =========================================================================
           PORTFOLIO PRESENTATION:
-          Mobile: 2-Column Curated Touch Grid (< 768px / max-md)
+          Mobile: 3D Auto-Advancing Spotlight Carousel & 2-Column Grid Toggle (< 768px)
           Desktop/Tablet: Frozen 1-to-3 Column Cards (>= 768px / md:)
           ========================================================================= */}
       {filteredItems.length === 0 ? (
@@ -178,36 +180,145 @@ export default function PortfolioGallery({ items }: { items: PortfolioItemData[]
         </div>
       ) : (
         <>
-          {/* Mobile 2-Column Touch Grid (< 768px) */}
-          <div className="grid md:hidden grid-cols-2 gap-3">
-            {filteredItems.map((item, index) => (
-              <div
-                key={item.id}
-                onClick={() => openLightbox(index)}
-                className="relative aspect-4/5 rounded-2xl overflow-hidden bg-white border border-[#C6A15B]/35 shadow-xs flex flex-col active:scale-98 transition-transform cursor-pointer"
+          {/* Mobile View Toggle Bar (< 768px) */}
+          <div className="flex md:hidden items-center justify-between mb-4 px-1">
+            <span className="text-[11px] font-medium text-[#2B2421]/70">
+              Showing {filteredItems.length} curated {filteredItems.length === 1 ? 'design' : 'designs'}
+            </span>
+
+            <div className="inline-flex items-center p-1 rounded-full bg-white border border-[#C6A15B]/35 shadow-xs">
+              <button
+                type="button"
+                onClick={() => setMobileView('spotlight')}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all ${
+                  mobileView === 'spotlight'
+                    ? 'bg-[#2B1F2A] text-[#F4EADD] shadow-xs'
+                    : 'text-[#2B2421]/70 hover:text-[#2B2421]'
+                }`}
+                aria-label="3D Carousel Spotlight View"
               >
-                <img
-                  src={item.imageUrl}
-                  alt={item.altText}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2B1F2A]/90 via-[#2B1F2A]/20 to-transparent pointer-events-none" />
+                <Layers className="w-3 h-3 text-[#C6A15B]" />
+                <span>3D Spotlight</span>
+              </button>
 
-                {/* Category Badge */}
-                <span className="absolute top-2 left-2 text-[8px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/90 text-[#8E3445] border border-[#C6A15B]/40 shadow-2xs">
-                  {item.category}
-                </span>
-
-                {/* Title */}
-                <div className="absolute bottom-2 left-2 right-2 text-white">
-                  <h4 className="font-serif text-xs font-bold leading-tight text-[#F4EADD] line-clamp-2">
-                    {item.title}
-                  </h4>
-                </div>
-              </div>
-            ))}
+              <button
+                type="button"
+                onClick={() => setMobileView('grid')}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all ${
+                  mobileView === 'grid'
+                    ? 'bg-[#2B1F2A] text-[#F4EADD] shadow-xs'
+                    : 'text-[#2B2421]/70 hover:text-[#2B2421]'
+                }`}
+                aria-label="2-Column Grid View"
+              >
+                <LayoutGrid className="w-3 h-3 text-[#C6A15B]" />
+                <span>Grid</span>
+              </button>
+            </div>
           </div>
+
+          {/* Mobile 3D Spotlight Carousel (< 768px) */}
+          {mobileView === 'spotlight' && (
+            <div className="block md:hidden mb-4">
+              <Mobile3DCarousel
+                items={filteredItems}
+                heightClass="h-[430px]"
+                ariaLabel="Mehndi Designs 3D Showcase"
+                onItemClick={(_item, index) => openLightbox(index)}
+                renderItem={(item, isActive, index) => (
+                  <div className="w-full h-full rounded-3xl overflow-hidden bg-white border border-[#C6A15B]/40 shadow-xl flex flex-col justify-between group">
+                    <div className="relative flex-1 overflow-hidden bg-[#F4EADD]">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.altText}
+                        className="w-full h-full object-cover transition-transform duration-500 ease-out"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2B1F2A]/90 via-[#2B1F2A]/25 to-transparent pointer-events-none" />
+
+                      {/* Floating Badges */}
+                      <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/95 text-[#8E3445] border border-[#C6A15B]/40 shadow-2xs">
+                          {item.category}
+                        </span>
+                        {item.collectionYear && (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#2B1F2A]/85 text-[#DFBF7D] border border-white/10 shadow-2xs">
+                            {item.collectionYear}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Inspect in Lightbox Prompt Button */}
+                      <div className="absolute bottom-3 right-3">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openLightbox(index);
+                          }}
+                          className="btn-elevated-primary text-[11px] px-2.5 py-1.5 gap-1 shadow-md"
+                          aria-label={`Open lightbox for ${item.title}`}
+                        >
+                          <Eye className="w-3.5 h-3.5 text-[#F4EADD]" />
+                          <span>Inspect</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Bottom Metadata Card */}
+                    <div className="p-3.5 bg-white border-t border-[#C6A15B]/20">
+                      <h4 className="font-serif text-base font-bold text-[#2B1F2A] leading-snug line-clamp-1">
+                        {item.title}
+                      </h4>
+                      {item.caption ? (
+                        <p className="text-[11px] text-[#2B2421]/75 line-clamp-1 mt-0.5 font-light">
+                          {item.caption}
+                        </p>
+                      ) : (
+                        <p className="text-[10px] text-[#713E2E] flex items-center gap-1 mt-0.5">
+                          <ShieldCheck className="w-3 h-3 text-[#C6A15B]" />
+                          <span>Authentic client bridal photography</span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              />
+            </div>
+          )}
+
+          {/* Mobile 2-Column Touch Grid (< 768px fallback when grid is selected) */}
+          {mobileView === 'grid' && (
+            <div className="grid md:hidden grid-cols-2 gap-3">
+              {filteredItems.map((item, index) => (
+                <div
+                  key={item.id}
+                  onClick={() => openLightbox(index)}
+                  className="relative aspect-4/5 rounded-2xl overflow-hidden bg-white border border-[#C6A15B]/35 shadow-xs flex flex-col active:scale-98 transition-transform cursor-pointer"
+                >
+                  <img
+                    src={item.imageUrl}
+                    alt={item.altText}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2B1F2A]/90 via-[#2B1F2A]/20 to-transparent pointer-events-none" />
+
+                  {/* Category Badge */}
+                  <span className="absolute top-2 left-2 text-[8px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/90 text-[#8E3445] border border-[#C6A15B]/40 shadow-2xs">
+                    {item.category}
+                  </span>
+
+                  {/* Title */}
+                  <div className="absolute bottom-2 left-2 right-2 text-white">
+                    <h4 className="font-serif text-xs font-bold leading-tight text-[#F4EADD] line-clamp-2">
+                      {item.title}
+                    </h4>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Desktop & Tablet Grid (Frozen for >= 768px) */}
           <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">

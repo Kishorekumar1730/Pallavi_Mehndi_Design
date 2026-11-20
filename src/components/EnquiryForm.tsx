@@ -279,7 +279,7 @@ export default function EnquiryForm({
   }
 
   return (
-    <div className="card-floating-prominent bg-white rounded-3xl border border-[#C6A15B]/30 p-6 sm:p-10 max-w-2xl mx-auto shadow-xl">
+    <div className="card-floating-prominent bg-white rounded-3xl border border-[#C6A15B]/30 p-4 sm:p-10 max-w-2xl mx-auto shadow-xl">
       {/* Progress Stepper */}
       <div className="mb-8">
         {/* Mobile Stepper Header (< 640px) */}
@@ -350,7 +350,7 @@ export default function EnquiryForm({
                   onChange={handleChange}
                   className={`w-full bg-[#FAF4EB] border ${
                     fieldErrors.eventDate ? 'border-red-500' : 'border-[#C6A15B]/30'
-                  } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
+                  } rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
                   required
                 />
               </div>
@@ -368,7 +368,7 @@ export default function EnquiryForm({
                 name="eventType"
                 value={formData.eventType}
                 onChange={handleChange}
-                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               >
                 <option value="BRIDAL_MAIN">Bridal Mehndi (Main Wedding Ceremony)</option>
                 <option value="SANGEET_MEHNDI">Sangeet / Mehendi Party</option>
@@ -393,7 +393,7 @@ export default function EnquiryForm({
                 placeholder="e.g. Salem (Fairlands / Shevapet) or Destination"
                 className={`w-full bg-[#FAF4EB] border ${
                   fieldErrors.eventLocation ? 'border-red-500' : 'border-[#C6A15B]/30'
-                } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
+                } rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
                 required
               />
               {fieldErrors.eventLocation && (
@@ -412,7 +412,7 @@ export default function EnquiryForm({
                 value={formData.venueDetails}
                 onChange={handleChange}
                 placeholder="e.g. Grand Estancia / Home residence / Mandapam"
-                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               />
             </div>
           </div>
@@ -439,7 +439,7 @@ export default function EnquiryForm({
                 name="serviceId"
                 value={formData.serviceId}
                 onChange={handleChange}
-                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               >
                 {services.map((svc) => (
                   <option key={svc.id} value={svc.id}>
@@ -466,7 +466,7 @@ export default function EnquiryForm({
                 onChange={handleChange}
                 className={`w-full bg-[#FAF4EB] border ${
                   fieldErrors.guestCount ? 'border-red-500' : 'border-[#C6A15B]/30'
-                } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
+                } rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
               />
               <p className="text-[11px] text-[#2B2421]/65 mt-1">
                 For bridal, enter 1. For Sangeet or guest parties, enter the estimated guest count.
@@ -487,7 +487,7 @@ export default function EnquiryForm({
                 value={formData.styleNotes}
                 onChange={handleChange}
                 placeholder="e.g. Symmetrical lotus mandalas, couple initials, elbow-length arms, negative space floral wristbands..."
-                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               />
             </div>
 
@@ -528,7 +528,7 @@ export default function EnquiryForm({
                 placeholder="e.g. Deepika Ramasamy"
                 className={`w-full bg-[#FAF4EB] border ${
                   fieldErrors.customerName ? 'border-red-500' : 'border-[#C6A15B]/30'
-                } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
+                } rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
                 required
               />
               {fieldErrors.customerName && (
@@ -550,7 +550,7 @@ export default function EnquiryForm({
                   placeholder="+91 98765 43210"
                   className={`w-full bg-[#FAF4EB] border ${
                     fieldErrors.phone ? 'border-red-500' : 'border-[#C6A15B]/30'
-                  } rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
+                  } rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]`}
                   required
                 />
                 {fieldErrors.phone && (
@@ -569,7 +569,7 @@ export default function EnquiryForm({
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@example.com"
-                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 />
               </div>
             </div>
@@ -583,7 +583,7 @@ export default function EnquiryForm({
                 name="contactMethod"
                 value={formData.contactMethod}
                 onChange={handleChange}
-                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
+                className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
               >
                 <option value="WHATSAPP">WhatsApp Message</option>
                 <option value="PHONE">Direct Phone Call</option>
@@ -601,7 +601,7 @@ export default function EnquiryForm({
                   name="referralSource"
                   value={formData.referralSource}
                   onChange={handleChange}
-                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 >
                   <option value="INSTAGRAM">Instagram</option>
                   <option value="FRIEND_FAMILY">Friend or Family Recommendation</option>
@@ -623,7 +623,7 @@ export default function EnquiryForm({
                   value={formData.referralCode}
                   onChange={handleChange}
                   placeholder="e.g. BRIDE2026"
-                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
+                  className="w-full bg-[#FAF4EB] border border-[#C6A15B]/30 rounded-xl px-4 py-3 text-base sm:text-sm text-[#2B2421] focus:outline-none focus:border-[#C6A15B]"
                 />
               </div>
             </div>
