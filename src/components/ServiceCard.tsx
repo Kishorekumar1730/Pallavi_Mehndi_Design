@@ -55,7 +55,7 @@ export default function ServiceCard({ service }: { service: ServiceData }) {
       <div>
         {/* Service Image / Real Photo Slot */}
         {service.imageUrl && (
-          <div className="relative h-60 w-full overflow-hidden bg-[#F4EADD] border-b border-[#C6A15B]/25">
+          <div className="relative h-44 sm:h-60 w-full overflow-hidden bg-[#F4EADD] border-b border-[#C6A15B]/25">
             <img
               src={service.imageUrl}
               alt={service.name}
@@ -79,7 +79,7 @@ export default function ServiceCard({ service }: { service: ServiceData }) {
           </div>
         )}
 
-        <div className="p-6 sm:p-7">
+        <div className="p-4 sm:p-7">
           <div className="flex items-center gap-2 mb-1.5">
             <span className="w-2 h-2 rounded-full bg-[#C6A15B]" />
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#713E2E]">
@@ -87,33 +87,33 @@ export default function ServiceCard({ service }: { service: ServiceData }) {
             </span>
           </div>
 
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#2B1F2A] group-hover:text-[#8E3445] transition-colors">
+          <h3 className="font-serif text-lg sm:text-2xl font-bold text-[#2B1F2A] group-hover:text-[#8E3445] transition-colors leading-tight">
             {service.name}
           </h3>
 
-          <p className="text-xs sm:text-sm text-[#2B2421]/80 mt-3 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#2B2421]/80 mt-2 sm:mt-3 leading-relaxed">
             {service.shortDescription}
           </p>
 
           {/* Suitable for badge */}
-          <div className="mt-4 pt-3.5 border-t border-[#F4EADD]">
+          <div className="mt-3 sm:mt-4 pt-3 sm:pt-3.5 border-t border-[#F4EADD]">
             <span className="text-[10px] font-bold text-[#713E2E] uppercase tracking-wider block mb-1">
               Ideal Occasion
             </span>
-            <p className="text-xs text-[#2B2421] bg-[#F4EADD]/60 px-3 py-1.5 rounded-xl border border-[#C6A15B]/30 inline-block font-medium">
+            <p className="text-xs text-[#2B2421] bg-[#F4EADD]/60 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-[#C6A15B]/30 inline-block font-medium">
               {service.suitableFor}
             </p>
           </div>
 
           {/* Inclusions highlights */}
           {inclusionsList.length > 0 && (
-            <div className="mt-4 pt-3.5 border-t border-[#F4EADD]">
-              <span className="text-[10px] font-bold text-[#713E2E] uppercase tracking-wider block mb-2">
+            <div className="mt-3 sm:mt-4 pt-3 sm:pt-3.5 border-t border-[#F4EADD]">
+              <span className="text-[10px] font-bold text-[#713E2E] uppercase tracking-wider block mb-1.5 sm:mb-2">
                 What&apos;s Included
               </span>
-              <ul className="space-y-2 text-xs text-[#2B2421]/85">
-                {inclusionsList.slice(0, 4).map((inc, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
+              <ul className="space-y-1.5 sm:space-y-2 text-xs text-[#2B2421]/85">
+                {inclusionsList.slice(0, 3).map((inc, idx) => (
+                  <li key={idx} className="flex items-start gap-1.5 sm:gap-2">
                     <Check className="w-3.5 h-3.5 text-[#C6A15B] shrink-0 mt-0.5" />
                     <span>{inc}</span>
                   </li>
@@ -143,8 +143,8 @@ export default function ServiceCard({ service }: { service: ServiceData }) {
       </div>
 
       {/* Footer Pricing & Elevated CTA */}
-      <div className="p-6 sm:p-7 pt-0 mt-2">
-        <div className="pt-4 border-t border-[#C6A15B]/25 flex items-center justify-between gap-4">
+      <div className="p-4 sm:p-7 pt-0 mt-1 sm:mt-2">
+        <div className="pt-3 sm:pt-4 border-t border-[#C6A15B]/25 flex items-center justify-between gap-3 sm:gap-4">
           <div>
             <span className="text-[11px] text-[#2B2421]/60 block font-medium">Investment Guide</span>
             <span className="font-serif text-lg font-bold text-[#8E3445]">

@@ -123,15 +123,32 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
               {/* Left Column: Brand copy and actions */}
-              <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
+              <div className="lg:col-span-5 space-y-5 sm:space-y-6 text-center lg:text-left">
+                {/* Mobile-Only Genuine Mehndi Visual Anchor */}
+                <div className="md:hidden flex items-center justify-center">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/75 backdrop-blur-md border border-[#C6A15B]/40 shadow-xs">
+                    <div className="w-6 h-6 rounded-full overflow-hidden border border-[#C6A15B] shrink-0">
+                      <img
+                        src="/images/hero-mehndi-cone.jpg"
+                        alt="Genuine live Mehndi artwork by Pallavi"
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                      />
+                    </div>
+                    <span className="text-[10px] font-bold text-[#8E3445] tracking-wide uppercase">
+                      Authentic Studio Artistry
+                    </span>
+                  </div>
+                </div>
+
                 {/* Heritage Badge */}
-                <div className="glass-pill inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold text-[#8E3445] tracking-wider uppercase">
+                <div className="glass-pill inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold text-[#8E3445] tracking-wider uppercase">
                   <Sparkles className="w-3.5 h-3.5 text-[#C6A15B]" />
                   <span>100% Hand-Blended Organic Henna • Pure Botanical Oils</span>
                 </div>
 
-                <div className="space-y-3">
-                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#2B1F2A] leading-[1.12]">
+                <div className="space-y-2.5 sm:space-y-3">
+                  <h1 className="font-serif text-[32px] sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#2B1F2A] leading-[1.14]">
                     Bespoke Bridal &amp; <br />
                     <span className="text-[#8E3445] italic font-normal">
                       Contemporary Henna
@@ -140,27 +157,27 @@ export default async function HomePage() {
                     Artistry
                   </h1>
 
-                  <p className="text-sm sm:text-base text-[#2B2421]/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+                  <p className="text-xs sm:text-base text-[#2B2421]/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
                     Exquisite bespoke bridal adornment and celebration mehndi crafted with intentional precision. Based in {serviceArea}.
                   </p>
                 </div>
 
-                {/* CTAs (Glossy Modern 3D Buttons matching mockup) */}
-                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+                {/* CTAs (Glossy Modern 3D Buttons: Side-by-side on mobile where space permits, clean wrap on narrow screens) */}
+                <div className="flex flex-row flex-wrap sm:flex-nowrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
                   <a
                     href="/enquire"
-                    className="w-full sm:w-auto btn-glossy-primary text-xs sm:text-sm px-6 sm:px-7 py-3 gap-2 group shadow-lg"
+                    className="btn-glossy-primary text-xs sm:text-sm px-4 sm:px-7 py-2.5 sm:py-3 gap-1.5 sm:gap-2 group shadow-md flex-1 sm:flex-none min-w-[145px] max-w-[210px] sm:max-w-none justify-center"
                   >
-                    <CalendarCheck className="w-4 h-4 text-[#F4EADD] group-hover:scale-110 transition-transform" />
-                    <span>Enquire About Your Date</span>
+                    <CalendarCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F4EADD] group-hover:scale-110 transition-transform" />
+                    <span>Enquire About Date</span>
                   </a>
 
                   <a
                     href="/portfolio"
-                    className="w-full sm:w-auto btn-glossy-secondary text-xs sm:text-sm px-5 sm:px-6 py-3 gap-2 group shadow-sm"
+                    className="btn-glossy-secondary text-xs sm:text-sm px-3.5 sm:px-6 py-2.5 sm:py-3 gap-1.5 sm:gap-2 group shadow-xs flex-1 sm:flex-none min-w-[135px] max-w-[190px] sm:max-w-none justify-center"
                   >
-                    <span>View Selected Works</span>
-                    <ArrowRight className="w-4 h-4 text-[#8E3445] group-hover:translate-x-1 transition-transform" />
+                    <span>Selected Works</span>
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#8E3445] group-hover:translate-x-1 transition-transform" />
                   </a>
 
                   <a
@@ -168,7 +185,7 @@ export default async function HomePage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Follow Pallavi on Instagram (opens in a new tab)"
-                    className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-[#2B1F2A] hover:text-[#8E3445] transition-colors py-2"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-[#2B1F2A] hover:text-[#8E3445] transition-colors py-1 sm:py-2"
                   >
                     <span>Instagram Profile</span>
                     <ExternalLink className="w-3.5 h-3.5 text-[#8E3445]" />
@@ -459,17 +476,17 @@ export default async function HomePage() {
                 <span className="heritage-badge-plum text-xs">
                   Planning Your Wedding or Celebration?
                 </span>
-                <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
+                <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
                   Let&apos;s Create Timeless Ephemeral Art for Your Special Date
                 </h2>
-                <p className="text-sm sm:text-base text-[#F4EADD]/85 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+                <p className="text-xs sm:text-base text-[#F4EADD]/85 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
                   We recommend reserving 3 to 6 months in advance for auspicious wedding muhurtham dates. Check calendar availability and receive a tailored quote today.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 pt-1 sm:pt-2">
                   <a
                     href="/enquire"
-                    className="w-full sm:w-auto btn-glossy-primary text-sm px-8 py-3.5 gap-2 shadow-lg"
+                    className="w-full sm:w-auto btn-glossy-primary text-xs sm:text-sm px-5 sm:px-8 py-3 sm:py-3.5 gap-2 shadow-lg justify-center text-center"
                   >
                     <CalendarCheck className="w-4 h-4 text-[#F4EADD]" />
                     <span>Check Date Availability</span>
@@ -480,44 +497,44 @@ export default async function HomePage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="View Pallavi's Instagram profile (opens in a new tab)"
-                    className="w-full sm:w-auto btn-glossy-secondary text-sm px-6 py-3.5 gap-2 shadow-md"
+                    className="w-full sm:w-auto btn-glossy-secondary text-xs sm:text-sm px-4 sm:px-6 py-2.5 sm:py-3.5 gap-2 shadow-md justify-center text-center"
                   >
-                    <InstagramLogo size={18} variant="gradient-badge" />
-                    <span>Visit Instagram @salem_mehandi_artist_pallavi</span>
+                    <InstagramLogo size={16} variant="gradient-badge" />
+                    <span>Visit @salem_mehandi_artist_pallavi</span>
                   </a>
                 </div>
 
-                <p className="text-[11px] sm:text-xs text-[#F4EADD]/60 pt-1">
+                <p className="text-[10px] sm:text-xs text-[#F4EADD]/60 pt-0.5 sm:pt-1">
                   All bookings are verified personally by the artist before confirmation.
                 </p>
               </div>
 
               {/* RIGHT COLUMN: Polished Studio Location Card with Interactive Map */}
               <div className="lg:col-span-5 w-full">
-                <div className="bg-gradient-to-b from-[#352734]/95 via-[#2E202D]/95 to-[#241923]/95 backdrop-blur-xl border border-[#C6A15B]/35 rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_rgba(255,255,255,0.12)] space-y-4 relative group hover:border-[#C6A15B]/60 transition-all duration-300">
+                <div className="bg-gradient-to-b from-[#352734]/95 via-[#2E202D]/95 to-[#241923]/95 backdrop-blur-xl border border-[#C6A15B]/35 rounded-[24px] sm:rounded-[32px] p-4 sm:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_rgba(255,255,255,0.12)] space-y-3 sm:space-y-4 relative group hover:border-[#C6A15B]/60 transition-all duration-300">
                   
                   {/* Location Card Header */}
-                  <div className="flex items-center justify-between pb-3.5 border-b border-[#C6A15B]/20">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#DFBF7D]/25 via-[#C6A15B]/20 to-[#9C7A35]/25 border border-[#C6A15B]/50 flex items-center justify-center text-[#DFBF7D] shadow-inner shrink-0">
-                        <MapPin className="w-5 h-5" />
+                  <div className="flex items-center justify-between pb-3 border-b border-[#C6A15B]/20">
+                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-[#DFBF7D]/25 via-[#C6A15B]/20 to-[#9C7A35]/25 border border-[#C6A15B]/50 flex items-center justify-center text-[#DFBF7D] shadow-inner shrink-0">
+                        <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
                       <div className="min-w-0">
-                        <span className="font-serif text-base sm:text-lg font-bold text-white block leading-tight truncate">
+                        <span className="font-serif text-sm sm:text-lg font-bold text-white block leading-tight truncate">
                           Salem Henna Studio
                         </span>
-                        <span className="text-[11px] sm:text-xs text-[#DFBF7D] font-medium block truncate">
+                        <span className="text-[10px] sm:text-xs text-[#DFBF7D] font-medium block truncate">
                           {serviceArea}
                         </span>
                       </div>
                     </div>
-                    <span className="hidden sm:inline-flex px-2.5 py-1 rounded-full bg-[#FAF5EE]/10 border border-[#C6A15B]/30 text-[10px] text-[#DFBF7D] uppercase font-semibold tracking-wider shrink-0">
+                    <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#FAF5EE]/10 border border-[#C6A15B]/30 text-[9px] sm:text-[10px] text-[#DFBF7D] uppercase font-semibold tracking-wider shrink-0">
                       Studio &amp; Travel
                     </span>
                   </div>
 
                   {/* Interactive Map Frame */}
-                  <div className="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden border border-[#C6A15B]/30 shadow-inner bg-[#1A1319]">
+                  <div className="relative w-full h-44 sm:h-56 md:h-64 rounded-xl sm:rounded-2xl overflow-hidden border border-[#C6A15B]/30 shadow-inner bg-[#1A1319]">
                     <iframe
                       src={mapEmbedUrl}
                       title="Pallavi Mehndi Artistry Studio & Service Location Map"
