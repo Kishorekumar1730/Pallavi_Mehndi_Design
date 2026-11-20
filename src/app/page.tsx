@@ -7,6 +7,7 @@ import InstagramLogo from '@/components/InstagramLogo';
 import ServiceCard from '@/components/ServiceCard';
 import PortfolioGallery from '@/components/PortfolioGallery';
 import BotanicalShadowOverlay from '@/components/BotanicalShadowOverlay';
+import MobileProfileSection from '@/components/MobileProfileSection';
 import {
   Sparkles,
   CalendarCheck,
@@ -103,7 +104,7 @@ export default async function HomePage() {
 
       <main className="flex-1">
         {/* ================= HERO SECTION ================= */}
-        <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28 border-b border-[#C6A15B]/30 bg-[radial-gradient(ellipse_at_50%_15%,#FFFDF9_0%,#F5EBDD_55%,#EADBCA_100%)]">
+        <section className="relative overflow-hidden pt-8 pb-12 sm:pt-16 sm:pb-28 border-b border-[#C6A15B]/30 bg-[radial-gradient(ellipse_at_50%_15%,#FFFDF9_0%,#F5EBDD_55%,#EADBCA_100%)]">
           {/* Authentic Henna Background Theme Layer (When uploaded from Instagram) */}
           {backgroundThemeUrl ? (
             <div
@@ -198,8 +199,8 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              {/* Right Column: Multi-Card Glossy Showcase */}
-              <div className="lg:col-span-7 flex items-center justify-center relative">
+              {/* Right Column: Multi-Card Glossy Showcase (Desktop & Tablet >= 768px Frozen) */}
+              <div className="hidden md:flex lg:col-span-7 items-center justify-center relative">
                 <InstagramHeroCard
                   instagramUrl={instagramUrl}
                   artistImageUrl={settings?.artistImageUrl}
@@ -209,6 +210,16 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* ================= PALLAVI PROFILE & MEHNDI ARTWORK SECTION (MOBILE-ONLY < 768px) ================= */}
+        {/* Reached by scrolling down from hero; displays portrait, real mehndi photos, and 3D glossy profile card */}
+        <div className="block md:hidden">
+          <MobileProfileSection
+            instagramUrl={instagramUrl}
+            artistImageUrl={settings?.artistImageUrl}
+            serviceArea={serviceArea}
+          />
+        </div>
 
         {/* ================= THE PALLAVI PHILOSOPHY & INGREDIENTS ================= */}
         <section className="py-16 sm:py-20 bg-[#FAF4EB] border-b border-[#C6A15B]/30 relative">
