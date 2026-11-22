@@ -9,6 +9,7 @@ import PortfolioGallery from '@/components/PortfolioGallery';
 import BotanicalShadowOverlay from '@/components/BotanicalShadowOverlay';
 import MobileProfileSection from '@/components/MobileProfileSection';
 import MobilePackages3DCarousel from '@/components/MobilePackages3DCarousel';
+import MobileStainTimeline from '@/components/MobileStainTimeline';
 import {
   Sparkles,
   CalendarCheck,
@@ -352,13 +353,13 @@ export default async function HomePage() {
         </section>
 
         {/* ================= NATURAL STAIN PROGRESSION TIMELINE ================= */}
-        <section className="py-16 bg-[#FAF4EB] border-y border-[#C6A15B]/30">
+        <section className="py-10 md:py-16 bg-[#FAF4EB] border-y border-[#C6A15B]/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+            <div className="text-center max-w-2xl mx-auto mb-6 md:mb-12 space-y-1.5 md:space-y-2">
               <span className="heritage-badge text-xs">
                 The Science of Natural Henna
               </span>
-              <h2 className="font-serif text-3xl font-bold text-[#2B1F2A]">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#2B1F2A]">
                 Stain Maturation Timeline
               </h2>
               <p className="text-xs sm:text-sm text-[#2B2421]/75">
@@ -366,7 +367,13 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {/* Mobile 3D Connected Timeline Stage (< 768px) */}
+            <div className="block md:hidden max-w-sm mx-auto">
+              <MobileStainTimeline />
+            </div>
+
+            {/* Desktop & Tablet Grid (Frozen for >= 768px) */}
+            <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <div className="card-glassmorphic card-glassmorphic-hover p-6 sm:p-7 text-center space-y-2.5">
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#F4EADD] text-[#C6A15B] border border-[#C6A15B]/40">
                   Hour 0 - 12 (Application)
