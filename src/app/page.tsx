@@ -8,6 +8,7 @@ import ServiceCard from '@/components/ServiceCard';
 import PortfolioGallery from '@/components/PortfolioGallery';
 import BotanicalShadowOverlay from '@/components/BotanicalShadowOverlay';
 import MobileProfileSection from '@/components/MobileProfileSection';
+import MobilePackages3DCarousel from '@/components/MobilePackages3DCarousel';
 import {
   Sparkles,
   CalendarCheck,
@@ -49,6 +50,24 @@ export default async function HomePage() {
         take: 3,
       }),
     ]);
+
+  const serializedFeaturedServices = featuredServices.map((s) => ({
+    id: s.id,
+    name: s.name,
+    nameTa: s.nameTa,
+    slug: s.slug,
+    shortDescription: s.shortDescription,
+    fullDescription: s.fullDescription,
+    suitableFor: s.suitableFor,
+    inclusions: s.inclusions,
+    durationMinutes: s.durationMinutes,
+    startingPrice: s.startingPrice,
+    priceType: s.priceType,
+    travelDetails: s.travelDetails,
+    availabilityNotes: s.availabilityNotes,
+    imageUrl: s.imageUrl,
+    category: s.category ? { name: s.category.name } : null,
+  }));
 
   const businessName = settings?.businessName || 'Pallavi Mehndi Artistry';
   const tagline = settings?.tagline || 'Bespoke Bridal & Contemporary Henna Artistry';
@@ -294,24 +313,24 @@ export default async function HomePage() {
         </section>
 
         {/* ================= CURATED SERVICES SHOWCASE ================= */}
-        <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <div className="space-y-2 max-w-2xl">
+        <section className="py-12 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 md:mb-12">
+            <div className="space-y-1.5 md:space-y-2 max-w-2xl">
               <span className="heritage-badge text-xs">
                 Artistic Offerings
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#2B1F2A]">
+              <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#2B1F2A]">
                 Curated Henna Packages
               </h2>
-              <p className="text-sm text-[#2B2421]/75 leading-relaxed font-light">
+              <p className="text-xs sm:text-sm text-[#2B2421]/75 leading-relaxed font-light">
                 Transparent pricing guidelines and customizable coverage for bridal ceremonies, sangeet celebrations, and festive occasions.
               </p>
             </div>
 
-            <div className="mt-4 md:mt-0">
+            <div className="mt-3 md:mt-0">
               <a
                 href="/services"
-                className="btn-elevated-secondary text-xs px-5 py-2.5 gap-2"
+                className="btn-elevated-secondary text-xs px-4 py-2 sm:px-5 sm:py-2.5 gap-2 inline-flex"
               >
                 <span>View All Services &amp; Inclusions</span>
                 <ArrowRight className="w-4 h-4 text-[#8E3445]" />
@@ -319,7 +338,13 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Mobile 3D Auto-Advancing Packages Carousel (< 768px) */}
+          <div className="block md:hidden">
+            <MobilePackages3DCarousel services={serializedFeaturedServices} />
+          </div>
+
+          {/* Desktop & Tablet Grid (Frozen for >= 768px) */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredServices.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
