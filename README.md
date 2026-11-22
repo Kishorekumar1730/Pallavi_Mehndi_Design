@@ -189,3 +189,5 @@ npx tsx scripts/verify-system.ts
 
 ## 📄 License & Ownership
 Copyright © 2026 Pallavi Mehndi Artistry. All rights reserved.
+#   P a l l a v i _ M e h n d i _ D e s i g n  
+ 
