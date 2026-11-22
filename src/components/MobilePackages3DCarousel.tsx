@@ -14,6 +14,8 @@ import {
   Camera,
   ChevronDown,
   ChevronUp,
+  ZoomIn,
+  X,
 } from 'lucide-react';
 
 export interface PackageServiceData {
@@ -48,6 +50,7 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
   const [isTabVisible, setIsTabVisible] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [expandedDetailsId, setExpandedDetailsId] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartXRef = useRef<number | null>(null);
@@ -116,7 +119,8 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
       isInteracting ||
       !isIntersecting ||
       !isTabVisible ||
-      prefersReducedMotion
+      prefersReducedMotion ||
+      lightboxIndex !== null
     ) {
       return;
     }
@@ -133,10 +137,11 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
     isIntersecting,
     isTabVisible,
     prefersReducedMotion,
+    lightboxIndex,
     goToNext,
   ]);
 
-  // Touch Swipe Handling (pan-y friendly, no hijacking of vertical page scroll)
+  // Touch Swipe Handling for Carousel
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0].clientX;
     touchStartYRef.current = e.touches[0].clientY;
@@ -170,6 +175,28 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
     setIsInteracting(false);
   };
 
+  // Keyboard navigation for Lightbox
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+  const showLightboxNext = useCallback(() => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((prev) => (prev! + 1) % total);
+  }, [lightboxIndex, total]);
+  const showLightboxPrev = useCallback(() => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((prev) => (prev! - 1 + total) % total);
+  }, [lightboxIndex, total]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showLightboxNext();
+      if (e.key === 'ArrowLeft') showLightboxPrev();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex, closeLightbox, showLightboxNext, showLightboxPrev]);
+
   const formatPrice = (service: PackageServiceData) => {
     if (service.priceType === 'QUOTE_ONLY' || !service.startingPrice) {
       return 'Quote on Request';
@@ -194,6 +221,8 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
 
   if (total === 0) return null;
 
+  const currentLightboxService = lightboxIndex !== null ? services[lightboxIndex] : null;
+
   return (
     <div
       ref={containerRef}
@@ -205,9 +234,9 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
       onFocus={() => setIsInteracting(true)}
       onBlur={() => setIsInteracting(false)}
     >
-      {/* 3D Stage Container */}
+      {/* 3D Stage Container: Generous responsive height to accommodate prominent artwork */}
       <div
-        className="relative w-full h-[540px] sm:h-[580px] overflow-hidden flex items-center justify-center touch-pan-y"
+        className="relative w-full h-[620px] sm:h-[660px] overflow-hidden flex items-center justify-center touch-pan-y"
         style={{ perspective: prefersReducedMotion ? 'none' : '1000px' }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -246,12 +275,12 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
               opacityStyle = 1;
               zIndex = 20;
             } else if (isAdjacentNext) {
-              transformStyle = 'translateX(62%) scale(0.88)';
-              opacityStyle = 0.5;
+              transformStyle = 'translateX(68%) scale(0.86)';
+              opacityStyle = 0.55;
               zIndex = 10;
             } else if (isAdjacentPrev) {
-              transformStyle = 'translateX(-62%) scale(0.88)';
-              opacityStyle = 0.5;
+              transformStyle = 'translateX(-68%) scale(0.86)';
+              opacityStyle = 0.55;
               zIndex = 10;
             } else {
               transformStyle = `translateX(${diff > 0 ? 120 : -120}%) scale(0.75)`;
@@ -265,16 +294,16 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
               opacityStyle = 1;
               zIndex = 20;
             } else if (isAdjacentNext) {
-              transformStyle = 'translate3d(58%, 0, -45px) scale(0.86) rotateY(-10deg)';
-              opacityStyle = 0.65;
+              transformStyle = 'translate3d(66%, 0, -45px) scale(0.85) rotateY(-8deg)';
+              opacityStyle = 0.55;
               zIndex = 10;
             } else if (isAdjacentPrev) {
-              transformStyle = 'translate3d(-58%, 0, -45px) scale(0.86) rotateY(10deg)';
-              opacityStyle = 0.65;
+              transformStyle = 'translate3d(-66%, 0, -45px) scale(0.85) rotateY(8deg)';
+              opacityStyle = 0.55;
               zIndex = 10;
             } else {
               transformStyle = `translate3d(${diff > 0 ? 120 : -120}%, 0, -100px) scale(0.7) rotateY(${
-                diff > 0 ? -15 : 15
+                diff > 0 ? -12 : 12
               }deg)`;
               opacityStyle = 0;
               zIndex = 0;
@@ -304,9 +333,9 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
                   : 'transform 550ms cubic-bezier(0.25, 1, 0.5, 1), opacity 550ms ease, box-shadow 550ms ease',
                 pointerEvents: isVisible ? 'auto' : 'none',
               }}
-              className={`absolute top-0 bottom-0 w-[86%] max-w-[320px] my-auto flex flex-col justify-between rounded-3xl bg-white border border-[#C6A15B]/35 overflow-hidden will-change-transform ${
+              className={`absolute top-0 bottom-0 w-[88%] max-w-[340px] my-auto flex flex-col justify-between rounded-3xl bg-white border border-[#C6A15B]/35 overflow-hidden will-change-transform ${
                 isActive
-                  ? 'shadow-2xl ring-1 ring-[#C6A15B]/30'
+                  ? 'shadow-2xl ring-1 ring-[#C6A15B]/40'
                   : 'shadow-md brightness-95 cursor-pointer'
               }`}
               role="group"
@@ -314,48 +343,71 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
               aria-label={`Package ${index + 1} of ${total}: ${service.name}`}
               aria-hidden={!isActive}
             >
-              {/* Top Photo Frame (Full artwork view with contained proportions) */}
-              <div className="relative h-48 sm:h-52 w-full bg-[#FAF4EB] border-b border-[#C6A15B]/25 overflow-hidden flex items-center justify-center p-2">
-                {hasRealPhoto ? (
-                  <img
-                    src={service.imageUrl!}
-                    alt={`${service.name} by Pallavi Salem Mehndi Artist`}
-                    className="w-full h-full object-contain drop-shadow-sm transition-transform duration-500 ease-out"
-                    loading="lazy"
-                  />
+              {/* 1. Header Bar: Category and Duration kept completely off the photo canvas */}
+              <div className="px-3.5 py-2.5 bg-white border-b border-[#C6A15B]/20 flex items-center justify-between shrink-0">
+                {service.category ? (
+                  <span className="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-[#FAF4EB] text-[#8E3445] border border-[#C6A15B]/30 shadow-2xs">
+                    {service.category.name}
+                  </span>
                 ) : (
-                  // Clean, clearly labeled empty state (NOT the fake awaiting upload SVG)
-                  <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 bg-[radial-gradient(ellipse_at_center,#FFFDF9_0%,#F5EBDD_100%)]">
-                    <div className="w-10 h-10 rounded-2xl bg-white/80 border border-[#C6A15B]/30 flex items-center justify-center text-[#8E3445] shadow-xs mb-2">
+                  <span />
+                )}
+
+                {service.durationMinutes ? (
+                  <span className="flex items-center gap-1 text-[9px] font-semibold text-[#713E2E] bg-[#FAF4EB] px-2 py-0.5 rounded-full border border-[#C6A15B]/25">
+                    <Clock className="w-3 h-3 text-[#C6A15B]" />
+                    <span>{formatDuration(service.durationMinutes)}</span>
+                  </span>
+                ) : null}
+              </div>
+
+              {/* 2. Full-Width Artwork Canvas: Spans the card width with contained, complete proportions */}
+              <div
+                onClick={(e) => {
+                  if (isActive && hasRealPhoto) {
+                    e.stopPropagation();
+                    setLightboxIndex(index);
+                  }
+                }}
+                className={`relative w-full h-[280px] sm:h-[310px] bg-[radial-gradient(ellipse_at_center,#FAF4EB_0%,#F5EBDD_100%)] border-b border-[#C6A15B]/25 overflow-hidden flex items-center justify-center shrink-0 ${
+                  isActive && hasRealPhoto ? 'cursor-zoom-in group/img' : ''
+                }`}
+                title={hasRealPhoto ? 'Tap to inspect original photo in full view' : undefined}
+              >
+                {hasRealPhoto ? (
+                  <>
+                    <img
+                      src={service.imageUrl!}
+                      alt={`${service.name} authentic bridal mehndi work by Pallavi`}
+                      className="w-full h-full object-contain p-1.5 drop-shadow-sm transition-transform duration-500 ease-out group-hover/img:scale-102"
+                      loading="lazy"
+                    />
+
+                    {/* Non-intrusive "Tap to inspect" prompt pill at bottom edge */}
+                    <div className="absolute bottom-2 right-2 pointer-events-none">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#2B1F2A]/80 text-[#F4EADD] text-[9px] font-medium backdrop-blur-xs border border-white/10 shadow-xs">
+                        <ZoomIn className="w-3 h-3 text-[#DFBF7D]" />
+                        <span>Tap to inspect</span>
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  // Clean, clearly labeled empty state for packages without uploaded photography
+                  <div className="w-full h-full flex flex-col items-center justify-center text-center p-4">
+                    <div className="w-11 h-11 rounded-2xl bg-white/90 border border-[#C6A15B]/30 flex items-center justify-center text-[#8E3445] shadow-xs mb-2">
                       <Camera className="w-5 h-5 text-[#8E3445]" />
                     </div>
-                    <span className="text-[11px] font-bold text-[#2B1F2A]">
-                      Photo Gallery In Preparation
+                    <span className="text-xs font-bold text-[#2B1F2A]">
+                      Photography in Preparation
                     </span>
-                    <span className="text-[10px] text-[#2B2421]/65 max-w-[200px] leading-tight mt-1 font-light">
-                      Custom bespoke bridal sketches and motifs tailored individually.
+                    <span className="text-[10px] text-[#2B2421]/65 max-w-[210px] leading-tight mt-1 font-light">
+                      Custom motifs &amp; party layouts sketched individually. Contact studio to preview design catalogue.
                     </span>
                   </div>
                 )}
-
-                {/* Floating Top Badges */}
-                <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
-                  {service.category && (
-                    <span className="px-2.5 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase bg-[#2B1F2A]/90 text-[#F4EADD] backdrop-blur-xs border border-[#C6A15B]/40 shadow-xs">
-                      {service.category.name}
-                    </span>
-                  )}
-
-                  {service.durationMinutes && (
-                    <span className="flex items-center gap-1 text-[9px] font-semibold bg-[#2B1F2A]/85 backdrop-blur-xs px-2 py-0.5 rounded-full text-[#F4EADD] border border-white/10 shadow-xs">
-                      <Clock className="w-3 h-3 text-[#C6A15B]" />
-                      <span>{formatDuration(service.durationMinutes)}</span>
-                    </span>
-                  )}
-                </div>
               </div>
 
-              {/* Package Content & Typography Area */}
+              {/* 3. Service Copy & Typography: Stable, readable text area directly below photo */}
               <div className="p-4 flex-1 flex flex-col justify-between overflow-y-auto scrollbar-none">
                 <div>
                   <div className="flex items-center gap-1.5 mb-1">
@@ -373,7 +425,7 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
                     {service.shortDescription}
                   </p>
 
-                  {/* Ideal Occasion */}
+                  {/* Confirmed Ideal Occasion */}
                   {service.suitableFor && (
                     <div className="mt-2 pt-2 border-t border-[#F4EADD]">
                       <span className="text-[9px] font-bold text-[#713E2E] uppercase tracking-wider block">
@@ -385,7 +437,7 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
                     </div>
                   )}
 
-                  {/* Inclusions summary (top 2) */}
+                  {/* Summary Inclusions (Top 2 items) */}
                   {inclusionsList.length > 0 && !isExpanded && (
                     <div className="mt-2 pt-2 border-t border-[#F4EADD]">
                       <ul className="space-y-1 text-[10px] text-[#2B2421]/80">
@@ -421,7 +473,7 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
                     </div>
                   )}
 
-                  {/* View Details Toggle Button */}
+                  {/* Accessible View Details Toggle */}
                   {inclusionsList.length > 2 && (
                     <button
                       type="button"
@@ -431,7 +483,11 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
                       }}
                       className="mt-2 text-[10px] font-semibold text-[#8E3445] hover:text-[#713E2E] flex items-center gap-1 active:scale-95 transition-transform"
                       aria-expanded={isExpanded}
-                      aria-label={isExpanded ? `Hide full inclusions for ${service.name}` : `View full inclusions for ${service.name}`}
+                      aria-label={
+                        isExpanded
+                          ? `Hide full inclusions for ${service.name}`
+                          : `View full inclusions for ${service.name}`
+                      }
                     >
                       <span>{isExpanded ? 'Hide details' : 'View full inclusions'}</span>
                       {isExpanded ? (
@@ -443,8 +499,8 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
                   )}
                 </div>
 
-                {/* Footer Pricing & Enquire CTA */}
-                <div className="pt-2 mt-2 border-t border-[#C6A15B]/25 flex items-center justify-between gap-2">
+                {/* Footer Pricing & Enquire CTA Button */}
+                <div className="pt-2 mt-2 border-t border-[#C6A15B]/25 flex items-center justify-between gap-2 shrink-0">
                   <div>
                     <span className="text-[9px] text-[#2B2421]/60 block font-medium">Investment</span>
                     <span className="font-serif text-sm font-bold text-[#8E3445]">
@@ -464,62 +520,47 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
             </div>
           );
         })}
-
-        {/* Previous Button (< 768px touch control) */}
-        {total > 1 && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              goToPrev();
-            }}
-            aria-label="Previous package"
-            className="absolute left-1 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-[#2B1F2A]/80 text-[#F4EADD] backdrop-blur-xs border border-[#C6A15B]/40 flex items-center justify-center active:scale-90 transition-transform shadow-md focus:outline-none focus:ring-2 focus:ring-[#C6A15B]"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-        )}
-
-        {/* Next Button (< 768px touch control) */}
-        {total > 1 && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              goToNext();
-            }}
-            aria-label="Next package"
-            className="absolute right-1 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-[#2B1F2A]/80 text-[#F4EADD] backdrop-blur-xs border border-[#C6A15B]/40 flex items-center justify-center active:scale-90 transition-transform shadow-md focus:outline-none focus:ring-2 focus:ring-[#C6A15B]"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        )}
       </div>
 
-      {/* Pagination Controls, Accessibility Toggle & Slide Counter */}
+      {/* 4. Bottom Navigation & Accessibility Controls: Positioned below cards so they NEVER cover active artwork */}
       {total > 1 && (
-        <div className="flex items-center justify-between px-3 mt-2 pt-1">
-          {/* Pause / Play Autoplay Toggle (WCAG 2.2.2 compliance) */}
-          <button
-            type="button"
-            onClick={() => setIsPausedByUser((prev) => !prev)}
-            aria-label={isPausedByUser ? 'Resume package carousel autoplay' : 'Pause package carousel autoplay'}
-            className="inline-flex items-center gap-1 text-[10px] text-[#2B2421]/70 bg-[#FAF4EB] border border-[#C6A15B]/30 px-2 py-0.5 rounded-full hover:bg-white transition-colors focus:ring-1 focus:ring-[#C6A15B]"
-          >
-            {isPausedByUser ? (
-              <>
-                <Play className="w-2.5 h-2.5 text-[#C6A15B] fill-current" />
-                <span>Play</span>
-              </>
-            ) : (
-              <>
-                <Pause className="w-2.5 h-2.5 text-[#8E3445] fill-current" />
-                <span>Pause</span>
-              </>
-            )}
-          </button>
+        <div className="flex items-center justify-between px-3 mt-3 pt-1">
+          {/* Left: Previous Button + Pause/Play Control */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={goToPrev}
+              aria-label="Previous package"
+              className="w-8 h-8 rounded-full bg-white text-[#2B1F2A] border border-[#C6A15B]/40 flex items-center justify-center active:scale-90 transition-transform shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C6A15B]"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
 
-          {/* Centered Dots with direct tap navigation */}
+            <button
+              type="button"
+              onClick={() => setIsPausedByUser((prev) => !prev)}
+              aria-label={
+                isPausedByUser
+                  ? 'Resume package carousel autoplay'
+                  : 'Pause package carousel autoplay'
+              }
+              className="inline-flex items-center gap-1 text-[10px] text-[#2B2421]/75 bg-white border border-[#C6A15B]/30 px-2.5 py-1 rounded-full hover:bg-[#FAF4EB] transition-colors focus:ring-1 focus:ring-[#C6A15B]"
+            >
+              {isPausedByUser ? (
+                <>
+                  <Play className="w-2.5 h-2.5 text-[#C6A15B] fill-current" />
+                  <span>Play</span>
+                </>
+              ) : (
+                <>
+                  <Pause className="w-2.5 h-2.5 text-[#8E3445] fill-current" />
+                  <span>Pause</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Center: Direct-Tap Pagination Dots */}
           <div className="flex items-center justify-center gap-1.5" role="tablist">
             {services.map((svc, dotIdx) => {
               const isSelected = dotIdx === currentIndex;
@@ -541,10 +582,114 @@ export default function MobilePackages3DCarousel({ services }: MobilePackages3DC
             })}
           </div>
 
-          {/* Slide counter */}
-          <span className="text-[10px] font-mono text-[#2B2421]/60 bg-white/80 px-2 py-0.5 rounded-full border border-[#C6A15B]/25">
-            {currentIndex + 1} of {total}
-          </span>
+          {/* Right: Slide Counter + Next Button */}
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-mono text-[#2B2421]/70 bg-white px-2 py-0.5 rounded-full border border-[#C6A15B]/25">
+              {currentIndex + 1} of {total}
+            </span>
+
+            <button
+              type="button"
+              onClick={goToNext}
+              aria-label="Next package"
+              className="w-8 h-8 rounded-full bg-white text-[#2B1F2A] border border-[#C6A15B]/40 flex items-center justify-center active:scale-90 transition-transform shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C6A15B]"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 5. Full-Screen Accessible Artwork Lightbox Modal */}
+      {currentLightboxService && lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1A121A]/95 backdrop-blur-md p-4 animate-in fade-in duration-200"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Full Artwork Inspection: ${currentLightboxService.name}`}
+          onClick={closeLightbox}
+        >
+          <div
+            className="w-full h-full max-w-lg flex flex-col justify-between py-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Lightbox Top Bar */}
+            <div className="flex items-center justify-between pb-2">
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-bold text-[#DFBF7D] tracking-wider uppercase block">
+                  {currentLightboxService.category?.name || 'Studio Offering'}
+                </span>
+                <h4 className="font-serif text-sm font-bold text-white">
+                  {currentLightboxService.name}
+                </h4>
+              </div>
+
+              <button
+                type="button"
+                onClick={closeLightbox}
+                className="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center active:scale-95 transition-transform"
+                aria-label="Close Lightbox"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Lightbox Photo Display */}
+            <div className="relative flex-1 flex items-center justify-center my-2 overflow-hidden">
+              <img
+                src={currentLightboxService.imageUrl!}
+                alt={currentLightboxService.name}
+                className="max-h-[65vh] w-auto max-w-full object-contain rounded-2xl shadow-2xl border border-white/20"
+              />
+
+              {/* Prev / Next Touch Arrows inside Lightbox */}
+              {total > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={showLightboxPrev}
+                    aria-label="Previous image"
+                    className="absolute left-1 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center active:scale-90 transition-transform"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={showLightboxNext}
+                    aria-label="Next image"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center active:scale-90 transition-transform"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Lightbox Bottom Drawer Details & Direct Action */}
+            <div className="bg-[#2B1F2A] border border-[#C6A15B]/40 rounded-2xl p-4 text-white space-y-2.5">
+              <p className="text-xs text-[#F4EADD]/85 leading-relaxed font-light">
+                {currentLightboxService.shortDescription}
+              </p>
+
+              <div className="flex items-center justify-between pt-1 border-t border-white/10 text-xs">
+                <div>
+                  <span className="text-[10px] text-white/60 block">Confirmed Price</span>
+                  <span className="font-serif font-bold text-[#DFBF7D]">
+                    {formatPrice(currentLightboxService)}
+                  </span>
+                </div>
+
+                <Link
+                  href={`/enquire?service=${currentLightboxService.id}`}
+                  onClick={closeLightbox}
+                  className="btn-elevated-primary text-xs px-4 py-2 gap-1.5"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#F4EADD]" />
+                  <span>Enquire for Date</span>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
