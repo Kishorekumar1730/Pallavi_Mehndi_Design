@@ -10,6 +10,7 @@ import BotanicalShadowOverlay from '@/components/BotanicalShadowOverlay';
 import MobileProfileSection from '@/components/MobileProfileSection';
 import MobilePackages3DCarousel from '@/components/MobilePackages3DCarousel';
 import MobileStainTimeline from '@/components/MobileStainTimeline';
+import DesktopPackagesShowcase from '@/components/DesktopPackagesShowcase';
 import {
   Sparkles,
   CalendarCheck,
@@ -344,11 +345,16 @@ export default async function HomePage() {
             <MobilePackages3DCarousel services={serializedFeaturedServices} />
           </div>
 
-          {/* Desktop & Tablet Grid (Frozen for >= 768px) */}
-          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Tablet Grid (768px - 1023px, Frozen & Preserved) */}
+          <div className="hidden md:grid lg:hidden grid-cols-2 gap-8">
             {featuredServices.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
+          </div>
+
+          {/* Desktop Showcase (>= 1024px, Artwork-Led Prominent Display with Lightbox) */}
+          <div className="hidden lg:block">
+            <DesktopPackagesShowcase services={serializedFeaturedServices} />
           </div>
         </section>
 
