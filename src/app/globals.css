@@ -530,3 +530,29 @@ h1, h2, h3, .font-serif {
     transform: none !important;
   }
 }
+
+/* -------------------------------------------------------------
+   SUPPRESS THIRD-PARTY HOST WATERMARKS & INJECTED BADGES
+   ------------------------------------------------------------- */
+netlify-hud,
+[data-netlify-site-id],
+[data-nf-variant],
+.netlify-badge,
+[class*="netlify-badge"],
+[id*="netlify-badge"],
+#netlify-identity-widget,
+div:has(> a[href*="netlify.com"]),
+div:has(> a[href*="netlify.new"]),
+a[href*="netlify.new"],
+a[href*="netlify.com/site/powered-by"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -99999px !important;
+  top: -99999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  z-index: -9999 !important;
+}
