@@ -15,7 +15,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pallavi-mehndi-design.netlify.app'),
+  metadataBase: new URL('https://pallavi-mehndi-artistry.netlify.app'),
   title: {
     default: "Pallavi Mehndi Artistry | Bespoke Bridal & Contemporary Henna",
     template: "%s | Pallavi Mehndi Artistry",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Pallavi Mehndi Artistry | Bespoke Bridal & Contemporary Henna",
     description: "Exquisite bespoke bridal, festive, and celebration henna artistry based in Salem, Tamil Nadu. Handcrafted with 100% natural, chemical-free organic Rajasthani henna cones.",
-    url: "https://pallavi-mehndi-design.netlify.app",
+    url: "https://pallavi-mehndi-artistry.netlify.app",
     siteName: "Pallavi Mehndi Artistry",
     images: [
       {
@@ -59,8 +59,13 @@ export const metadata: Metadata = {
     creator: "@salem_mehandi_artist_pallavi",
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/images/artist-avatar.jpg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
