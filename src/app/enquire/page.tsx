@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import EnquiryForm from '@/components/EnquiryForm';
 import { ShieldCheck } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-static';
 
 export default async function EnquirePage({
   searchParams,
